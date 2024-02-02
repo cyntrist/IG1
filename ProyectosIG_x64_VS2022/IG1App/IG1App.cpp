@@ -67,7 +67,7 @@ IG1App::iniWinOpenGL()
 	                                                    // buffer and stencil buffer
 
 	mWinId = glutCreateWindow(
-	  "IG1App"); // with its associated OpenGL context, return window's identifier
+	  "IG1"); // with its associated OpenGL context, return window's identifier
 
 	// Callback registration
 	glutReshapeFunc(s_resize);

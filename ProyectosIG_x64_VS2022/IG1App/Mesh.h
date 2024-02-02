@@ -30,6 +30,8 @@ protected:
 	std::vector<glm::dvec3> vVertices; // vertex array
 	std::vector<glm::dvec4> vColors;   // color array
 	virtual void draw() const;
+
+	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
 };
 
 #endif //_H_Scene_H_

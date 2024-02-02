@@ -1,0 +1,16 @@
+
+ej 3 -> Polygon cambiar a RegularPolygon
+
+
+----------------------- CAMERA --------------------
+
+mEye -> posicion de la camara
+mLook -> posicion del objetivo
+mUp -> vector arriba ????
+
+
+PM -> projection matrix (true cuando es perspectiva es orogonal ->>>> NO HAY PROFUNDIAD)
+	-> bOrto -> bool orthogonal
+
+VM -> view matrix -> siempre hace falta creemos
+
