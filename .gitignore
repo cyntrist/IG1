@@ -27,7 +27,6 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
@@ -396,3 +395,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+ProyectosIG_x64_VS2022/bin/IG1AppDebug.exe
