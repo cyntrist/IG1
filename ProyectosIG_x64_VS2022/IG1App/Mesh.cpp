@@ -70,7 +70,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 Mesh* Mesh::generateRGBTriangle(GLuint num, GLdouble r)
 {
 	Mesh* mesh = new Mesh();
-	mesh->mPrimitive = GL_LINE_LOOP;
+	glPolygonMode(GL_FRONT, GL_FILL);
 	mesh->mNumVertices = num;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 	// prpara una polilinea (okolilinea)

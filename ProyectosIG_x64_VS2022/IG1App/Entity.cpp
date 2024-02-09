@@ -38,7 +38,7 @@ EjesRGB::render(dmat4 const& modelViewMat) const
 
 RGBTriangle::RGBTriangle(GLuint num, GLdouble r) : Abs_Entity()
 {
-	mMesh->generateRGBTriangle(num, r);
+	mMesh = Mesh::generateRGBTriangle(num, r);
 
 }
 
