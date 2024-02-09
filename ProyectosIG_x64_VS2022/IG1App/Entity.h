@@ -22,9 +22,15 @@ public:
 	glm::dmat4 const& modelMat() const { return mModelMat; };
 	void setModelMat(glm::dmat4 const& aMat) { mModelMat = aMat; };
 
+	// color
+	glm::dvec4 getmColor() { return mColor; } // getter
+	void setmColor(glm::dvec4 color) { mColor = color; } // setter
+
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
+	glm::dvec4 mColor;	   // color
+
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;
