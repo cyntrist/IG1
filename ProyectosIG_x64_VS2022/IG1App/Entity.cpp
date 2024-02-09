@@ -35,3 +35,26 @@ EjesRGB::render(dmat4 const& modelViewMat) const
 		glLineWidth(1);
 	}
 }
+
+RGBTriangle::RGBTriangle(GLuint num, GLdouble r) : Abs_Entity()
+{
+	mMesh->generateRGBTriangle(num, r);
+
+}
+
+RGBTriangle::~RGBTriangle()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+	}
+}

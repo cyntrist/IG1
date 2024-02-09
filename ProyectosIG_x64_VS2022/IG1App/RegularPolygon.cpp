@@ -13,7 +13,6 @@ void RegularPolygon::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
-
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();

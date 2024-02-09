@@ -17,7 +17,11 @@ Scene::init()
 	// Graphics objects (entities) of the scene
 	gObjects.push_back(new EjesRGB(400.0));
 
-	gObjects.push_back(new RegularPolygon(20, 200, glm::dvec4(0, 1, 1, 1)));
+	//gObjects.push_back(new RegularPolygon(3, 200, glm::dvec4(0, 1, 1, 1)));
+	//gObjects.push_back(new RegularPolygon(64, 200, glm::dvec4(1, 0, 1, 1)));
+
+	gObjects.push_back(new RGBTriangle(3, 200));
+
 }
 void
 Scene::free()
