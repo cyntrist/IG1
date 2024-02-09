@@ -22,6 +22,7 @@ public:
 	GLuint size() const { return mNumVertices; }; // number of elements
 	std::vector<glm::dvec3> const& vertices() const { return vVertices; };
 	std::vector<glm::dvec4> const& colors() const { return vColors; };
+	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
 
 protected:
 	GLuint mPrimitive =
@@ -31,7 +32,6 @@ protected:
 	std::vector<glm::dvec4> vColors;   // color array
 	virtual void draw() const;
 
-	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
 };
 
 #endif //_H_Scene_H_
