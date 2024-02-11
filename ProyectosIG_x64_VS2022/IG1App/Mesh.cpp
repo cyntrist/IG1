@@ -144,6 +144,12 @@ Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 	return mesh;
 }
 
+Mesh* Mesh::generateCube(GLdouble longitud)
+{
+	auto* mesh = new Mesh();
+	return mesh;
+}
+
 
 Mesh*
 Mesh::createRGBAxes(GLdouble l)

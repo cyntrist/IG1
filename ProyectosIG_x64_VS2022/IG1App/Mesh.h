@@ -26,6 +26,7 @@ public:
 	static Mesh* generateRGBTriangle(GLuint num, GLdouble r);
 	static Mesh* generateRectangle(GLdouble w, GLdouble h);
 	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
+	static Mesh* generateCube(GLdouble longitud);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...

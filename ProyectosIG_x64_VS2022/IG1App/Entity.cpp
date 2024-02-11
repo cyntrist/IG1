@@ -112,3 +112,27 @@ void RGBRectangle::render(glm::dmat4 const& modelViewMat) const
 		glLineWidth(1);
 	}
 }
+
+
+/// CUBE
+Cube::Cube(GLdouble longitud)
+{
+	mMesh = Mesh::generateCube(longitud);
+}
+
+Cube::~Cube()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void Cube::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+	}
+}

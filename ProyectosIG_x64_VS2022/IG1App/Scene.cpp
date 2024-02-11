@@ -27,7 +27,10 @@ Scene::init()
 	//gObjects.push_back(new RGBTriangle(3, 200));
 
 	// Apartado 8
-	gObjects.push_back(new RGBRectangle(400,200));
+	//gObjects.push_back(new RGBRectangle(400,200));
+
+	// Apartado 9
+	gObjects.push_back(new Cube(100));
 }
 
 void
