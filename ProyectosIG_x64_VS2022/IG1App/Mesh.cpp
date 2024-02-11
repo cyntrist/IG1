@@ -83,7 +83,7 @@ Mesh* Mesh::generateRGBTriangle(GLuint num, GLdouble r)
 	for (int i = 0; i < num; i++) {
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha) 
-		mesh->vVertices.emplace_back(r * cos(radians(dividido * i)), alpha + r * sin(radians(dividido * i)), 1.0);
+		mesh->vVertices.emplace_back(r * cos(alpha + radians(dividido * i)), r * sin(alpha + radians(dividido * i)), 1.0);
 	}
 	
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
