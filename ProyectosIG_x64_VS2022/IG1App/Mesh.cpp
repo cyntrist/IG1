@@ -144,9 +144,41 @@ Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 	return mesh;
 }
 
-Mesh* Mesh::generateCube(GLdouble longitud)
+Mesh* Mesh::generateCube(GLdouble l)
 {
 	auto* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	mesh->mNumVertices = 8;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	// primera cara
+	mesh->vVertices.emplace_back(0, 0, 0.0);
+	mesh->vVertices.emplace_back(l, 0, 0.0);
+	mesh->vVertices.emplace_back(0, l, 0.0);
+	mesh->vVertices.emplace_back(l, l, 0.0);
+
+	//cara de arriba
+	mesh->vVertices.emplace_back(0, l, l);
+	mesh->vVertices.emplace_back(l, l, l);
+
+	// cara de enfrente
+	mesh->vVertices.emplace_back(0, 0, l);
+	mesh->vVertices.emplace_back(l, 0, l);
+
+	// faltan la de abajo y laterales... no se como hacerlo sin repetir vertices --> habra que cambiar primitiva? no lo parece
+
+	// lo siguiente no funca porque se repiten vertices
+	// cara lateral derecha
+	mesh->vVertices.emplace_back(l,l,0.0);
+	mesh->vVertices.emplace_back(l,0.0,0.0);
+	
+	// cara de abajo
+	mesh->vVertices.emplace_back(0, 0, 0);
+	mesh->vVertices.emplace_back(l, 0, 0);
+
+
+
 	return mesh;
 }
 
