@@ -93,8 +93,22 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 /// RGB RECTANGLE
 RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)
 {
+	mMesh = Mesh::generateRGBRectangle(w, h);
+}
+
+RGBRectangle::~RGBRectangle()
+{
+	delete mMesh;
+	mMesh = nullptr;
 }
 
 void RGBRectangle::render(glm::dmat4 const& modelViewMat) const
 {
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+	}
 }

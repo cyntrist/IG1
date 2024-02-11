@@ -26,7 +26,10 @@ Scene::init()
 	// Apartado 6 y 7	
 	//gObjects.push_back(new RGBTriangle(3, 200));
 
+	// Apartado 8
+	gObjects.push_back(new RGBRectangle(400,200));
 }
+
 void
 Scene::free()
 { // release memory and resources

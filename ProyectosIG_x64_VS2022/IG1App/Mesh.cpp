@@ -33,7 +33,6 @@ Mesh::render() const
 			// each component, stride, pointer
 		}
 		draw();
-		generateRectangle(10,5);
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
@@ -58,7 +57,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	{
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha) 
-		mesh->vVertices.emplace_back(r * cos(radians(dividido * i)), r * sin(radians(dividido * i)), 1.0);
+		mesh->vVertices.emplace_back(r * cos(alpha + radians(dividido * i)), alpha +r * sin(radians(dividido * i)), 1.0);
 	}
 
 	glEnd(); //end drawing of line loop
@@ -91,6 +90,7 @@ Mesh* Mesh::generateRGBTriangle(GLuint num, GLdouble r)
 		                             1.0);
 	}
 
+	mesh->vColors.reserve(mesh->mNumVertices);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
@@ -103,16 +103,16 @@ Mesh* Mesh::generateRGBTriangle(GLuint num, GLdouble r)
 Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 {
 	auto* mesh = new Mesh();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
 	mesh->mNumVertices = 4;
 	mesh->vVertices.reserve(mesh->mNumVertices);
-	glBegin(mesh->mPrimitive); // start drawing a line loop
 
-	mesh->vVertices.emplace_back(w/2, h/2, 0.0);
+	glBegin(mesh->mPrimitive); // start drawing a line loop
 	mesh->vVertices.emplace_back(-w/2, h/2, 0.0);
+	mesh->vVertices.emplace_back(w/2, h/2, 0.0);
 	mesh->vVertices.emplace_back(-w/2, -h/2, 0.0);
 	mesh->vVertices.emplace_back(w/2, -h/2, 0.0);
-
 	glEnd(); //end drawing of line loop
 
 	return mesh;
@@ -120,14 +120,25 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 
 Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 {
-	auto* mesh = generateRectangle(w, h);
-	glBegin(mesh->mPrimitive); //start drawing a line loop
+	auto* mesh = new Mesh();
+	glPolygonMode(GL_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT, GL_FILL);
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+	mesh->mNumVertices = 4;
+	mesh->vVertices.reserve(mesh->mNumVertices);
 
+	glBegin(mesh->mPrimitive); // start drawing a line loop
+	mesh->vVertices.emplace_back(-w/2, h/2, 0.0);
+	mesh->vVertices.emplace_back(w/2, h/2, 0.0);
+	mesh->vVertices.emplace_back(-w/2, -h/2, 0.0);
+	mesh->vVertices.emplace_back(w/2, -h/2, 0.0);
+
+
+	mesh->vColors.reserve(mesh->mNumVertices);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 	glEnd(); //end drawing of line loop
 
 	return mesh;

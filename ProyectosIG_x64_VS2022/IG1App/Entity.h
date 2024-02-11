@@ -64,7 +64,7 @@ class RGBRectangle : public Abs_Entity
 {
 public:
 	explicit RGBRectangle(GLdouble w, GLdouble h);
-	~RGBRectangle() = default;
+	~RGBRectangle();
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
 
