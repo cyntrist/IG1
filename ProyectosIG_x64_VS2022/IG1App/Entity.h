@@ -10,7 +10,7 @@ class Abs_Entity // abstract class
 {
 public:
 	Abs_Entity()
-	  : mModelMat(1.0){}; // 4x4 identity matrix
+	  : mModelMat(1.0){} // 4x4 identity matrix
 	virtual ~Abs_Entity() = default;
 
 	Abs_Entity(const Abs_Entity& e) = delete;            // no copy constructor
@@ -41,14 +41,15 @@ class EjesRGB : public Abs_Entity
 public:
 	explicit EjesRGB(GLdouble l);
 	~EjesRGB();
-	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void render(glm::dmat4 const& modelViewMat) const override;
 };
 
 class RegularPolygon : public Abs_Entity {
 public:
 	RegularPolygon() = default;
+	RegularPolygon(GLuint num, GLdouble r);
 	RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color);
-	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void render(glm::dmat4 const& modelViewMat) const override;
 };
 
 class RGBTriangle : public Abs_Entity 
@@ -56,7 +57,15 @@ class RGBTriangle : public Abs_Entity
 public:
 	explicit RGBTriangle(GLuint num, GLdouble r);
 	~RGBTriangle();
-	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void render(glm::dmat4 const& modelViewMat) const override;
+};
+
+class RGBRectangle : public Abs_Entity
+{
+public:
+	explicit RGBRectangle(GLdouble w, GLdouble h);
+	~RGBRectangle() = default;
+	void render(glm::dmat4 const& modelViewMat) const override;
 };
 
 #endif //_H_Entities_H_

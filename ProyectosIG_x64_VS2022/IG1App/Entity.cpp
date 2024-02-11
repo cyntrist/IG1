@@ -40,7 +40,12 @@ EjesRGB::render(dmat4 const& modelViewMat) const
 
 
 /// REGULAR POLYGON
-RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color) : Abs_Entity()
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r)
+{
+	mMesh = Mesh::generateRegularPolygon(num, r);
+}
+
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
 	setmColor(color);
@@ -62,10 +67,9 @@ void RegularPolygon::render(glm::dmat4 const& modelViewMat) const
 
 
 /// RGB TRIANGLE
-RGBTriangle::RGBTriangle(GLuint num, GLdouble r) : Abs_Entity()
+RGBTriangle::RGBTriangle(GLuint num, GLdouble r) 
 {
 	mMesh = Mesh::generateRGBTriangle(num, r);
-
 }
 
 RGBTriangle::~RGBTriangle()
@@ -83,4 +87,14 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 		glLineWidth(1);
 	}
+}
+
+
+/// RGB RECTANGLE
+RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)
+{
+}
+
+void RGBRectangle::render(glm::dmat4 const& modelViewMat) const
+{
 }
