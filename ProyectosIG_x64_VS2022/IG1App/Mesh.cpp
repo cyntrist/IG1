@@ -30,9 +30,6 @@ Mesh::render() const
 		}
 
 		draw();
-
-		// LO LLAMABAMOS AQUÍ 
-
 ;		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
@@ -40,17 +37,16 @@ Mesh::render() const
 
 Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 {
-	Mesh* mesh = new Mesh();
+	auto* mesh = new Mesh();
 	mesh->mPrimitive = GL_LINE_LOOP;			
 	mesh->mNumVertices = num;
 	mesh->vVertices.reserve(mesh->mNumVertices);
-	// prpara una polilinea (okolilinea)
 
 	// numero de vertices
-	double dividido = 360.0 / num;
+	const double dividido = 360.0 / num;
 
-	// angulo
-	//constexpr double alpha = radians(90.0);
+	// angulo inicial
+	constexpr double alpha = radians(90.0);
 
 	glBegin(mesh->mPrimitive); //start drawing a line loop
 
@@ -80,15 +76,14 @@ Mesh* Mesh::generateRGBTriangle(GLuint num, GLdouble r)
 	double dividido = 360.0 / num;
 
 	// angulo
-	//constexpr double alpha = radians(90.0);
+	constexpr double alpha = radians(90.0);
 
 	glBegin(mesh->mPrimitive); //start drawing a line loop
 
 	for (int i = 0; i < num; i++) {
-
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha) 
-		mesh->vVertices.emplace_back(r * cos(radians(dividido * i)), r * sin(radians(dividido * i)), 1.0);
+		mesh->vVertices.emplace_back(r * cos(radians(dividido * i)), alpha + r * sin(radians(dividido * i)), 1.0);
 	}
 	
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);

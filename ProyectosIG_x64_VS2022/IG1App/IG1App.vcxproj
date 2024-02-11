@@ -74,7 +74,6 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="IG1App.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="RegularPolygon.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
@@ -84,7 +83,6 @@
     <ClCompile Include="IG1App.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="RegularPolygon.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
