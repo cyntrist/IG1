@@ -224,29 +224,31 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 
 	/// APARTADO 10:
 	///	Con primitiva Triangle normal, para poder darle color a cada cara
-	GLdouble m = l / 2;
-	constexpr std::array PIVOTS = {
-		dvec2(-1, 1),
-		dvec2(1, -1),
-		dvec2(1, 1)
-	};
+	///
+	///	algo tiene que estar mal del código siguiente porque no funciona
+	//GLdouble n = l / 2;
+	//constexpr std::array PIVOTS = {
+	//	dvec2(-1, 1),
+	//	dvec2(1, -1),
+	//	dvec2(1, 1)
+	//};
 
-	for (int edge = 0; edge < 3; ++edge)
-	{
-		for (int value : {-m, m})
-		{
-			dvec3 center = { 0, 0, 0 };
-			center[edge] = value;
+	//for (int edge = 0; edge < 3; ++edge)
+	//{
+	//	for (int value : {-n, n})
+	//	{
+	//		dvec3 center = { 0, 0, 0 };
+	//		center[edge] = value;
 
-			dvec3 u = { 0, 0, 0 };
-			u[(edge + 1) % 3] = 1;
-			dvec3 v = cross(u, normalize(-center));
+	//		dvec3 u = { 0, 0, 0 };
+	//		u[(edge + 1) % 3] = 1;
+	//		dvec3 v = cross(u, normalize(-center));
 
-			for (double triangle : {m, -m})
-				for (const dvec2& n : PIVOTS)
-					mesh->vVertices.push_back(center + triangle + (n.x * u + n.y * v));
-		}
-	}
+	//		for (double triangle : {n, -n})
+	//			for (const dvec2& m : PIVOTS)
+	//				mesh->vVertices.push_back(center + triangle + (m.x * u + m.y * v));
+	//	}
+	//}
 
 	return mesh;
 }
