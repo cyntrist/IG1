@@ -225,7 +225,9 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	/// APARTADO 10:
 	///	Con primitiva Triangle normal, para poder darle color a cada cara
 	///
-	///	algo tiene que estar mal del código siguiente porque no funciona
+	///	algo tiene que estar mal de lo que he copiado de la pizarra porque no funciona
+	///	prefiero hacerlo de manera manual, pero lo dejo aqui como referencia
+	///	o por si acaso
 	//GLdouble n = l / 2;
 	//constexpr std::array PIVOTS = {
 	//	dvec2(-1, 1),
