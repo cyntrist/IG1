@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include <array>
 #include "CheckML.h"
 #include <fstream>
 using namespace std;
@@ -36,6 +37,40 @@ Mesh::render() const
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
+}
+
+Mesh*
+Mesh::createRGBAxes(GLdouble l)
+{
+	auto mesh = new Mesh();
+
+	mesh->mPrimitive = GL_LINES;
+
+	mesh->mNumVertices = 6;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	// X axis vertices
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+	mesh->vVertices.emplace_back(l, 0.0, 0.0);
+	// Y axis vertices
+	mesh->vVertices.emplace_back(0, 0.0, 0.0);
+	mesh->vVertices.emplace_back(0.0, l, 0.0);
+	// Z axis vertices
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+	mesh->vVertices.emplace_back(0.0, 0.0, l);
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+	// X axis color: red  (Alpha = 1 : fully opaque)
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	// Y axis color: green
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// Z axis color: blue
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	return mesh;
 }
 
 Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
@@ -148,71 +183,70 @@ Mesh* Mesh::generateCube(GLdouble l)
 {
 	auto* mesh = new Mesh();
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	mesh->mNumVertices = 8;
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_BACK, GL_POINT);
+	mesh->mNumVertices = 14;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
-	// primera cara
-	mesh->vVertices.emplace_back(0, 0, 0.0);
-	mesh->vVertices.emplace_back(l, 0, 0.0);
-	mesh->vVertices.emplace_back(0, l, 0.0);
-	mesh->vVertices.emplace_back(l, l, 0.0);
+	/// EN CLASE:
+	// 14 VERTICES!!!!!!!
+	const GLdouble m = l / 2;
 
-	//cara de arriba
-	mesh->vVertices.emplace_back(0, l, l);
-	mesh->vVertices.emplace_back(l, l, l);
+	mesh->vVertices.emplace_back(-m, -m, -m); // v0
+	mesh->vVertices.emplace_back(m, -m, -m); // v1
+	mesh->vVertices.emplace_back(-m, -m, m); // v2
+	mesh->vVertices.emplace_back(m, -m, m); // v3
+	mesh->vVertices.emplace_back(m, m, m); // v4
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v5 = v1
+	mesh->vVertices.emplace_back(m, m, -m); // v6
+	mesh->vVertices.push_back(mesh->vVertices[0]); // v7 = v0
+	mesh->vVertices.emplace_back(-m, m, -m); // v8
+	mesh->vVertices.push_back(mesh->vVertices[2]); // v9 = v2
+	mesh->vVertices.emplace_back(-m, m, m); // v10
+	mesh->vVertices.push_back(mesh->vVertices[4]); // v11 = v4
+	mesh->vVertices.push_back(mesh->vVertices[8]); // v12 = v8
+	mesh->vVertices.push_back(mesh->vVertices[6]); // v13 = v6
 
-	// cara de enfrente
-	mesh->vVertices.emplace_back(0, 0, l);
-	mesh->vVertices.emplace_back(l, 0, l);
-
-	// faltan la de abajo y laterales... no se como hacerlo sin repetir vertices --> habra que cambiar primitiva? no lo parece
-
-	// lo siguiente no funca porque se repiten vertices
-	// cara lateral derecha
-	mesh->vVertices.emplace_back(l,l,0.0);
-	mesh->vVertices.emplace_back(l,0.0,0.0);
-	
-	// cara de abajo
-	mesh->vVertices.emplace_back(0, 0, 0);
-	mesh->vVertices.emplace_back(l, 0, 0);
-
-
+	mesh->vColors.reserve(mesh->mNumVertices);
+	mesh->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 
 	return mesh;
 }
 
-
-Mesh*
-Mesh::createRGBAxes(GLdouble l)
+Mesh* Mesh::generateRGBCube(GLdouble l)
 {
-	auto mesh = new Mesh();
-
-	mesh->mPrimitive = GL_LINES;
-
-	mesh->mNumVertices = 6;
+	auto* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLES;
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_BACK, GL_POINT);
+	mesh->mNumVertices = 100;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
-	// X axis vertices
-	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
-	mesh->vVertices.emplace_back(l, 0.0, 0.0);
-	// Y axis vertices
-	mesh->vVertices.emplace_back(0, 0.0, 0.0);
-	mesh->vVertices.emplace_back(0.0, l, 0.0);
-	// Z axis vertices
-	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
-	mesh->vVertices.emplace_back(0.0, 0.0, l);
+	/// APARTADO 10:
+	///	Con primitiva Triangle normal, para poder darle color a cada cara
+	GLdouble m = l / 2;
+	constexpr std::array PIVOTS = {
+		dvec2(-1, 1),
+		dvec2(1, -1),
+		dvec2(1, 1)
+	};
 
-	mesh->vColors.reserve(mesh->mNumVertices);
-	// X axis color: red  (Alpha = 1 : fully opaque)
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	// Y axis color: green
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	// Z axis color: blue
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	for (int edge = 0; edge < 3; ++edge)
+	{
+		for (int value : {-m, m})
+		{
+			dvec3 center = { 0, 0, 0 };
+			center[edge] = value;
+
+			dvec3 u = { 0, 0, 0 };
+			u[(edge + 1) % 3] = 1;
+			dvec3 v = cross(u, normalize(-center));
+
+			for (double triangle : {m, -m})
+				for (const dvec2& n : PIVOTS)
+					mesh->vVertices.push_back(center + triangle + (n.x * u + n.y * v));
+		}
+	}
 
 	return mesh;
 }

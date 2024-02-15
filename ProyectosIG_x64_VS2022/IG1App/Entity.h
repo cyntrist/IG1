@@ -76,4 +76,12 @@ public:
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
 
+class RGBCube : public Abs_Entity
+{
+public:
+	explicit RGBCube(GLdouble longitud);
+	~RGBCube();
+	void render(glm::dmat4 const& modelViewMat) const override;
+};
+
 #endif //_H_Entities_H_

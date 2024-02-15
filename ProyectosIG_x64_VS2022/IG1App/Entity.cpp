@@ -136,3 +136,26 @@ void Cube::render(glm::dmat4 const& modelViewMat) const
 		glLineWidth(1);
 	}
 }
+
+/// RGBCUBE
+RGBCube::RGBCube(GLdouble longitud)
+{
+	mMesh = Mesh::generateRGBCube(longitud);
+}
+
+RGBCube::~RGBCube()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void RGBCube::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+	}
+}
