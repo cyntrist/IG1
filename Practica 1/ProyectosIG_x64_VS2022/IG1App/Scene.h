@@ -23,8 +23,10 @@ public:
 	Scene& operator=(const Scene& s) = delete; // no copy assignment
 
 	void init();
-
+	// apartado 11
+	void addObject(Abs_Entity* ent);
 	void render(Camera const& cam) const;
+	void update();
 
 protected:
 	void free();

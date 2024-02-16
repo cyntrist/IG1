@@ -17,6 +17,7 @@ public:
 	Abs_Entity& operator=(const Abs_Entity& e) = delete; // no copy assignment
 
 	virtual void render(glm::dmat4 const& modelViewMat) const = 0; // abstract method
+	virtual void update() {}
 
 	// modeling matrix
 	glm::dmat4 const& modelMat() const { return mModelMat; };
@@ -47,6 +48,7 @@ public:
 class RegularPolygon : public Abs_Entity {
 public:
 	RegularPolygon() = default;
+	~RegularPolygon();
 	RegularPolygon(GLuint num, GLdouble r);
 	RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color);
 	void render(glm::dmat4 const& modelViewMat) const override;
@@ -55,7 +57,7 @@ public:
 class RGBTriangle : public Abs_Entity 
 {
 public:
-	explicit RGBTriangle(GLuint num, GLdouble r);
+	explicit RGBTriangle(GLdouble r);
 	~RGBTriangle();
 	void render(glm::dmat4 const& modelViewMat) const override;
 };

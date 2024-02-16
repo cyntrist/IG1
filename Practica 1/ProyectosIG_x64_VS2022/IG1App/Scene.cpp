@@ -33,13 +33,12 @@ Scene::init()
 	//gObjects.push_back(new Cube(100));
 
 	// Apartado 10
-	gObjects.push_back(new RGBCube(100));
+	//gObjects.push_back(new RGBCube(100));
 }
 
 void
 Scene::free()
 { // release memory and resources
-
 	for (Abs_Entity* el : gObjects) {
 		delete el;
 		el = nullptr;
@@ -59,6 +58,11 @@ Scene::resetGL()
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
 }
 
+void Scene::addObject(Abs_Entity* ent)
+{
+	gObjects.push_back(ent);
+}
+
 void
 Scene::render(Camera const& cam) const
 {
@@ -66,5 +70,13 @@ Scene::render(Camera const& cam) const
 
 	for (Abs_Entity* el : gObjects) {
 		el->render(cam.viewMat());
+	}
+}
+
+void Scene::update()
+{
+	for (auto* i : gObjects)
+	{
+		i->update();
 	}
 }

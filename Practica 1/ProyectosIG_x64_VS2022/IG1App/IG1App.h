@@ -5,12 +5,15 @@
 // #include <gl/GLU.h>   // OpenGL Utility Library
 // #include <GL/glut.h>  // OpenGL Utility Toolkit
 
+#include <array>
 #include <GL/freeglut.h> // OpenGL Utility Toolkit
 #include <glm/glm.hpp>   // OpenGL Mathematics
 
 #include "Camera.h"
 #include "Scene.h"
 #include "Viewport.h"
+
+constexpr int MAX_SCENES = 2;
 
 class IG1App
 {
@@ -26,7 +29,7 @@ public:
 	// Camera position, view volume and projection
 	Camera const& camera() { return *mCamera; };
 	// Graphics objects of the scene
-	Scene const& scene() { return *mScene; };
+	//Scene const& scene() { return *mScene; };
 
 	void run();   // the main event processing loop
 	void close(); // the application
@@ -55,7 +58,10 @@ protected:
 	// Camera position, view volume and projection
 	Camera* mCamera = nullptr;
 	// Graphics objects of the scene
-	Scene* mScene = nullptr;
+	//Scene* mScene = nullptr; // escena renderizada actual
+	int sceneIndex = 0;
+	std::array<Scene*, MAX_SCENES> scenes; // array de escenas
+	
 
 	bool mStop = false; // main event processing loop
 	int mWinId = 0;     // window's identifier

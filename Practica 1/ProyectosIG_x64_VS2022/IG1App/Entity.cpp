@@ -45,6 +45,12 @@ RegularPolygon::RegularPolygon(GLuint num, GLdouble r)
 	mMesh = Mesh::generateRegularPolygon(num, r);
 }
 
+RegularPolygon::~RegularPolygon()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
@@ -67,9 +73,9 @@ void RegularPolygon::render(glm::dmat4 const& modelViewMat) const
 
 
 /// RGB TRIANGLE
-RGBTriangle::RGBTriangle(GLuint num, GLdouble r) 
+RGBTriangle::RGBTriangle(GLdouble r) 
 {
-	mMesh = Mesh::generateRGBTriangle(num, r);
+	mMesh = Mesh::generateRGBTriangle(r);
 }
 
 RGBTriangle::~RGBTriangle()
@@ -82,6 +88,8 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_BACK, GL_POINTS);
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -106,6 +114,8 @@ void RGBRectangle::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT, GL_FILL);
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -130,6 +140,8 @@ void Cube::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_POINT);
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -153,6 +165,8 @@ void RGBCube::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_BACK, GL_FILL);
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();

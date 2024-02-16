@@ -92,7 +92,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	{
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha) 
-		mesh->vVertices.emplace_back(r * cos(alpha + radians(dividido * i)), alpha +r * sin(radians(dividido * i)), 1.0);
+		mesh->vVertices.emplace_back(r * cos(alpha + radians(dividido * i)),r * sin(alpha + radians(dividido * i)), 1.0);
 	}
 
 	glEnd(); //end drawing of line loop
@@ -100,24 +100,24 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	return mesh;
 }
 
-Mesh* Mesh::generateRGBTriangle(GLuint num, GLdouble r)
+Mesh* Mesh::generateRGBTriangle(GLdouble r)
 {
 	auto mesh = new Mesh();
-	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_POINTS);
-	mesh->mNumVertices = num;
+	/*glPolygonMode(GL_FRONT, GL_FILL);
+	glPolygonMode(GL_BACK, GL_POINTS);*/
+	mesh->mNumVertices = 3;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 	// prpara una polilinea (okolilinea)
 
 	// angulo entre vertices
-	double dividido = 360.0 / num;
+	double dividido = 360.0 / mesh->mNumVertices;
 
 	// angulo inicial
 	constexpr double alpha = radians(90.0);
 
 	glBegin(mesh->mPrimitive); //start drawing a line loop
 
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i < mesh->mNumVertices; i++)
 	{
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha) 
@@ -138,7 +138,7 @@ Mesh* Mesh::generateRGBTriangle(GLuint num, GLdouble r)
 Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 {
 	auto* mesh = new Mesh();
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
 	mesh->mNumVertices = 4;
 	mesh->vVertices.reserve(mesh->mNumVertices);
@@ -156,8 +156,7 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 {
 	auto* mesh = new Mesh();
-	glPolygonMode(GL_BACK, GL_LINE);
-	glPolygonMode(GL_FRONT, GL_FILL);
+	
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
 	mesh->mNumVertices = 4;
 	mesh->vVertices.reserve(mesh->mNumVertices);
@@ -183,8 +182,8 @@ Mesh* Mesh::generateCube(GLdouble l)
 {
 	auto* mesh = new Mesh();
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
-	glPolygonMode(GL_FRONT, GL_LINE);
-	glPolygonMode(GL_BACK, GL_POINT);
+	/*glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_BACK, GL_POINT);*/
 	mesh->mNumVertices = 14;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
@@ -217,8 +216,8 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 {
 	auto* mesh = new Mesh();
 	mesh->mPrimitive = GL_TRIANGLES;
-	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_FILL);
+	/*glPolygonMode(GL_FRONT, GL_FILL);
+	glPolygonMode(GL_BACK, GL_FILL);*/
 	mesh->mNumVertices = 100;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
