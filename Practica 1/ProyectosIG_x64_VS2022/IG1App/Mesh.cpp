@@ -228,29 +228,51 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	///	algo tiene que estar mal de lo que he copiado de la pizarra porque no funciona
 	///	prefiero hacerlo de manera manual, pero lo dejo aqui como referencia
 	///	o por si acaso
-	//GLdouble n = l / 2;
-	//constexpr std::array PIVOTS = {
-	//	dvec2(-1, 1),
-	//	dvec2(1, -1),
-	//	dvec2(1, 1)
-	//};
+	
+	
+	GLdouble m = l / 2;
+	
+	
+	/*
+	constexpr std::array PIVOTS = {
+		dvec2(-1, 1),
+		dvec2(1, -1),
+		dvec2(1, 1)
+	};
 
-	//for (int edge = 0; edge < 3; ++edge)
-	//{
-	//	for (int value : {-n, n})
-	//	{
-	//		dvec3 center = { 0, 0, 0 };
-	//		center[edge] = value;
+	for (int edge = 0; edge < 3; ++edge)
+	{
+		for (int value : {-n, n})
+		{
+			dvec3 center = { 0, 0, 0 };
+			center[edge] = value;
 
-	//		dvec3 u = { 0, 0, 0 };
-	//		u[(edge + 1) % 3] = 1;
-	//		dvec3 v = cross(u, normalize(-center));
+			dvec3 u = { 0, 0, 0 };
+			u[(edge + 1) % 3] = 1;
+			dvec3 v = cross(u, normalize(-center));
 
-	//		for (double triangle : {n, -n})
-	//			for (const dvec2& m : PIVOTS)
-	//				mesh->vVertices.push_back(center + triangle + (m.x * u + m.y * v));
-	//	}
-	//}
+			for (double triangle : {n, -n})
+				for (const dvec2& m : PIVOTS)
+					mesh->vVertices.push_back(center + triangle + (m.x * u + m.y * v));
+		}
+	}*/
+
+	/*
+	mesh->vVertices.emplace_back(-m, -m, -m); // v0
+	mesh->vVertices.emplace_back(m, -m, -m); // v1
+	mesh->vVertices.emplace_back(-m, -m, m); // v2
+	mesh->vVertices.emplace_back(m, -m, m); // v3
+	mesh->vVertices.emplace_back(m, m, m); // v4
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v5 = v1
+	mesh->vVertices.emplace_back(m, m, -m); // v6
+	mesh->vVertices.push_back(mesh->vVertices[0]); // v7 = v0
+	mesh->vVertices.emplace_back(-m, m, -m); // v8
+	mesh->vVertices.push_back(mesh->vVertices[2]); // v9 = v2
+	mesh->vVertices.emplace_back(-m, m, m); // v10
+	mesh->vVertices.push_back(mesh->vVertices[4]); // v11 = v4
+	mesh->vVertices.push_back(mesh->vVertices[8]); // v12 = v8
+	mesh->vVertices.push_back(mesh->vVertices[6]); // v13 = v6
+	*/
 
 	return mesh;
 }
