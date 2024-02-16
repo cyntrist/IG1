@@ -73,9 +73,9 @@ void RegularPolygon::render(glm::dmat4 const& modelViewMat) const
 
 
 /// RGB TRIANGLE
-RGBTriangle::RGBTriangle(GLdouble r) 
+RGBTriangle::RGBTriangle(GLdouble r, GLuint x, GLuint y) 
 {
-	mMesh = Mesh::generateRGBTriangle(r);
+	mMesh = Mesh::generateRGBTriangle(r, x, y);
 }
 
 RGBTriangle::~RGBTriangle()

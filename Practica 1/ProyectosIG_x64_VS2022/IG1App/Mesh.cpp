@@ -100,7 +100,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	return mesh;
 }
 
-Mesh* Mesh::generateRGBTriangle(GLdouble r)
+Mesh* Mesh::generateRGBTriangle(GLdouble r, GLuint x, GLuint y)
 {
 	auto mesh = new Mesh();
 	/*glPolygonMode(GL_FRONT, GL_FILL);
@@ -121,7 +121,7 @@ Mesh* Mesh::generateRGBTriangle(GLdouble r)
 	{
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha) 
-		mesh->vVertices.emplace_back(r * cos(alpha + radians(dividido * i)), r * sin(alpha + radians(dividido * i)),
+		mesh->vVertices.emplace_back(r * cos((alpha + radians(dividido * i))) + x, (r * sin(alpha + radians(dividido * i))) + y,
 		                             1.0);
 	}
 
