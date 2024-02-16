@@ -267,6 +267,8 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v4 = v1
 	mesh->vVertices.push_back(mesh->vVertices[2]); // v5 = v2
 
+
+
 	// triangulo 1 cara 2
 	mesh->vVertices.push_back(mesh->vVertices[3]); // v6 = v3
 	mesh->vVertices.emplace_back(m, m, m); // v7
@@ -274,36 +276,96 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	// triangulo 2 cara 2
 	mesh->vVertices.emplace_back(m, m, -m); // v9
 	mesh->vVertices.push_back(mesh->vVertices[7]); // v10 = v7
-	mesh->vVertices.push_back(mesh->vVertices[1]); // v11 = v8 = v5 = v2
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v11 = v1
 
 
-	//mesh->vVertices.emplace_back(m, m, -m); // v6
-	//mesh->vVertices.push_back(mesh->vVertices[0]); // v7 = v0
-	//mesh->vVertices.emplace_back(-m, m, -m); // v8
-	//mesh->vVertices.push_back(mesh->vVertices[2]); // v9 = v2
-	//mesh->vVertices.emplace_back(-m, m, m); // v10
-	//mesh->vVertices.push_back(mesh->vVertices[4]); // v11 = v4
-	//mesh->vVertices.push_back(mesh->vVertices[8]); // v12 = v8
-	//mesh->vVertices.push_back(mesh->vVertices[6]); // v13 = v6
+	// triangulo 1 cara 3
+	mesh->vVertices.push_back(mesh->vVertices[9]); // v12 = v9
+	mesh->vVertices.push_back(mesh->vVertices[0]); // v13 = v0
+	mesh->vVertices.emplace_back(-m, m, -m); // v14
+	// triangulo 2 cara 3
+	mesh->vVertices.push_back(mesh->vVertices[9]); // v12 = v9
+	mesh->vVertices.push_back(mesh->vVertices[0]); // v13 = v0
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v14 = v1
+	
+	// triangulo 1 cara 4
+	mesh->vVertices.emplace_back(-m, m, -m); // v15 = -v0
+	mesh->vVertices.emplace_back(m, m, -m); // v16 = -v1
+	mesh->vVertices.emplace_back(-m, m, m); // v17 = -v2
+	// triangulo 2 cara 4
+	mesh->vVertices.emplace_back(m, m, m); // v18 = -v3
+	mesh->vVertices.emplace_back(m, m, -m); // v19 = v16 = -v4 = -v1
+	mesh->vVertices.emplace_back(-m, m, m); // v20 = v17 = -v5 = -v2
+	// ^^^^ - en y
+
+
+	// triangulo 1 cara 5
+	mesh->vVertices.emplace_back(-m, -m, m); // v21 = -v6 = -v3
+	mesh->vVertices.emplace_back(-m, m, m); // v22 = -v7
+	mesh->vVertices.emplace_back(-m, -m, -m); // v23 = 
+	// triangulo 2 cara 5
+	mesh->vVertices.emplace_back(-m, m, -m); // v24 = -v9
+	mesh->vVertices.emplace_back(-m, m, m); // v25 = -v10 = -v7
+	mesh->vVertices.emplace_back(-m, -m, -m); // v26 = -v11 = -v1
+	// ^^^^ - en x
+
+	// triangulo 1 cara 6
+	mesh->vVertices.emplace_back(m, m, m); // v27 = -v9
+	mesh->vVertices.emplace_back(-m, -m, m); // v28 = -v0
+	mesh->vVertices.emplace_back(-m, m, m); // v29
+	// triangulo 2 cara 6
+	mesh->vVertices.emplace_back(m, m, m); // v30 = v27
+	mesh->vVertices.emplace_back(-m,- m, m); // v31 = v28
+	mesh->vVertices.emplace_back(m, -m, m); // v32 = v3
+	// ^^^^ - en z
 
 
 	mesh->vColors.reserve(mesh->mNumVertices);
 	// cara 1
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
 	// cara 2
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	// cara 3
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	// cara 4
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// cara 5
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	// cara 6
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+
+
 	//mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 	
 
