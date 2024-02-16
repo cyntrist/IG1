@@ -267,9 +267,16 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v4 = v1
 	mesh->vVertices.push_back(mesh->vVertices[2]); // v5 = v2
 
-	//mesh->vVertices.emplace_back(m, -m, m); // v3
-	//mesh->vVertices.emplace_back(m, m, m); // v4
-	//mesh->vVertices.push_back(mesh->vVertices[1]); // v5 = v1
+	// triangulo 1 cara 2
+	mesh->vVertices.push_back(mesh->vVertices[3]); // v6 = v3
+	mesh->vVertices.emplace_back(m, m, m); // v7
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v8 = v5 = v2
+	// triangulo 2 cara 2
+	mesh->vVertices.emplace_back(m, m, -m); // v9
+	mesh->vVertices.push_back(mesh->vVertices[7]); // v10 = v7
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v11 = v8 = v5 = v2
+
+
 	//mesh->vVertices.emplace_back(m, m, -m); // v6
 	//mesh->vVertices.push_back(mesh->vVertices[0]); // v7 = v0
 	//mesh->vVertices.emplace_back(-m, m, -m); // v8
@@ -281,12 +288,22 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 
 
 	mesh->vColors.reserve(mesh->mNumVertices);
+	// cara 1
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	// cara 2
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// cara 3
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 	//mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 	
 
