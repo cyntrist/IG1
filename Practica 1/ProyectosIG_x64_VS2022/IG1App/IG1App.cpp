@@ -47,7 +47,7 @@ IG1App::init()
 	scenes[1] = new Scene;
 	scenes[0]->addObject(new RegularPolygon(32, 250));
 	scenes[0]->addObject(new RGBRectangle(500,250));
-	scenes[0]->addObject(new RGBTriangle(50, 250, 0));
+	scenes[0]->addObject(new RGBTriangle(50, 0, 0));
 	scenes[1]->addObject(new RGBCube(100));
 
 	mCamera->set2D();
@@ -128,7 +128,6 @@ void
 IG1App::key(unsigned char key, int x, int y)
 {
 	bool need_redisplay = true;
-	std::tolower(key);
 	switch (key) {
 		case 27:                     // Escape key
 			glutLeaveMainLoop(); // stops main loop and destroy the OpenGL context
@@ -154,6 +153,12 @@ IG1App::key(unsigned char key, int x, int y)
 			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
 			mCamera->set3D();
 			sceneIndex = 1;
+			break;
+		case 'u':
+			scenes[sceneIndex]->update();
+			break;
+		case 'U':
+			glutIdleFunc(update);
 			break;
 		default:
 			need_redisplay = false;
@@ -198,4 +203,9 @@ IG1App::specialKey(int key, int x, int y)
 	if (need_redisplay)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to
 		                     // display()
+}
+
+void IG1App::update()
+{
+	// ... apartado 16
 }

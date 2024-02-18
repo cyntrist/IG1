@@ -47,6 +47,7 @@ protected:
 	void key(unsigned char key, int x, int y); // keypress event
 	void specialKey(int key, int x, int y);    // keypress event for special characters
 
+	static void update();
 	// static callbacks
 	static void s_display() { s_ig1app.display(); };
 	static void s_resize(int newWidth, int newHeight) { s_ig1app.resize(newWidth, newHeight); };

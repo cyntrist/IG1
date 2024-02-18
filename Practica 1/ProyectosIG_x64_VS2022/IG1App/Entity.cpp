@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -73,9 +74,19 @@ void RegularPolygon::render(glm::dmat4 const& modelViewMat) const
 
 
 /// RGB TRIANGLE
-RGBTriangle::RGBTriangle(GLdouble r, GLuint x, GLuint y) 
+RGBTriangle::RGBTriangle(GLdouble l)
 {
-	mMesh = Mesh::generateRGBTriangle(r, x, y);
+	mMesh = Mesh::generateRGBTriangle(l, 0, 0);
+}
+
+RGBTriangle::RGBTriangle(GLdouble l, GLdouble x)
+{
+	mMesh = Mesh::generateRGBTriangle(l, x, 0);
+}
+
+RGBTriangle::RGBTriangle(GLdouble l, GLuint x, GLuint y) 
+{
+	mMesh = Mesh::generateRGBTriangle(l, x, y);
 }
 
 RGBTriangle::~RGBTriangle()
@@ -95,6 +106,13 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 		glLineWidth(1);
 	}
+}
+
+void RGBTriangle::update()
+{
+	// 15...
+	std::cout << "coponcio";
+	mModelMat = glm::rotate(mModelMat, glm::radians(90.0), dvec3(0, 1.0, 0));
 }
 
 

@@ -1,4 +1,7 @@
 #include "Scene.h"
+
+#include <iostream>
+
 #include "CheckML.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -52,6 +55,7 @@ Scene::setGL()
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 }
 void
+
 Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
@@ -75,8 +79,7 @@ Scene::render(Camera const& cam) const
 
 void Scene::update()
 {
+	glutPostRedisplay();
 	for (auto* i : gObjects)
-	{
 		i->update();
-	}
 }
