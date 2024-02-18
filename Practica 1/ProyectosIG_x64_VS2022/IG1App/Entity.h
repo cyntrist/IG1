@@ -56,7 +56,8 @@ public:
 
 class RGBTriangle : public Abs_Entity 
 {
-	GLfloat angle = 0.0f;
+	GLdouble angle = 5.0;
+	GLdouble radio;
 public:
 	explicit RGBTriangle(GLdouble l); // lado
 	explicit RGBTriangle(GLdouble l, GLdouble x); // distancia x desde el origen

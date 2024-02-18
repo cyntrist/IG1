@@ -15,6 +15,9 @@
 
 constexpr int MAX_SCENES = 2;
 
+	static int sceneIndex = 0;
+	static std::array<Scene*, MAX_SCENES> scenes; // array de escenas
+
 class IG1App
 {
 public:
@@ -60,8 +63,6 @@ protected:
 	Camera* mCamera = nullptr;
 	// Graphics objects of the scene
 	//Scene* mScene = nullptr; // escena renderizada actual
-	int sceneIndex = 0;
-	std::array<Scene*, MAX_SCENES> scenes; // array de escenas
 	
 
 	bool mStop = false; // main event processing loop

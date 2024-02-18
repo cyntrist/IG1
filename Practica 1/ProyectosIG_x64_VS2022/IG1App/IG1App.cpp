@@ -47,7 +47,7 @@ IG1App::init()
 	scenes[1] = new Scene;
 	scenes[0]->addObject(new RegularPolygon(32, 250));
 	scenes[0]->addObject(new RGBRectangle(500,250));
-	scenes[0]->addObject(new RGBTriangle(50, 0, 0));
+	scenes[0]->addObject(new RGBTriangle(50, 250));
 	scenes[1]->addObject(new RGBCube(100));
 
 	mCamera->set2D();
@@ -207,5 +207,6 @@ IG1App::specialKey(int key, int x, int y)
 
 void IG1App::update()
 {
-	// ... apartado 16
+	// Apartado 16
+	scenes[sceneIndex]->update();
 }

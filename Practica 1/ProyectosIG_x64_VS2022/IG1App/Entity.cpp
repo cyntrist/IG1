@@ -74,19 +74,21 @@ void RegularPolygon::render(glm::dmat4 const& modelViewMat) const
 
 
 /// RGB TRIANGLE
-RGBTriangle::RGBTriangle(GLdouble l)
+RGBTriangle::RGBTriangle(GLdouble l) : radio(0)
 {
 	mMesh = Mesh::generateRGBTriangle(l, 0, 0);
 }
 
-RGBTriangle::RGBTriangle(GLdouble l, GLdouble x)
+RGBTriangle::RGBTriangle(GLdouble l, GLdouble x) : radio(x)
 {
-	mMesh = Mesh::generateRGBTriangle(l, x, 0);
+	mMesh = Mesh::generateRGBTriangle(l, 0, 0);
+	mModelMat = translate(mModelMat, dvec3(radio, 0, 0));
 }
 
-RGBTriangle::RGBTriangle(GLdouble l, GLuint x, GLuint y) 
+RGBTriangle::RGBTriangle(GLdouble l, GLuint x, GLuint y)  : radio(x)
 {
 	mMesh = Mesh::generateRGBTriangle(l, x, y);
+	mModelMat = translate(mModelMat, dvec3(x, y, 0));
 }
 
 RGBTriangle::~RGBTriangle()
@@ -111,8 +113,12 @@ void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
 void RGBTriangle::update()
 {
 	// 15...
-	std::cout << "coponcio";
-	mModelMat = glm::rotate(mModelMat, glm::radians(90.0), dvec3(0, 1.0, 0));
+	// giro sobre si mismo
+	mModelMat = rotate(mModelMat, radians(-angle), dvec3(0, 0.0, 1.0));
+
+	// giro sobre la circunferencia
+	int nose = 22; // si el radio es 25, por que tengo que hacer la traslación con 22...????
+	mModelMat = translate(mModelMat, dvec3(0, -nose, 0.0));
 }
 
 
