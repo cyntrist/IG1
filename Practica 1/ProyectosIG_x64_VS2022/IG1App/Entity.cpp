@@ -117,8 +117,8 @@ void RGBTriangle::update()
 	mModelMat = rotate(mModelMat, radians(-angle), dvec3(0, 0.0, 1.0));
 
 	// giro sobre la circunferencia
-	int nose = 22; // si el radio es 25, por que tengo que hacer la traslación con 22...????
-	mModelMat = translate(mModelMat, dvec3(0, -nose, 0.0));
+	int nose = 22; // si el radio es 25, por que me sale este número, no entiendo cual es la ecuación lo siento!
+	mModelMat = translate(mModelMat, dvec3(0.0, -nose, 0.0));
 }
 
 
@@ -177,6 +177,8 @@ void Cube::render(glm::dmat4 const& modelViewMat) const
 RGBCube::RGBCube(GLdouble longitud)
 {
 	mMesh = Mesh::generateRGBCube(longitud);
+	int l = longitud/2;
+	mModelMat = translate(mModelMat, dvec3(l, l, -longitud + l)); // pos inicial
 }
 
 RGBCube::~RGBCube()
@@ -196,4 +198,43 @@ void RGBCube::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 		glLineWidth(1);
 	}
+}
+
+void RGBCube::update()
+{
+	//mModelMat = rotate(mModelMat, radians(angle), dvec3(1.0, 0.0, 0.0));
+	mModelMat = rotateAroundCenter(mModelMat, vec3(0,0,0), radians(angle), vec3(x,y,z));
+	totalRotation += angle; 
+	std::cout << totalRotation << std::endl;
+	if (totalRotation >= 180.0f)
+	{
+		if (x == 1)
+		{
+			x = 0;
+			y = 0;
+			z = 1;
+		}
+		else if (z == 1)
+		{
+			x = 0;
+			y = 1;
+			z = 0;
+		}
+		else if (y == 1)
+		{
+			//x = 1;
+			//y = 0;
+			//x = 0;
+		}
+		totalRotation = 0.0f;
+	}
+}
+
+mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float angle, const vec3& axis) {
+    mat4 translateBack = translate(mat4(1.0f), center);
+    mat4 rotation = rotate(mat4(1.0f), angle, axis); 
+    mat4 translateToCenter = translate(mat4(1.0f), -center); 
+
+	// lo que nos explicó rubén en clase sobre el orden de multiplicación de matrices
+    return translateBack * rotation * translateToCenter * matrix; 
 }
