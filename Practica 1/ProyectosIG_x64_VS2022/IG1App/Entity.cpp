@@ -202,7 +202,6 @@ void RGBCube::render(glm::dmat4 const& modelViewMat) const
 
 void RGBCube::update()
 {
-	//mModelMat = rotate(mModelMat, radians(angle), dvec3(1.0, 0.0, 0.0));
 	mModelMat = rotateAroundCenter(mModelMat, vec3(0,0,0), radians(angle), vec3(x,y,z));
 	totalRotation += angle; 
 	std::cout << totalRotation << std::endl;
@@ -214,18 +213,24 @@ void RGBCube::update()
 			y = 0;
 			z = 1;
 		}
+		else if (y == 1)
+		{
+			x = 1;
+			y = 0;
+			x = 0;
+		}
 		else if (z == 1)
 		{
 			x = 0;
 			y = 1;
 			z = 0;
 		}
-		else if (y == 1)
+
+		if (x == 0 && y == 0 && z == 0)
 		{
-			//x = 1;
-			//y = 0;
-			//x = 0;
+			x = 1;
 		}
+
 		totalRotation = 0.0f;
 	}
 }
