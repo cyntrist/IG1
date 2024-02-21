@@ -7,7 +7,7 @@
 using namespace glm;
 
 void
-Abs_Entity::upload(dmat4 const& modelViewMat) const
+Abs_Entity::upload(const dmat4& modelViewMat) const
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(modelViewMat)); // transfers modelView matrix to the GPU
@@ -16,7 +16,7 @@ Abs_Entity::upload(dmat4 const& modelViewMat) const
 
 /// EJES RGB
 EjesRGB::EjesRGB(GLdouble l)
-  : Abs_Entity()
+	: Abs_Entity()
 {
 	mMesh = Mesh::createRGBAxes(l);
 }
@@ -28,9 +28,10 @@ EjesRGB::~EjesRGB()
 };
 
 void
-EjesRGB::render(dmat4 const& modelViewMat) const
+EjesRGB::render(const dmat4& modelViewMat) const
 {
-	if (mMesh != nullptr) {
+	if (mMesh != nullptr)
+	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 		glLineWidth(2);
@@ -52,16 +53,16 @@ RegularPolygon::~RegularPolygon()
 	mMesh = nullptr;
 }
 
-RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color)
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r, dvec4 color)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
 	setmColor(color);
-	
 }
 
-void RegularPolygon::render(glm::dmat4 const& modelViewMat) const
+void RegularPolygon::render(const dmat4& modelViewMat) const
 {
-	if (mMesh != nullptr) {
+	if (mMesh != nullptr)
+	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
 		upload(aMat);
@@ -85,7 +86,7 @@ RGBTriangle::RGBTriangle(GLdouble l, GLdouble x) : radio(x)
 	mModelMat = translate(mModelMat, dvec3(radio, 0, 0));
 }
 
-RGBTriangle::RGBTriangle(GLdouble l, GLuint x, GLuint y)  : radio(x)
+RGBTriangle::RGBTriangle(GLdouble l, GLuint x, GLuint y) : radio(x)
 {
 	mMesh = Mesh::generateRGBTriangle(l, x, y);
 	mModelMat = translate(mModelMat, dvec3(x, y, 0));
@@ -97,9 +98,10 @@ RGBTriangle::~RGBTriangle()
 	mMesh = nullptr;
 }
 
-void RGBTriangle::render(glm::dmat4 const& modelViewMat) const
+void RGBTriangle::render(const dmat4& modelViewMat) const
 {
-	if (mMesh != nullptr) {
+	if (mMesh != nullptr)
+	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_POINTS);
@@ -117,7 +119,7 @@ void RGBTriangle::update()
 	mModelMat = rotate(mModelMat, radians(-angle), dvec3(0, 0.0, 1.0));
 
 	// giro sobre la circunferencia
-	int nose = 22; // si el radio es 25, por que me sale este número, no entiendo cual es la ecuación lo siento!
+	int nose = 22; // si el radio es 25, por que me sale este numero, no entiendo cual es la ecuacion lo siento!
 	mModelMat = translate(mModelMat, dvec3(0.0, -nose, 0.0));
 }
 
@@ -134,9 +136,10 @@ RGBRectangle::~RGBRectangle()
 	mMesh = nullptr;
 }
 
-void RGBRectangle::render(glm::dmat4 const& modelViewMat) const
+void RGBRectangle::render(const dmat4& modelViewMat) const
 {
-	if (mMesh != nullptr) {
+	if (mMesh != nullptr)
+	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_BACK, GL_LINE);
 		glPolygonMode(GL_FRONT, GL_FILL);
@@ -160,9 +163,10 @@ Cube::~Cube()
 	mMesh = nullptr;
 }
 
-void Cube::render(glm::dmat4 const& modelViewMat) const
+void Cube::render(const dmat4& modelViewMat) const
 {
-	if (mMesh != nullptr) {
+	if (mMesh != nullptr)
+	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_POINT);
@@ -177,7 +181,7 @@ void Cube::render(glm::dmat4 const& modelViewMat) const
 RGBCube::RGBCube(GLdouble longitud)
 {
 	mMesh = Mesh::generateRGBCube(longitud);
-	int l = longitud/2;
+	int l = longitud / 2;
 	mModelMat = translate(mModelMat, dvec3(l, l, -longitud + l)); // pos inicial
 }
 
@@ -187,9 +191,10 @@ RGBCube::~RGBCube()
 	mMesh = nullptr;
 }
 
-void RGBCube::render(glm::dmat4 const& modelViewMat) const
+void RGBCube::render(const dmat4& modelViewMat) const
 {
-	if (mMesh != nullptr) {
+	if (mMesh != nullptr)
+	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_FILL);
@@ -202,10 +207,11 @@ void RGBCube::render(glm::dmat4 const& modelViewMat) const
 
 void RGBCube::update()
 {
-	mModelMat = rotateAroundCenter(mModelMat, vec3(0,0,0), radians(angle), vec3(x,y,z));
-	totalRotation += angle; 
+	mModelMat = rotateAroundCenter(mModelMat, vec3(0, 0, 0), radians(angle), vec3(x, y, z));
+	totalRotation += angle;
 	if (totalRotation >= 180.0f)
-	{ // esto es TERRIBLE per ofunciona no me mires mal
+	{
+		// esto es TERRIBLE per ofunciona no me mires mal
 		if (x == 1)
 		{
 			x = 0;
@@ -234,11 +240,15 @@ void RGBCube::update()
 	}
 }
 
-mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float angle, const vec3& axis) {
-    const mat4 translateToOriginMatrix = translate(mat4(1.0f), center); // matriz de traslacion de vuelta al origen inicial
-    const mat4 rotationMatrix = rotate(mat4(1.0f), angle, axis);  // matriz de la rotacion en cuestion
-    const mat4 translateToCenterMatrix = translate(mat4(1.0f), -center); // matriz de traslsacion al centro que queremos????
+mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float angle, const vec3& axis)
+{
+	const mat4 translateToOriginMatrix = translate(mat4(1.0f), center);
+	// matriz de traslacion de vuelta al origen inicial
+	const mat4 rotationMatrix = rotate(mat4(1.0f), angle, axis); // matriz de la rotacion en cuestion
+	const mat4 translateToCenterMatrix = translate(mat4(1.0f), -center);
+	// matriz de traslsacion al centro que queremos????
 
 	// lo que nos explico ruben en clase sobre el orden de multiplicacion de matrices que es inverso
-    return translateToOriginMatrix * rotationMatrix * translateToCenterMatrix * matrix; 
+	return translateToOriginMatrix * rotationMatrix
+		* translateToCenterMatrix * matrix;
 }
