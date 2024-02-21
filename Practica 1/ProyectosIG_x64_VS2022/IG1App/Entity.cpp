@@ -204,9 +204,8 @@ void RGBCube::update()
 {
 	mModelMat = rotateAroundCenter(mModelMat, vec3(0,0,0), radians(angle), vec3(x,y,z));
 	totalRotation += angle; 
-	std::cout << totalRotation << std::endl;
 	if (totalRotation >= 180.0f)
-	{
+	{ // esto es TERRIBLE per ofunciona no me mires mal
 		if (x == 1)
 		{
 			x = 0;
@@ -236,10 +235,10 @@ void RGBCube::update()
 }
 
 mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float angle, const vec3& axis) {
-    mat4 translateBack = translate(mat4(1.0f), center);
-    mat4 rotation = rotate(mat4(1.0f), angle, axis); 
-    mat4 translateToCenter = translate(mat4(1.0f), -center); 
+    const mat4 translateToOriginMatrix = translate(mat4(1.0f), center); // matriz de traslacion de vuelta al origen inicial
+    const mat4 rotationMatrix = rotate(mat4(1.0f), angle, axis);  // matriz de la rotacion en cuestion
+    const mat4 translateToCenterMatrix = translate(mat4(1.0f), -center); // matriz de traslsacion al centro que queremos????
 
-	// lo que nos explicó rubén en clase sobre el orden de multiplicación de matrices
-    return translateBack * rotation * translateToCenter * matrix; 
+	// lo que nos explico ruben en clase sobre el orden de multiplicacion de matrices que es inverso
+    return translateToOriginMatrix * rotationMatrix * translateToCenterMatrix * matrix; 
 }

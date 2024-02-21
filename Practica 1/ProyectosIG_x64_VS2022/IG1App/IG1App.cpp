@@ -48,7 +48,7 @@ IG1App::init()
 	scenes[0]->addObject(new RegularPolygon(32, 250));
 	scenes[0]->addObject(new RGBRectangle(500,250));
 	scenes[0]->addObject(new RGBTriangle(50, 250));
-	scenes[1]->addObject(new RGBCube(100));
+	scenes[1]->addObject(new RGBCube(200));
 
 	mCamera->set2D();
 	//mScene->init();
