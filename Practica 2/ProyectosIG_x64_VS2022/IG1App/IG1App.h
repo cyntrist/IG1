@@ -5,12 +5,18 @@
 // #include <gl/GLU.h>   // OpenGL Utility Library
 // #include <GL/glut.h>  // OpenGL Utility Toolkit
 
+#include <array>
 #include <GL/freeglut.h> // OpenGL Utility Toolkit
 #include <glm/glm.hpp>   // OpenGL Mathematics
 
 #include "Camera.h"
 #include "Scene.h"
 #include "Viewport.h"
+
+constexpr int MAX_SCENES = 2;
+
+	static int sceneIndex = 0;
+	static std::array<Scene*, MAX_SCENES> scenes; // array de escenas
 
 class IG1App
 {
@@ -26,7 +32,7 @@ public:
 	// Camera position, view volume and projection
 	Camera const& camera() { return *mCamera; };
 	// Graphics objects of the scene
-	Scene const& scene() { return *mScene; };
+	//Scene const& scene() { return *mScene; };
 
 	void run();   // the main event processing loop
 	void close(); // the application
@@ -44,6 +50,7 @@ protected:
 	void key(unsigned char key, int x, int y); // keypress event
 	void specialKey(int key, int x, int y);    // keypress event for special characters
 
+	static void update();
 	// static callbacks
 	static void s_display() { s_ig1app.display(); };
 	static void s_resize(int newWidth, int newHeight) { s_ig1app.resize(newWidth, newHeight); };
@@ -55,7 +62,8 @@ protected:
 	// Camera position, view volume and projection
 	Camera* mCamera = nullptr;
 	// Graphics objects of the scene
-	Scene* mScene = nullptr;
+	//Scene* mScene = nullptr; // escena renderizada actual
+	
 
 	bool mStop = false; // main event processing loop
 	int mWinId = 0;     // window's identifier

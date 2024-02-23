@@ -9,8 +9,6 @@
 class Mesh
 {
 public:
-	static Mesh* createRGBAxes(GLdouble l); // creates a new 3D-RGB axes mesh
-
 	Mesh() = default;
 	virtual ~Mesh() = default;
 
@@ -22,7 +20,14 @@ public:
 	GLuint size() const { return mNumVertices; }; // number of elements
 	std::vector<glm::dvec3> const& vertices() const { return vVertices; };
 	std::vector<glm::dvec4> const& colors() const { return vColors; };
-
+	
+	static Mesh* createRGBAxes(GLdouble l); // creates a new 3D-RGB axes mesh
+	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
+	static Mesh* generateRGBTriangle(GLdouble r, GLuint x, GLuint y);
+	static Mesh* generateRectangle(GLdouble w, GLdouble h);
+	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
+	static Mesh* generateCube(GLdouble longitud);
+	static Mesh* generateRGBCube(GLdouble longitud);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
@@ -30,6 +35,7 @@ protected:
 	std::vector<glm::dvec3> vVertices; // vertex array
 	std::vector<glm::dvec4> vColors;   // color array
 	virtual void draw() const;
+
 };
 
 #endif //_H_Scene_H_

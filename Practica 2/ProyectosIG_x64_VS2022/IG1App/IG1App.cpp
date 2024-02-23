@@ -40,10 +40,20 @@ IG1App::init()
 	mViewPort =
 	  new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
-	mScene = new Scene;
+
+	//mScene = new Scene;
+	// apartado 11
+	scenes[0] = new Scene;
+	scenes[1] = new Scene;
+	scenes[0]->addObject(new RegularPolygon(32, 250));
+	scenes[0]->addObject(new RGBRectangle(500,250));
+	scenes[0]->addObject(new RGBTriangle(50, 250));
+	scenes[1]->addObject(new RegularPolygon(4, 300));
 
 	mCamera->set2D();
-	mScene->init();
+	//mScene->init();
+	for (auto i : scenes)
+		i->init();
 }
 
 void
@@ -67,7 +77,7 @@ IG1App::iniWinOpenGL()
 	                                                    // buffer and stencil buffer
 
 	mWinId = glutCreateWindow(
-	  "IG1App"); // with its associated OpenGL context, return window's identifier
+	  "IG1"); // with its associated OpenGL context, return window's identifier
 
 	// Callback registration
 	glutReshapeFunc(s_resize);
@@ -82,8 +92,8 @@ IG1App::iniWinOpenGL()
 void
 IG1App::free()
 { // release memory and resources
-	delete mScene;
-	mScene = nullptr;
+	for (auto i : scenes)
+		delete i;
 	delete mCamera;
 	mCamera = nullptr;
 	delete mViewPort;
@@ -96,7 +106,7 @@ IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clears the back buffer
 
-	mScene->render(*mCamera); // uploads the viewport and camera to the GPU
+	scenes[sceneIndex]->render(*mCamera); // uploads the viewport and camera to the GPU
 
 	glutSwapBuffers(); // swaps the front and back buffer
 }
@@ -118,7 +128,6 @@ void
 IG1App::key(unsigned char key, int x, int y)
 {
 	bool need_redisplay = true;
-
 	switch (key) {
 		case 27:                     // Escape key
 			glutLeaveMainLoop(); // stops main loop and destroy the OpenGL context
@@ -134,6 +143,22 @@ IG1App::key(unsigned char key, int x, int y)
 			break;
 		case 'o':
 			mCamera->set2D();
+			break;
+		case '0':
+			//sceneIndex = (sceneIndex - 1) % MAX_SCENES;
+			mCamera->set2D();
+			sceneIndex = 0;
+			break;
+		case '1':
+			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
+			mCamera->set3D();
+			sceneIndex = 1;
+			break;
+		case 'u':
+			scenes[sceneIndex]->update();
+			break;
+		case 'U':
+			glutIdleFunc(update);
 			break;
 		default:
 			need_redisplay = false;
@@ -178,4 +203,10 @@ IG1App::specialKey(int key, int x, int y)
 	if (need_redisplay)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to
 		                     // display()
+}
+
+void IG1App::update()
+{
+	// Apartado 16
+	scenes[sceneIndex]->update();
 }
