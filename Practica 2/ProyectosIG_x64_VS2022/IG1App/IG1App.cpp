@@ -45,12 +45,12 @@ IG1App::init()
 	// apartado 11
 	scenes[0] = new Scene;
 	scenes[1] = new Scene;
-	//scenes[2] = new Scene;
+	scenes[2] = new Scene;
 	scenes[0]->addObject(new RegularPolygon(32, 250));
 	scenes[0]->addObject(new RGBRectangle(500,250));
 	scenes[0]->addObject(new RGBTriangle(50, 250));
 	scenes[1]->addObject(new RegularPolygon(4, 300));
-	//scenes[2]->addObject(new RegularPolygon(4, 300)); // new Ground(20, 20, 0)
+	scenes[2]->addObject(new Ground(200, 200, 0)); // new Ground(20, 20, 0)
 
 	mCamera->set2D();
 	//mScene->init();
@@ -156,7 +156,11 @@ IG1App::key(unsigned char key, int x, int y)
 			mCamera->set3D();
 			sceneIndex = 1;
 			break;
-
+		case '2':
+			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
+			mCamera->set3D();
+			sceneIndex = 2;
+			break;
 		case 'u':
 			scenes[sceneIndex]->update();
 			break;
