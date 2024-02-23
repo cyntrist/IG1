@@ -98,4 +98,13 @@ public:
 	glm::mat4 rotateAroundCenter(const glm::mat4& matrix, const glm::vec3& center, float angle, const glm::vec3& axis);
 };
 
+
+class Ground : public Abs_Entity {
+
+public:
+	explicit Ground(GLdouble w, GLdouble h, GLdouble y);
+	~Ground();
+	void render(glm::dmat4 const& modelViewMat) const override;
+};
+
 #endif //_H_Entities_H_

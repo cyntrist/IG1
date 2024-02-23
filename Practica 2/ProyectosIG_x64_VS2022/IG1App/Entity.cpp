@@ -252,3 +252,27 @@ mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float a
 	return translateToOriginMatrix * rotationMatrix
 		* translateToCenterMatrix * matrix;
 }
+
+Ground::Ground(GLdouble w, GLdouble h, GLdouble y)
+{
+	Mesh::generateRectangle(w, h, y);
+
+}
+
+Ground::~Ground()
+{
+}
+
+void Ground::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_POINT);
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+	}
+}

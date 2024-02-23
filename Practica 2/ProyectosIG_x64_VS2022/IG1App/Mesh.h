@@ -28,6 +28,7 @@ public:
 	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
 	static Mesh* generateCube(GLdouble longitud);
 	static Mesh* generateRGBCube(GLdouble longitud);
+	static Mesh* generateRectangle(GLdouble w, GLdouble h, GLdouble y);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
