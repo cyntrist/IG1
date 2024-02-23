@@ -162,10 +162,10 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h, GLdouble y)
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
 	glBegin(mesh->mPrimitive); // start drawing a line loop
-	mesh->vVertices.emplace_back(-w / 2, y, h);
-	mesh->vVertices.emplace_back(w / 2, y, h);
-	mesh->vVertices.emplace_back(-w / 2, y, h);
-	mesh->vVertices.emplace_back(w / 2, y, h);
+	mesh->vVertices.emplace_back(-w , y, h);
+	mesh->vVertices.emplace_back(w, y, h);
+	mesh->vVertices.emplace_back(-w, y, -h);
+	mesh->vVertices.emplace_back(w, y, -h);
 	glEnd(); //end drawing of line loop
 
 	return mesh;
