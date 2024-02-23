@@ -156,11 +156,7 @@ IG1App::key(unsigned char key, int x, int y)
 			mCamera->set3D();
 			sceneIndex = 1;
 			break;
-		case '2':
-			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
-			mCamera->set3D();
-			sceneIndex = 2;
-			break;
+
 		case 'u':
 			scenes[sceneIndex]->update();
 			break;
