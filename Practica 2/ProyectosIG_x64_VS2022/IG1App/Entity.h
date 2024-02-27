@@ -104,6 +104,7 @@ class Ground : public Abs_Entity {
 public:
 	explicit Ground(GLdouble w, GLdouble h);
 	explicit Ground(GLdouble w, GLdouble h, std::string t);
+	explicit Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t);
 	~Ground() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 	void setTexture(std::string text) const { mTexture->load(text, 255);}

@@ -267,6 +267,14 @@ Ground::Ground(GLdouble w, GLdouble h, std::string t) : Ground(w, h)
 	setTexture(t);
 }
 
+Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t)
+{
+	mMesh = Mesh::generateRectangleTexCor(w, h, rw, rh);
+	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mTexture = new Texture();
+	setTexture(t);
+}
+
 Ground::~Ground()
 {
 	delete mMesh;

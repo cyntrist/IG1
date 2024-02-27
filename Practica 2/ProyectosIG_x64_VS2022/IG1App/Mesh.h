@@ -30,6 +30,7 @@ public:
 	static Mesh* generateRGBCube(GLdouble longitud);
 
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h);
+	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
