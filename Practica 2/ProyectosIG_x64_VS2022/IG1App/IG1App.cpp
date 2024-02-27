@@ -50,7 +50,7 @@ IG1App::init()
 	scenes[0]->addObject(new RGBRectangle(500,250));
 	scenes[0]->addObject(new RGBTriangle(50, 250));
 	scenes[1]->addObject(new RegularPolygon(4, 300));
-	scenes[2]->addObject(new Ground(300, 300, "baldosaC")); // new Ground(20, 20, 0)
+	scenes[2]->addObject(new Ground(300, 300, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
 
 	mCamera->set2D();
 	//mScene->init();
