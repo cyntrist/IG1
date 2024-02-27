@@ -383,12 +383,9 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 {
 	auto mesh = generateRectangle(w, h);
 	mesh->vTexCoords.emplace_back(0,0);
-	mesh->vTexCoords.emplace_back(w,0);
-	mesh->vTexCoords.emplace_back(w,h);
-	mesh->vTexCoords.emplace_back(0,h);
+	mesh->vTexCoords.emplace_back(1,0);
+	mesh->vTexCoords.emplace_back(0,1);
+	mesh->vTexCoords.emplace_back(1,1);
+
 	return mesh;
 }
-
-
-
-

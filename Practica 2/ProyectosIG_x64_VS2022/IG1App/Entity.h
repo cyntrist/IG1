@@ -106,7 +106,7 @@ public:
 	explicit Ground(GLdouble w, GLdouble h, std::string t);
 	~Ground() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
-	void setTexture(std::string text) const { mTexture->load(text);}
+	void setTexture(std::string text) const { mTexture->load(text, 255);}
 };
 
 #endif //_H_Entities_H_
