@@ -257,13 +257,20 @@ mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float a
 /// GROUND
 Ground::Ground(GLdouble w, GLdouble h)
 {
-	mMesh = Mesh::generateRectangle(w, h);
+	mMesh = Mesh::generateRectangleTexCor(w, h);
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+}
+
+Ground::Ground(GLdouble w, GLdouble h, std::string t) : Ground(w, h)
+{
+	mTexture = new Texture();
+	setTexture(t);
 }
 
 Ground::~Ground()
 {
 	delete mMesh;
+	delete mTexture;
 	mMesh = nullptr;
 }
 
@@ -273,9 +280,11 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mTexture->bind(GL_REPLACE);// GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
+		mTexture->unbind();
 	}
 }

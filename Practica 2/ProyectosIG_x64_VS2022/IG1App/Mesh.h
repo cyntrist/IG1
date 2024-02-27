@@ -28,6 +28,8 @@ public:
 	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
 	static Mesh* generateCube(GLdouble longitud);
 	static Mesh* generateRGBCube(GLdouble longitud);
+
+	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
@@ -36,6 +38,7 @@ protected:
 	std::vector<glm::dvec4> vColors;   // color array
 	virtual void draw() const;
 
+	std::vector<glm::dvec2> vTexCoords;
 };
 
 #endif //_H_Scene_H_

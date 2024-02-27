@@ -3,8 +3,8 @@
 
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
-
 #include "Mesh.h"
+#include "Texture.h"
 
 class Abs_Entity // abstract class
 {
@@ -100,11 +100,13 @@ public:
 
 
 class Ground : public Abs_Entity {
-
+	Texture* mTexture;
 public:
 	explicit Ground(GLdouble w, GLdouble h);
-	~Ground();
+	explicit Ground(GLdouble w, GLdouble h, std::string t);
+	~Ground() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
+	void setTexture(std::string text) const { mTexture->load(text);}
 };
 
 #endif //_H_Entities_H_
