@@ -296,3 +296,27 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 		mTexture->unbind();
 	}
 }
+
+
+/// BOX OUTLINE
+BoxOutline::BoxOutline(GLdouble length)
+{
+	mMesh = Mesh::generateBoxOutline(length);
+}
+
+BoxOutline::~BoxOutline()
+{
+}
+
+void BoxOutline::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+	}
+}

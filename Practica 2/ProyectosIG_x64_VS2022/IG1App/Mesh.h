@@ -31,6 +31,7 @@ public:
 
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h);
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	static Mesh* generateBoxOutline(GLdouble length);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...

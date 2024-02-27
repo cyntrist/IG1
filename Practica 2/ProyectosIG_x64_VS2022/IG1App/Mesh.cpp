@@ -395,10 +395,38 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 {
 	auto mesh = generateRectangle(w, h);
 
+	mesh->vTexCoords.reserve(mesh->vVertices.size());
 	mesh->vTexCoords.emplace_back(0,0);
 	mesh->vTexCoords.emplace_back(rw,0);
 	mesh->vTexCoords.emplace_back(0,rh);
 	mesh->vTexCoords.emplace_back(rw,rh);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateBoxOutline(GLdouble length)
+{
+	auto* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+	/*glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_BACK, GL_POINT);*/
+	mesh->mNumVertices = 10;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	/// EN CLASE:
+	// 14 VERTICES!!!!!!!
+	const GLdouble m = length / 2;
+
+	mesh->vVertices.emplace_back(-m, -m, -m); // v0
+	mesh->vVertices.emplace_back(m, -m, -m); // v1
+	mesh->vVertices.emplace_back(-m, -m, m); // v2
+	mesh->vVertices.emplace_back(m, -m, m); // v3
+	mesh->vVertices.emplace_back(m, m, m); // v4
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v5 = v1
+	mesh->vVertices.emplace_back(m, m, -m); // v6
+	mesh->vVertices.push_back(mesh->vVertices[0]); // v7 = v0
+	mesh->vVertices.emplace_back(-m, m, -m); // v8
+	mesh->vVertices.emplace_back(-m, m, m); // v9
 
 	return mesh;
 }

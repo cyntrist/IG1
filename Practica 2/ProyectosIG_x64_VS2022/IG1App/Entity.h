@@ -110,4 +110,13 @@ public:
 	void setTexture(std::string text) const { mTexture->load(text, 255);}
 };
 
+class BoxOutline : public Abs_Entity
+{
+
+public:
+	explicit BoxOutline(GLdouble length);
+	~BoxOutline() override;
+	void render(glm::dmat4 const& modelViewMat) const override;
+};
+
 #endif //_H_Entities_H_
