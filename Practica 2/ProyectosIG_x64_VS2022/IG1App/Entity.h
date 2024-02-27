@@ -102,7 +102,7 @@ public:
 class Ground : public Abs_Entity {
 
 public:
-	explicit Ground(GLdouble w, GLdouble h, GLdouble y);
+	explicit Ground(GLdouble w, GLdouble h);
 	~Ground();
 	void render(glm::dmat4 const& modelViewMat) const override;
 };

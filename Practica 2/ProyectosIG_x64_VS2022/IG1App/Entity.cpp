@@ -255,9 +255,10 @@ mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float a
 
 
 /// GROUND
-Ground::Ground(GLdouble w, GLdouble h, GLdouble y)
+Ground::Ground(GLdouble w, GLdouble h)
 {
-	mMesh = Mesh::generateRectangle(w, h, y);
+	mMesh = Mesh::generateRectangle(w, h);
+	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 }
 
 Ground::~Ground()

@@ -153,24 +153,6 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 	return mesh;
 }
 
-Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h, GLdouble y)
-{
-	auto* mesh = new Mesh();
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	mesh->mPrimitive = GL_TRIANGLE_STRIP;
-	mesh->mNumVertices = 4;
-	mesh->vVertices.reserve(mesh->mNumVertices);
-
-	glBegin(mesh->mPrimitive); // start drawing a line loop
-	mesh->vVertices.emplace_back(-w , y, h);
-	mesh->vVertices.emplace_back(w, y, h);
-	mesh->vVertices.emplace_back(-w, y, -h);
-	mesh->vVertices.emplace_back(w, y, -h);
-	glEnd(); //end drawing of line loop
-
-	return mesh;
-}
-
 Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 {
 	auto* mesh = new Mesh();
