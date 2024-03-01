@@ -347,3 +347,25 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 
 	}
 }
+
+
+/// STAR 3D
+Star3D::Star3D(GLdouble re, GLuint np, GLdouble h)
+{
+	mMesh = Mesh::generateStar3D(re, np, h);
+}
+
+void Star3D::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+		//mTexture->unbind();
+	}
+}
