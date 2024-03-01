@@ -458,3 +458,39 @@ Mesh* Mesh::generateBoxOutlineTexColor(GLdouble longitud)
 
 	return mesh;
 }
+
+Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
+{
+	auto* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+	mesh->mNumVertices = np;
+	mesh->vVertices.reserve(mesh->mNumVertices * 2 + 2);
+
+	// numero de vertices
+	const double alpha = 360.0 / np;
+	const double beta = alpha / 2;
+	// angulo inicial
+	constexpr double offset = radians(90.0);
+
+	glBegin(mesh->mPrimitive); //start drawing a line loop
+	mesh->vVertices.emplace_back(0,0,0);
+	for (int i = 0; i < np; i++)
+	{
+		// x = Cx + R*cos(alpha)
+		// y = Cy + R*sen(alpha)
+
+		mesh->vVertices.emplace_back(
+			re * cos(offset + radians(alpha * i)),
+			re * sin(offset + radians(alpha * i)),
+			h);
+		/// cada alfa medios hay un vertice interior
+		mesh->vVertices.emplace_back(
+			re/2 * cos(offset + radians(alpha * i)),
+			re/2 * sin(offset + radians(alpha * i)),
+			h);
+	}
+	mesh->vVertices.emplace_back(offset,offset,h);
+
+	glEnd(); //end drawing of line loop
+	return mesh;
+}

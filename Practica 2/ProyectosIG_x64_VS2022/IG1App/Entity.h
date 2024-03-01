@@ -27,7 +27,6 @@ public:
 	glm::dvec4 getmColor() { return mColor; } // getter
 	void setmColor(glm::dvec4 color) { mColor = color; } // setter
 
-	void setTexture(std::string text) const { mTexture->load(text, 255); }
 
 protected:
 	Mesh* mMesh = nullptr; // the mesh
@@ -35,6 +34,7 @@ protected:
 	glm::dvec4 mColor;	   // color
 	Texture* mTexture;	   // texture
 
+	void setTexture(std::string text) const { mTexture->load(text, 255);}
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;
@@ -103,7 +103,6 @@ public:
 
 
 class Ground : public Abs_Entity {
-	
 public:
 	explicit Ground(GLdouble w, GLdouble h);
 	explicit Ground(GLdouble w, GLdouble h, std::string t);
@@ -123,4 +122,10 @@ public:
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
 
+class Star3D : public Abs_Entity
+{
+public:
+	explicit Star3D(GLdouble re, GLuint np, GLdouble h);
+	void render(glm::dmat4 const& modelViewMat) const override;
+};
 #endif //_H_Entities_H_
