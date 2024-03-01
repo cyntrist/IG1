@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "Mesh.h"
 #include "Texture.h"
+#include <vector>
 
 class Abs_Entity // abstract class
 {
@@ -27,13 +28,16 @@ public:
 	glm::dvec4 getmColor() { return mColor; } // getter
 	void setmColor(glm::dvec4 color) { mColor = color; } // setter
 
-	void setTexture(std::string text) const { mTexture->load(text, 255); }
+	void setTexture(std::string text, Texture* mtext) const { mtext->load(text, 255); }
 
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
 	glm::dvec4 mColor;	   // color
 	Texture* mTexture;	   // texture
+	Texture* mTexture2;	   // texture
+	//std::vector<Texture*> mTextureVector:
+
 
 
 	// transfers modelViewMat to the GPU
@@ -119,6 +123,7 @@ class BoxOutline : public Abs_Entity
 public:
 	explicit BoxOutline(GLdouble length);
 	explicit BoxOutline(GLdouble length, std::string t);
+	explicit BoxOutline(GLdouble length, std::string t, std::string t2);
 	~BoxOutline() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 };

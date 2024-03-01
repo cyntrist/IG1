@@ -450,11 +450,7 @@ Mesh* Mesh::generateBoxOutlineTexColor(GLdouble longitud)
 		mesh->vTexCoords.emplace_back(1, 0);
 		mesh->vTexCoords.emplace_back(0, 1);
 		mesh->vTexCoords.emplace_back(1, 1);
-
 	}
-
-
-
 
 	return mesh;
 }

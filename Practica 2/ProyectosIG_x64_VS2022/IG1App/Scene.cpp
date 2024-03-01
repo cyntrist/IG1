@@ -54,6 +54,7 @@ Scene::setGL()
 	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 	glEnable(GL_TEXTURE_2D);		  // enable Texture mode
+	glEnable(GLUT_MULTISAMPLE);
 }
 void
 
