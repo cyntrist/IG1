@@ -304,8 +304,19 @@ BoxOutline::BoxOutline(GLdouble length)
 	mMesh = Mesh::generateBoxOutline(length);
 }
 
+BoxOutline::BoxOutline(GLdouble length, std::string t)
+{
+	mMesh = Mesh::generateBoxOutlineTexColor(length);
+	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mTexture = new Texture();
+	setTexture(t);
+}
+
 BoxOutline::~BoxOutline()
 {
+	delete mMesh;
+	delete mTexture;
+	mMesh = nullptr;
 }
 
 void BoxOutline::render(glm::dmat4 const& modelViewMat) const
@@ -313,10 +324,12 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
+		mTexture->unbind();
 	}
 }

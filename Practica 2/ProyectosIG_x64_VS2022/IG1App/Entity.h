@@ -27,10 +27,13 @@ public:
 	glm::dvec4 getmColor() { return mColor; } // getter
 	void setmColor(glm::dvec4 color) { mColor = color; } // setter
 
+	void setTexture(std::string text) const { mTexture->load(text, 255); }
+
 protected:
 	Mesh* mMesh = nullptr; // the mesh
 	glm::dmat4 mModelMat;  // modeling matrix
 	glm::dvec4 mColor;	   // color
+	Texture* mTexture;	   // texture
 
 
 	// transfers modelViewMat to the GPU
@@ -100,14 +103,14 @@ public:
 
 
 class Ground : public Abs_Entity {
-	Texture* mTexture;
+	
 public:
 	explicit Ground(GLdouble w, GLdouble h);
 	explicit Ground(GLdouble w, GLdouble h, std::string t);
 	explicit Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t);
 	~Ground() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
-	void setTexture(std::string text) const { mTexture->load(text, 255);}
+	
 };
 
 class BoxOutline : public Abs_Entity
@@ -115,6 +118,7 @@ class BoxOutline : public Abs_Entity
 
 public:
 	explicit BoxOutline(GLdouble length);
+	explicit BoxOutline(GLdouble length, std::string t);
 	~BoxOutline() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 };

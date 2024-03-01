@@ -202,10 +202,13 @@ Mesh* Mesh::generateCube(GLdouble l)
 	mesh->vVertices.emplace_back(-m, -m, -m); // v0
 	mesh->vVertices.emplace_back(m, -m, -m); // v1
 	mesh->vVertices.emplace_back(-m, -m, m); // v2
+
 	mesh->vVertices.emplace_back(m, -m, m); // v3
+
 	mesh->vVertices.emplace_back(m, m, m); // v4
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v5 = v1
 	mesh->vVertices.emplace_back(m, m, -m); // v6
+
 	mesh->vVertices.push_back(mesh->vVertices[0]); // v7 = v0
 	mesh->vVertices.emplace_back(-m, m, -m); // v8
 	mesh->vVertices.push_back(mesh->vVertices[2]); // v9 = v2
@@ -417,16 +420,41 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	// 14 VERTICES!!!!!!!
 	const GLdouble m = length / 2;
 
-	mesh->vVertices.emplace_back(-m, -m, -m); // v0
-	mesh->vVertices.emplace_back(m, -m, -m); // v1
-	mesh->vVertices.emplace_back(-m, -m, m); // v2
-	mesh->vVertices.emplace_back(m, -m, m); // v3
-	mesh->vVertices.emplace_back(m, m, m); // v4
-	mesh->vVertices.push_back(mesh->vVertices[1]); // v5 = v1
-	mesh->vVertices.emplace_back(m, m, -m); // v6
-	mesh->vVertices.push_back(mesh->vVertices[0]); // v7 = v0
-	mesh->vVertices.emplace_back(-m, m, -m); // v8
-	mesh->vVertices.emplace_back(-m, m, m); // v9
+	mesh->vVertices.emplace_back(m, -m, m); // v0
+	mesh->vVertices.emplace_back(m, m, m); // v1
+	mesh->vVertices.emplace_back(m, -m, -m); // v2
+
+	mesh->vVertices.emplace_back(m, m, -m); // v3
+	mesh->vVertices.emplace_back(-m,-m, -m); // v4
+	mesh->vVertices.emplace_back(-m, m, -m); // v5
+
+	mesh->vVertices.emplace_back(-m, -m, m); // v6
+	mesh->vVertices.emplace_back(-m, m, m); // v7
+
+	mesh->vVertices.push_back(mesh->vVertices[0]); // v8
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v9
+	
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+	//mesh->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateBoxOutlineTexColor(GLdouble longitud)
+{
+	auto mesh = generateBoxOutline(longitud);
+
+	for (int i = 0; i < 4; i++) {
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(1, 0);
+		mesh->vTexCoords.emplace_back(0, 1);
+		mesh->vTexCoords.emplace_back(1, 1);
+
+	}
+
+
+
 
 	return mesh;
 }

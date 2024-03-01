@@ -32,6 +32,7 @@ public:
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h);
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generateBoxOutline(GLdouble length);
+	static Mesh* generateBoxOutlineTexColor(GLdouble longitud);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
@@ -40,7 +41,7 @@ protected:
 	std::vector<glm::dvec4> vColors;   // color array
 	virtual void draw() const;
 
-	std::vector<glm::dvec2> vTexCoords;
+	std::vector<glm::dvec2> vTexCoords;	// vertices de texturas (analogo a vVertices vColor)
 };
 
 #endif //_H_Scene_H_
