@@ -334,17 +334,23 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		glPolygonMode(GL_FRONT, GL_FILL);
-		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+			
+		// front
+		glPolygonMode(GL_FRONT, GL_FILL);	// fill
+		mTexture->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_FRONT);				// culleo
+		mMesh->render();					// render
+		mTexture->unbind();					// unbind
+
+		// back
+		glPolygonMode(GL_BACK, GL_FILL);	// fill
+		mTexture2->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_BACK);				// culleo
+		mMesh->render();					// render
+		mTexture2->unbind();				// unbind
+
 		upload(aMat);
-		glLineWidth(2);
 		mMesh->render();
-		glLineWidth(1);
-		mTexture->unbind();
-
-		//mTexture2->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
-		//mTexture2->unbind();
-
 	}
 }
 
