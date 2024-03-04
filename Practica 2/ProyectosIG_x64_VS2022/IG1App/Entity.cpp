@@ -379,3 +379,14 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 		//mTexture->unbind();
 	}
 }
+
+GlassParapet::GlassParapet(GLdouble length)
+{
+
+
+}
+
+GlassParapet::~GlassParapet()
+{
+
+}

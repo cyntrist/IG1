@@ -134,4 +134,11 @@ public:
 	explicit Star3D(GLdouble re, GLuint np, GLdouble h);
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
+
+class GlassParapet : public Abs_Entity {
+	explicit GlassParapet(GLdouble length);
+	~GlassParapet() override;
+
+
+};
 #endif //_H_Entities_H_
