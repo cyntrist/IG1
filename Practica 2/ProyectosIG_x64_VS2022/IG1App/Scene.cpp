@@ -55,6 +55,7 @@ Scene::setGL()
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 	glEnable(GL_TEXTURE_2D);		  // enable Texture mode
 	glEnable(GLUT_MULTISAMPLE);
+	glEnable(GL_CULL_FACE);
 }
 void
 
