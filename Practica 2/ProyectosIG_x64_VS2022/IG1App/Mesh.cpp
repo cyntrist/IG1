@@ -481,14 +481,13 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 			re * sin(offset + radians(alpha * i)), 
 			h);
 		mesh->vVertices.emplace_back(
-			re/2 * cos(offset + radians((alpha)  * i)), 
-			re/2 * sin(offset + radians((alpha) * i)), 
+			re/2 * cos(offset + radians(alpha  * i)), 
+			re/2 * sin(offset + radians(alpha * i)), 
 			h);
 		
 	}
 	mesh->vVertices.push_back(mesh->vVertices[1]);
-	mesh->vVertices.push_back(mesh->vVertices[2]);
-	mesh->vVertices.push_back(mesh->vVertices[3]);
+
 
 	glEnd(); //end drawing of line loop
 
