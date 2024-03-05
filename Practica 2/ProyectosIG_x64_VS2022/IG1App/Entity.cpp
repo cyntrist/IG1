@@ -264,7 +264,7 @@ Ground::Ground(GLdouble w, GLdouble h)
 Ground::Ground(GLdouble w, GLdouble h, std::string t) : Ground(w, h)
 {
 	mTexture = new Texture();
-	setTexture(t, mTexture);
+	setTexture(t, mTexture, 255);
 }
 
 Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t)
@@ -272,7 +272,7 @@ Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t)
 	mMesh = Mesh::generateRectangleTexCor(w, h, rw, rh);
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
-	setTexture(t, mTexture);
+	setTexture(t, mTexture, 255);
 }
 
 Ground::~Ground()
@@ -309,7 +309,7 @@ BoxOutline::BoxOutline(GLdouble length, std::string t)
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
-	setTexture(t, mTexture);
+	setTexture(t, mTexture, 255);
 }
 
 BoxOutline::BoxOutline(GLdouble length, std::string t, std::string t2)
@@ -317,9 +317,9 @@ BoxOutline::BoxOutline(GLdouble length, std::string t, std::string t2)
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
-	setTexture(t, mTexture);
+	setTexture(t, mTexture, 255);
 	mTexture2 = new Texture();
-	setTexture(t2, mTexture2);
+	setTexture(t2, mTexture2, 255);
 }
 
 BoxOutline::~BoxOutline()
@@ -380,13 +380,34 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 
-GlassParapet::GlassParapet(GLdouble length)
+GlassParapet::GlassParapet(GLdouble length, std::string t)
 {
-
+	mMesh = Mesh::generateBoxOutlineTexColor(length);
+	mTexture = new Texture();
+	setTexture(t, mTexture, 125);
 
 }
 
 GlassParapet::~GlassParapet()
 {
+	delete mMesh;
+	delete mTexture;
+	mMesh = nullptr;
+	mTexture = nullptr;
+}
 
+void GlassParapet::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+		mTexture->unbind();
+
+	}
 }

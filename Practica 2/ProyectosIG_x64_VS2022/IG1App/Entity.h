@@ -28,7 +28,7 @@ public:
 	glm::dvec4 getmColor() { return mColor; } // getter
 	void setmColor(glm::dvec4 color) { mColor = color; } // setter
 
-	void setTexture(std::string text, Texture* mtext) const { mtext->load(text, 255); }
+	void setTexture(std::string text, Texture* mtext, GLubyte alpha) const { mtext->load(text, alpha); }
 
 protected:
 	Mesh* mMesh = nullptr; // the mesh
@@ -136,9 +136,11 @@ public:
 };
 
 class GlassParapet : public Abs_Entity {
-	explicit GlassParapet(GLdouble length);
+public:
+	explicit GlassParapet(GLdouble length, std::string t);
 	~GlassParapet() override;
 
+	void render(glm::dmat4 const& modelViewMat) const override;
 
 };
 #endif //_H_Entities_H_

@@ -35,6 +35,8 @@ public:
 	static Mesh* generateBoxOutline(GLdouble length);
 	static Mesh* generateBoxOutlineTexColor(GLdouble longitud);
 	static Mesh* generateStar3D(GLdouble re, GLuint np, GLdouble h);
+	//static Mesh* generateGlassParapet(GLdouble longitud);
+
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
