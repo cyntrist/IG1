@@ -335,6 +335,8 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 			
+		glEnable(GL_CULL_FACE);
+
 		// back
 		glPolygonMode(GL_BACK, GL_FILL);	// fill
 		mTexture2->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
@@ -349,8 +351,7 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();					// render
 		mTexture->unbind();					// unbind
 
-	
-
+		glDisable(GL_CULL_FACE);
 
 
 		upload(aMat);
@@ -384,7 +385,7 @@ GlassParapet::GlassParapet(GLdouble length, std::string t)
 {
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	mTexture = new Texture();
-	setTexture(t, mTexture, 125);
+	setTexture(t, mTexture, 128);
 
 }
 
@@ -400,8 +401,10 @@ void GlassParapet::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
+
+
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
 		glLineWidth(2);

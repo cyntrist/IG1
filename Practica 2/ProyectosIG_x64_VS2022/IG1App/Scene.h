@@ -27,11 +27,15 @@ public:
 	void addObject(Abs_Entity* ent);
 	void render(Camera const& cam) const;
 	void update();
+	void setCulling();
+	void unsetCulling();
+
 
 protected:
 	void free();
 	void setGL();
 	void resetGL();
+	
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 };

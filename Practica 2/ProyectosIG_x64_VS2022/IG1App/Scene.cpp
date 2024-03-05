@@ -55,7 +55,9 @@ Scene::setGL()
 	glEnable(GL_DEPTH_TEST);          // enable Depth test
 	glEnable(GL_TEXTURE_2D);		  // enable Texture mode
 	glEnable(GLUT_MULTISAMPLE);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);									// enable Blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	// enable Alpha channel
 }
 void
 
@@ -64,6 +66,16 @@ Scene::resetGL()
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
 	glDisable(GL_TEXTURE_2D);	  // disable Texture mode
+}
+
+void Scene::setCulling()
+{
+	glEnable(GL_CULL_FACE);
+}
+
+void Scene::unsetCulling()
+{
+	glDisable(GL_CULL_FACE);
 }
 
 void Scene::addObject(Abs_Entity* ent)

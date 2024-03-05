@@ -54,7 +54,7 @@ IG1App::init()
 	scenes[1]->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 	scenes[2]->addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
 	scenes[3]->addObject(new Star3D(200, 6, 300));
-	scenes[4]->addObject(new GlassParapet(200, "./bmps/baldosaC.bmp"));
+	scenes[4]->addObject(new GlassParapet(200, "./bmps/windowV.bmp"));
 	sceneIndex = 3;
 	mCamera->set3D();
 
@@ -170,6 +170,7 @@ IG1App::key(unsigned char key, int x, int y)
 			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
 			mCamera->set3D();
 			sceneIndex = 3;
+			scenes[3]->setCulling();
 			break;
 		case '4':
 			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
