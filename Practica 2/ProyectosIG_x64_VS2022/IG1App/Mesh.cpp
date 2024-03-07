@@ -510,3 +510,41 @@ Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
 
 	return mesh;
 }
+
+Mesh* Mesh::generateGlassParapet(GLdouble w, GLdouble h)
+{
+	auto* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+	mesh->mNumVertices = 10;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	auto x = w / 2;
+	auto y = h / 2;
+
+
+	mesh->vVertices.emplace_back(x, -y, x); // v0
+	mesh->vVertices.emplace_back(x, y, x); // v1
+	mesh->vVertices.emplace_back(x, -y, -x); // v2
+
+	mesh->vVertices.emplace_back(x, y, -x); // v3
+	mesh->vVertices.emplace_back(-x, -y, -x); // v4
+	mesh->vVertices.emplace_back(-x, y, -x); // v5
+
+	mesh->vVertices.emplace_back(-x, -y, x); // v6
+	mesh->vVertices.emplace_back(-x, y, x); // v7
+
+	mesh->vVertices.push_back(mesh->vVertices[0]); // v8
+	mesh->vVertices.push_back(mesh->vVertices[1]); // v9
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+
+
+	for (int i = 0; i < 4; i++) {
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(1, 0);
+		mesh->vTexCoords.emplace_back(0, 1);
+		mesh->vTexCoords.emplace_back(1, 1);
+	}
+
+	return mesh;
+}
