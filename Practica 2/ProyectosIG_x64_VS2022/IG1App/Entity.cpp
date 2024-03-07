@@ -511,11 +511,17 @@ void Star3D::update()
 {
 	angle += rotationFactor;
 
-	// rotacion en el eje z
-	mModelMat = rotate(dmat4(1.0), radians(angle), dvec3(0.0, 0.0, 1.0));
-	// rotacion en el eje y
-	mModelMat = rotate(dmat4(1.0), radians(angle), dvec3(0.0, 1.0, 0.0));
-	// ambas rotaciones tienen el mismo angulo
+	//// rotacion en el eje z
+	//mModelMat *= rotate(dmat4(1.0), radians(angle), dvec3(0.0, 1.0, 0.0));
+	//// rotacion en el eje y
+	//mModelMat *= rotate(dmat4(1.0), radians(angle), dvec3(0.0, 0.0, 1.0));
+	//// ambas rotaciones tienen el mismo angulo
+
+	mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0)) *
+		rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 0.0)) *
+		rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0));
+
+	//rotationSp += .05;
 }
 
 GlassParapet::GlassParapet(GLdouble width, GLdouble height, std::string t)
@@ -559,7 +565,7 @@ Photo::Photo(GLdouble w, GLdouble h)
 	mModelMat = translate(dmat4(1), dvec3(0.0, -100.0, 0.0)) 
 		* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
-	mTexture->loadColorBuffer(w, h);
+	mTexture->loadColorBuffer(800.0, 600.0);
 	//setTexture(t, mTexture, 128);
 }
 
@@ -595,5 +601,5 @@ void Photo::render(const dmat4& modelViewMat) const
 void Photo::update()
 {
 	// actualiza la textura 
-	mTexture->loadColorBuffer(pW, pH, GL_FRONT);
+	mTexture->loadColorBuffer(800.0, 600.0);
 }
