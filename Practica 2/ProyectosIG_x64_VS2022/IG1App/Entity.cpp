@@ -363,7 +363,12 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 /// BOX
 Box::Box(GLdouble length, std::string t, std::string t2)
 {
-	mMesh = Mesh::generateBoxTexColor(length);
+	mMesh = Mesh::generateBoxOutlineTexColor(length);
+	mTop = Mesh::generateRectangleTexCor(length, length);
+	mBottom = Mesh::generateRectangleTexCor(length, length);
+
+	mTopMat = rotate(dmat4(1.0), radians(90.0), dvec3(1.0, 0.0, 0.0));
+	mBotMat = rotate(dmat4(1.0), radians(90.0), dvec3(0.0, 0.0, 1.0));
 
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
@@ -383,7 +388,8 @@ void Box::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-			
+		dmat4 topMat = modelViewMat * mTopMat;
+		dmat4 botMat = modelViewMat * mBotMat;
 		glEnable(GL_CULL_FACE);
 
 		// back
@@ -391,6 +397,8 @@ void Box::render(glm::dmat4 const& modelViewMat) const
 		mTexture2->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_BACK);				// culleo
 		mMesh->render();					// render
+		mTop->render();					// render
+		mBottom->render();					// render
 		mTexture2->unbind();				// unbind
 
 		// front
@@ -398,13 +406,18 @@ void Box::render(glm::dmat4 const& modelViewMat) const
 		mTexture->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_FRONT);				// culleo
 		mMesh->render();					// render
+		mTop->render();					// render
+		mBottom->render();					// render
 		mTexture->unbind();					// unbind
 
 		glDisable(GL_CULL_FACE);
 
-
+		upload(botMat);
 		upload(aMat);
+		upload(topMat);
 		mMesh->render();
+		mTop->render();					// render
+		mBottom->render();
 	}
 }
 
@@ -451,9 +464,9 @@ void Star3D::update()
 	angle += rotationFactor;
 
 	// rotacion en el eje z
-	mModelMat = rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0));
+	mModelMat = rotate(dmat4(1.0), radians(angle), dvec3(0.0, 0.0, 1.0));
 	// rotacion en el eje y
-	mModelMat = rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 0.0));
+	mModelMat = rotate(dmat4(1.0), radians(angle), dvec3(0.0, 1.0, 0.0));
 	// ambas rotaciones tienen el mismo angulo
 }
 

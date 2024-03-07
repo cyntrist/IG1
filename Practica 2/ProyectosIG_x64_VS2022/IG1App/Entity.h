@@ -130,7 +130,10 @@ public:
 
 class Box : public Abs_Entity
 {
-
+	Mesh* mTop;
+	Mesh* mBottom;
+	glm::dmat4 mTopMat = glm::dmat4(1.0);
+	glm::dmat4 mBotMat = glm::dmat4(1.0);
 public:
 	explicit Box(GLdouble length, std::string t, std::string t2);
 	~Box() override;
@@ -140,7 +143,7 @@ public:
 class Star3D : public Abs_Entity
 {
 	GLdouble angle = 0;
-	GLdouble rotationFactor = 5;
+	GLdouble rotationFactor = 1;
 public:
 	explicit Star3D(GLdouble re, GLuint np, GLdouble h, std::string);
 	~Star3D() override;

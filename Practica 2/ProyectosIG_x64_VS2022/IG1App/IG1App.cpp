@@ -62,7 +62,6 @@ IG1App::init()
 	scenes[3]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
 	scenes[4]->addObject(new GlassParapet(200, "./bmps/windowV.bmp"));
 	scenes[5]->addObject(new Photo(mCamera->viewPort().width(), mCamera->viewPort().height()));
-	sceneIndex = 3;
 	scenes[6]->addObject(new Box(200,  "./bmps/container.bmp", "./bmps/papelC.bmp"));
 	sceneIndex = 6;
 	mCamera->set3D();
