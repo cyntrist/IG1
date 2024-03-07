@@ -455,6 +455,39 @@ Mesh* Mesh::generateBoxOutlineTexColor(GLdouble longitud)
 	return mesh;
 }
 
+Mesh* Mesh::generateBoxTexColor(GLdouble longitud)
+{
+	auto mesh = new Mesh();
+	//auto mesh = generateBoxOutlineTexColor(longitud);
+	auto tapaAbajo = generateRectangleTexCor(longitud, longitud);
+	auto tapaArriba = generateRectangleTexCor(longitud, longitud);
+
+	mesh->vVertices.reserve(mesh->mNumVertices 
+		+ tapaAbajo->mNumVertices + tapaArriba->mNumVertices);
+
+	glBegin(mesh->mPrimitive); // start drawing a line loop
+	for(auto v : tapaAbajo->vVertices)
+	{
+		v.x += longitud/2;
+		v.y += longitud/2;
+		mesh->vVertices.push_back(v);
+	}
+	for(auto v : tapaArriba->vVertices)
+	{
+		mesh->vVertices.push_back(v);
+	}
+
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+	for (int i = 0; i < 4; i++) {
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(1, 0);
+		mesh->vTexCoords.emplace_back(0, 1);
+		mesh->vTexCoords.emplace_back(1, 1);
+	}
+	glEnd();
+	return mesh;
+}
+
 Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 {
 	auto* mesh = new Mesh();

@@ -326,6 +326,7 @@ BoxOutline::~BoxOutline()
 {
 	delete mMesh;
 	delete mTexture;
+	delete mTexture2;
 	mMesh = nullptr;
 }
 
@@ -359,12 +360,67 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 }
 
 
+/// BOX
+Box::Box(GLdouble length, std::string t, std::string t2)
+{
+	mMesh = Mesh::generateBoxTexColor(length);
+
+	mTexture = new Texture();
+	setTexture(t, mTexture, 255);
+	mTexture2 = new Texture();
+	setTexture(t2, mTexture2, 255);
+}
+
+Box::~Box()
+{
+	delete mMesh;
+	delete mTexture;
+	mMesh = nullptr;
+}
+
+void Box::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+			
+		glEnable(GL_CULL_FACE);
+
+		// back
+		glPolygonMode(GL_BACK, GL_FILL);	// fill
+		mTexture2->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_BACK);				// culleo
+		mMesh->render();					// render
+		mTexture2->unbind();				// unbind
+
+		// front
+		glPolygonMode(GL_FRONT, GL_FILL);	// fill
+		mTexture->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_FRONT);				// culleo
+		mMesh->render();					// render
+		mTexture->unbind();					// unbind
+
+		glDisable(GL_CULL_FACE);
+
+
+		upload(aMat);
+		mMesh->render();
+	}
+}
+
 /// STAR 3D
 Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, std::string text)
 {
 	mMesh = Mesh::generateStar3DTexCor(re, np, h);
 	mTexture = new Texture();
 	setTexture(text, mTexture, 255);
+}
+
+Star3D::~Star3D()
+{
+	delete mMesh;
+	delete mTexture;
+	mMesh = nullptr;
 }
 
 void Star3D::render(glm::dmat4 const& modelViewMat) const
@@ -397,7 +453,7 @@ void Star3D::update()
 	// rotacion en el eje z
 	mModelMat = rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0));
 	// rotacion en el eje y
-	mModelMat = rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 1.0));
+	mModelMat = rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 0.0));
 	// ambas rotaciones tienen el mismo angulo
 }
 

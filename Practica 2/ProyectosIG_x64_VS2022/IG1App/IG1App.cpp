@@ -11,10 +11,12 @@ IG1App IG1App::s_ig1app; // default constructor (constructor with no parameters)
 void
 IG1App::close()
 {
-	if (!mStop) { // if main loop has not stopped
+	if (!mStop)
+	{
+		// if main loop has not stopped
 		cout << "Closing glut...\n";
 		glutLeaveMainLoop(); // stops main loop and destroy the OpenGL context
-		mStop = true;        // main loop stopped
+		mStop = true; // main loop stopped
 	}
 	free();
 }
@@ -22,10 +24,12 @@ IG1App::close()
 void
 IG1App::run() // enters the main event processing loop
 {
-	if (mWinId == 0) {      // if not initialized
-		init();         // initialize the application
+	if (mWinId == 0)
+	{
+		// if not initialized
+		init(); // initialize the application
 		glutMainLoop(); // enters the main event processing loop
-		mStop = true;   // main loop has stopped
+		mStop = true; // main loop has stopped
 	}
 }
 
@@ -38,7 +42,7 @@ IG1App::init()
 	// create the scene after creating the context
 	// allocate memory and resources
 	mViewPort =
-	  new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
+		new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
 
 	//mScene = new Scene;
@@ -49,8 +53,9 @@ IG1App::init()
 	scenes[3] = new Scene;
 	scenes[4] = new Scene;
 	scenes[5] = new Scene;
+	scenes[6] = new Scene;
 	scenes[0]->addObject(new RegularPolygon(32, 250));
-	scenes[0]->addObject(new RGBRectangle(500,250));
+	scenes[0]->addObject(new RGBRectangle(500, 250));
 	scenes[0]->addObject(new RGBTriangle(50, 250));
 	scenes[1]->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 	scenes[2]->addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
@@ -58,6 +63,8 @@ IG1App::init()
 	scenes[4]->addObject(new GlassParapet(200, "./bmps/windowV.bmp"));
 	scenes[5]->addObject(new Photo(mWinH, mWinW));
 	sceneIndex = 3;
+	scenes[6]->addObject(new Box(200,  "./bmps/container.bmp", "./bmps/papelC.bmp"));
+	sceneIndex = 6;
 	mCamera->set3D();
 
 	//mScene->init();
@@ -67,14 +74,15 @@ IG1App::init()
 
 void
 IG1App::iniWinOpenGL()
-{ // Initialization
+{
+	// Initialization
 	cout << "Starting glut...\n";
 	int argc = 0;
 	glutInit(&argc, nullptr);
 
 	glutInitContextVersion(3, 3);
 	glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE); // GLUT_CORE_PROFILE
-	glutInitContextFlags(GLUT_DEBUG);                   // GLUT_FORWARD_COMPATIBLE
+	glutInitContextFlags(GLUT_DEBUG); // GLUT_FORWARD_COMPATIBLE
 
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
@@ -82,11 +90,11 @@ IG1App::iniWinOpenGL()
 	// glutInitWindowPosition (140, 140);
 
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE |
-	                    GLUT_DEPTH /*| GLUT_STENCIL*/); // RGBA colors, double buffer, depth
-	                                                    // buffer and stencil buffer
+		GLUT_DEPTH /*| GLUT_STENCIL*/); // RGBA colors, double buffer, depth
+	// buffer and stencil buffer
 
 	mWinId = glutCreateWindow(
-	  "IG1"); // with its associated OpenGL context, return window's identifier
+		"IG1"); // with its associated OpenGL context, return window's identifier
 
 	// Callback registration
 	glutReshapeFunc(s_resize);
@@ -100,7 +108,8 @@ IG1App::iniWinOpenGL()
 
 void
 IG1App::free()
-{ // release memory and resources
+{
+	// release memory and resources
 	for (auto i : scenes)
 		delete i;
 	delete mCamera;
@@ -111,7 +120,8 @@ IG1App::free()
 
 void
 IG1App::display() const
-{ // double buffering
+{
+	// double buffering
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clears the back buffer
 
@@ -137,68 +147,66 @@ void
 IG1App::key(unsigned char key, int x, int y)
 {
 	bool need_redisplay = true;
-	switch (key) {
-		case 27:                     // Escape key
-			glutLeaveMainLoop(); // stops main loop and destroy the OpenGL context
-			break;
-		case '+':
-			mCamera->setScale(+0.01); // zoom in  (increases the scale)
-			break;
-		case '-':
-			mCamera->setScale(-0.01); // zoom out (decreases the scale)
-			break;
-		case 'l':
-			mCamera->set3D();
-			break;
-		case 'o':
-			mCamera->set2D();
-			break;
-		case '0':
-			//sceneIndex = (sceneIndex - 1) % MAX_SCENES;
-			mCamera->set2D();
-			sceneIndex = 0;
-			break;
-		case '1':
-			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
-			mCamera->set3D();
-			sceneIndex = 1;
-			break;
-		case '2':
-			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
-			mCamera->set3D();
-			sceneIndex = 2;
-			break;
-		case '3':
-			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
-			mCamera->set3D();
-			sceneIndex = 3;
-			//scenes[3]->setCulling();
-			break;
-		case '4':
-			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
-			mCamera->set3D();
-			sceneIndex = 4;
-			break;
-		case '5':
-			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
-			mCamera->set3D();
-			sceneIndex = 5;
-			break;
-		case 'u':
-			scenes[sceneIndex]->update();
-			break;
-		case 'U':
-			mUpdate = !mUpdate;
-			glutIdleFunc(s_update);
-			break;
-		default:
-			need_redisplay = false;
-			break;
+	switch (key)
+	{
+	case 27: // Escape key
+		glutLeaveMainLoop(); // stops main loop and destroy the OpenGL context
+		break;
+	case '+':
+		mCamera->setScale(+0.01); // zoom in  (increases the scale)
+		break;
+	case '-':
+		mCamera->setScale(-0.01); // zoom out (decreases the scale)
+		break;
+	case 'l':
+		mCamera->set3D();
+		break;
+	case 'o':
+		mCamera->set2D();
+		break;
+	case '0':
+		mCamera->set2D();
+		sceneIndex = 0;
+		break;
+	case '1':
+		mCamera->set3D();
+		sceneIndex = 1;
+		break;
+	case '2':
+		mCamera->set3D();
+		sceneIndex = 2;
+		break;
+	case '3':
+		mCamera->set3D();
+		sceneIndex = 3;
+		break;
+	case '4':
+		mCamera->set3D();
+		sceneIndex = 4;
+		break;
+	case '5':
+		mCamera->set3D();
+		sceneIndex = 5;
+		break;
+	case '6':
+		mCamera->set3D();
+		sceneIndex = 6;
+		break;
+	case 'u':
+		scenes[sceneIndex]->update();
+		break;
+	case 'U':
+		mUpdate = !mUpdate;
+		glutIdleFunc(s_update);
+		break;
+	default:
+		need_redisplay = false;
+		break;
 	} // switch
 
 	if (need_redisplay)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to
-		                     // display()
+	// display()
 }
 
 void
@@ -207,33 +215,34 @@ IG1App::specialKey(int key, int x, int y)
 	bool need_redisplay = true;
 	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
 
-	switch (key) {
-		case GLUT_KEY_RIGHT:
-			if (mdf == GLUT_ACTIVE_CTRL)
-				mCamera->pitch(-1); // rotates -1 on the X axis
-			else
-				mCamera->pitch(1); // rotates 1 on the X axis
-			break;
-		case GLUT_KEY_LEFT:
-			if (mdf == GLUT_ACTIVE_CTRL)
-				mCamera->yaw(1); // rotates 1 on the Y axis
-			else
-				mCamera->yaw(-1); // rotate -1 on the Y axis
-			break;
-		case GLUT_KEY_UP:
-			mCamera->roll(1); // rotates 1 on the Z axis
-			break;
-		case GLUT_KEY_DOWN:
-			mCamera->roll(-1); // rotates -1 on the Z axis
-			break;
-		default:
-			need_redisplay = false;
-			break;
+	switch (key)
+	{
+	case GLUT_KEY_RIGHT:
+		if (mdf == GLUT_ACTIVE_CTRL)
+			mCamera->pitch(-1); // rotates -1 on the X axis
+		else
+			mCamera->pitch(1); // rotates 1 on the X axis
+		break;
+	case GLUT_KEY_LEFT:
+		if (mdf == GLUT_ACTIVE_CTRL)
+			mCamera->yaw(1); // rotates 1 on the Y axis
+		else
+			mCamera->yaw(-1); // rotate -1 on the Y axis
+		break;
+	case GLUT_KEY_UP:
+		mCamera->roll(1); // rotates 1 on the Z axis
+		break;
+	case GLUT_KEY_DOWN:
+		mCamera->roll(-1); // rotates -1 on the Z axis
+		break;
+	default:
+		need_redisplay = false;
+		break;
 	} // switch
 
 	if (need_redisplay)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to
-		                     // display()
+	// display()
 }
 
 void IG1App::update()
