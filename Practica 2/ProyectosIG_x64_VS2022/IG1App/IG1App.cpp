@@ -181,7 +181,8 @@ IG1App::key(unsigned char key, int x, int y)
 			scenes[sceneIndex]->update();
 			break;
 		case 'U':
-			glutIdleFunc(update);
+			mUpdate = !mUpdate;
+			glutIdleFunc(s_update);
 			break;
 		default:
 			need_redisplay = false;
@@ -231,5 +232,9 @@ IG1App::specialKey(int key, int x, int y)
 void IG1App::update()
 {
 	// Apartado 16
-	scenes[sceneIndex]->update();
+	if (mUpdate)
+	{
+		scenes[sceneIndex]->update();
+		glutPostRedisplay();
+	}
 }
