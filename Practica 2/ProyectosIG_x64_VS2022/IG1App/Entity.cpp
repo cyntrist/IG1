@@ -373,11 +373,16 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		//mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
-		upload(aMat);
 		glLineWidth(2);
+		upload(aMat); // upload de primera estrella
 		mMesh->render();
-		glLineWidth(1);
+
+		dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
+		upload(bMat); // upload de la segunda estrella rotada
+
+		mMesh->render();
 		//mTexture->unbind();
+		glLineWidth(1);
 	}
 }
 
