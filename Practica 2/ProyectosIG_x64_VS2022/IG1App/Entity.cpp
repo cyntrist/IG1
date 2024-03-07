@@ -391,6 +391,7 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 
 void Star3D::update()
 {
+
 	angle += rotationFactor;
 
 	// rotacion en el eje z
@@ -457,6 +458,8 @@ void Photo::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
+		// HACER ALGO AQUI
+
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
@@ -465,12 +468,14 @@ void Photo::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 		glLineWidth(1);
 		mTexture->unbind();
+
+		// DESHACERLO AQUI
 	}
 
 }
 
 void Photo::update()
 {
-	mTexture->loadColorBuffer(pW, pH, GL_FRONT);
-
+	// actualiza la textura 
+	mTexture->loadColorBuffer(pW, pH, GL_BACK);
 }
