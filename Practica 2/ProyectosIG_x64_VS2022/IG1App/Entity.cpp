@@ -270,7 +270,8 @@ Ground::Ground(GLdouble w, GLdouble h, std::string t) : Ground(w, h)
 Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, rw, rh);
-	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, -150.0, 0.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 }
@@ -280,6 +281,7 @@ Ground::~Ground()
 	delete mMesh;
 	delete mTexture;
 	mMesh = nullptr;
+	mTexture = nullptr;
 }
 
 void Ground::render(const dmat4& modelViewMat) const
@@ -290,11 +292,12 @@ void Ground::render(const dmat4& modelViewMat) const
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
-		glLineWidth(2);
 		mMesh->render();
-		glLineWidth(1);
 		mTexture->unbind();
+
 	}
+
+	
 }
 
 
@@ -302,25 +305,38 @@ void Ground::render(const dmat4& modelViewMat) const
 BoxOutline::BoxOutline(GLdouble length)
 {
 	mMesh = Mesh::generateBoxOutline(length);
+	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, 0.0, 0.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 }
 
 BoxOutline::BoxOutline(GLdouble length, std::string t)
 {
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, 0.0, 0.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 }
 
 BoxOutline::BoxOutline(GLdouble length, std::string t, std::string t2)
 {
+
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
-	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	//mMesh = Mesh::generateBoxOutline(length);
+	mModelMat = translate(dmat4(1), dvec3(-300.0, -100.0, -300.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(0.0, 1.0, 0.0));
+	
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 	mTexture2 = new Texture();
 	setTexture(t2, mTexture2, 255);
+
 }
+
+
+
 
 BoxOutline::~BoxOutline()
 {
@@ -328,6 +344,8 @@ BoxOutline::~BoxOutline()
 	delete mTexture;
 	delete mTexture2;
 	mMesh = nullptr;
+	mTexture = nullptr;
+	mTexture2 = nullptr;
 }
 
 void BoxOutline::render(const dmat4& modelViewMat) const
@@ -335,6 +353,8 @@ void BoxOutline::render(const dmat4& modelViewMat) const
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+
+		upload(aMat);
 
 		glEnable(GL_CULL_FACE);
 
@@ -352,10 +372,12 @@ void BoxOutline::render(const dmat4& modelViewMat) const
 		mMesh->render(); // render
 		mTexture->unbind(); // unbind
 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDisable(GL_CULL_FACE);
 
-		upload(aMat);
+		
 		mMesh->render();
+		
 	}
 }
 
@@ -454,6 +476,7 @@ void Box::update()
 Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, std::string text)
 {
 	mMesh = Mesh::generateStar3DTexCor(re, np, h);
+	mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0)); 
 	mTexture = new Texture();
 	setTexture(text, mTexture, 255);
 }
@@ -491,18 +514,25 @@ void Star3D::update()
 {
 	angle += rotationFactor;
 
-	// rotacion en el eje z
-	mModelMat = rotate(dmat4(1.0), radians(angle), dvec3(0.0, 0.0, 1.0));
-	// rotacion en el eje y
-	mModelMat = rotate(dmat4(1.0), radians(angle), dvec3(0.0, 1.0, 0.0));
-	// ambas rotaciones tienen el mismo angulo
+	//// rotacion en el eje z
+	//mModelMat *= rotate(dmat4(1.0), radians(angle), dvec3(0.0, 1.0, 0.0));
+	//// rotacion en el eje y
+	//mModelMat *= rotate(dmat4(1.0), radians(angle), dvec3(0.0, 0.0, 1.0));
+	//// ambas rotaciones tienen el mismo angulo
+
+	mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0)) *
+		rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 0.0)) *
+		rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0));
+
+	//rotationSp += .05;
 }
 
-GlassParapet::GlassParapet(GLdouble length, std::string t)
+GlassParapet::GlassParapet(GLdouble width, GLdouble height, std::string t)
 {
-	mMesh = Mesh::generateBoxOutlineTexColor(length);
+	mMesh = Mesh::generateGlassParapet(width, height);//Mesh::generateBoxOutlineTexColor(width);
 	mTexture = new Texture();
 	setTexture(t, mTexture, 128);
+	mModelMat = translate(dmat4(1), dvec3(0.0, -100.0, 0.0));
 }
 
 GlassParapet::~GlassParapet()
@@ -534,8 +564,11 @@ Photo::Photo(GLdouble w, GLdouble h)
 	pW = w;
 	pH = h;
 	mMesh = Mesh::generateRectangleTexCor(w, h);
-	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, -100.0, 0.0)) 
+		* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
+	mTexture->loadColorBuffer(800.0, 600.0);
 	//setTexture(t, mTexture, 128);
 }
 
@@ -552,23 +585,24 @@ void Photo::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		// HACER ALGO AQUI
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+		mTexture->bind(GL_REPLACE);// GL_REPLACE, GL_MODULATE, GL_ADD
+
+
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
+
+
 		glLineWidth(1);
 		mTexture->unbind();
-
-		// DESHACERLO AQUI
 	}
 }
 
 void Photo::update()
 {
 	// actualiza la textura 
-	mTexture->loadColorBuffer(pW, pH, GL_BACK);
+	mTexture->loadColorBuffer(800.0, 600.0);
 }

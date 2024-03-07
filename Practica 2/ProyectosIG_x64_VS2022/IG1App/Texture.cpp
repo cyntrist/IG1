@@ -68,9 +68,14 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) //=G
 	// si buffer es un buffer valido; aka si es FRONT o BACK, se sigue, si no pasa
 	if (buffer == GL_FRONT || buffer == GL_BACK) {
 
-		glGenTextures(1, &mId);				// se genera 1 textura y se guarda su nombre en mId
-		//glBindTexture(GL_TEXTURE_2D, mId);	// se activa/crea (si no esta creada) la textura a 2D 
+		//glGenTextures(1, &mId);				// se genera 1 textura y se guarda su nombre en mId
+		glBindTexture(GL_TEXTURE_2D, mId);	// se activa/crea (si no esta creada) la textura a 2D 
 		// no hace falta porque se llama en bind
+
+		init();
+
+		mWidth = width;
+		mHeight = height;
 
 		// llama al bind, que llama a glBindTexture(GL_TEXTURE_2D, mixMode) y a glTextEnvi(...)
 		// el primero activa la textura y el segundo settea el modo (REPLACE, MODULATE O ADD)
@@ -89,5 +94,7 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) //=G
 		// desactiva la textura
 		unbind();
 	}
+
+
 }
 //-------------------------------------------------------------------------

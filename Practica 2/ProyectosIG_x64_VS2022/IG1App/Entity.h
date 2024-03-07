@@ -160,7 +160,7 @@ public:
 
 class GlassParapet : public Abs_Entity {
 public:
-	explicit GlassParapet(GLdouble length, std::string t);
+	explicit GlassParapet(GLdouble width, GLdouble height, std::string t);
 	~GlassParapet() override;
 
 	void render(glm::dmat4 const& modelViewMat) const override;
