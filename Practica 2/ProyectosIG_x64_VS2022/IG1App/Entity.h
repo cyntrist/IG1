@@ -140,6 +140,11 @@ public:
 	explicit Box(GLdouble length, const std::string& t, const std::string& t2);
 	~Box() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
+	void renderTop(glm::dmat4 const& modelViewMat) const;
+	void renderMain(glm::dmat4 const& modelViewMat) const;
+	void renderBot(glm::dmat4 const& modelViewMat) const;
+	void update() override;
+
 };
 
 class Star3D : public Abs_Entity

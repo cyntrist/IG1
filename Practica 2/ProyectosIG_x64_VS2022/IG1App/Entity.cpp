@@ -389,62 +389,65 @@ void Box::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		/// Inicializacion de textura, modo y culling para caras traseras
+		/// Inicializacion de culling
 		glEnable(GL_CULL_FACE);
+
+		///	Caras traseras
 		glPolygonMode(GL_BACK, GL_FILL);
 		mTexture2->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_BACK);
 
-		/// RENDERIZADO
-		///	Caras traseras
-		// Cuerpo principal
-		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		upload(aMat);
-		mMesh->render();
-		// Tapa (primero rotate luego translate)
-		dmat4 bMat = modelViewMat
-			* translate(mTopMat, dvec3(0, length / 2, 0))
-			* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
-		upload(bMat);
-		mTopMesh->render();
-		// Culo (primero rotate luego translate)
-		dmat4 cMat = modelViewMat
-			* translate(mTopMat, dvec3(0, -length / 2, 0))
-			* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
-		upload(cMat);
-		mBottomMesh->render();
+		renderMain(modelViewMat); // Cuerpo principal
+		renderTop(modelViewMat); // Tapa (primero rotate luego translate)
+		renderBot(modelViewMat); // Culo (primero rotate luego translate)
 
-		mTexture2->unbind();
+		mTexture2->unbind(); // quita la textura del buffer
 
 		/// Caras delanteras
 		glPolygonMode(GL_FRONT, GL_FILL);
 		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_FRONT);
 
-		// Cuerpo principal
-		aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		upload(aMat);
-		mMesh->render();
-		// Tapa (primero rotate luego translate)
-		bMat = modelViewMat
-			* translate(mTopMat, dvec3(0, length / 2, 0))
-			* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
-		upload(bMat);
-		mTopMesh->render();
-		// Culo (primero rotate luego translate)
-		cMat = modelViewMat
-			* translate(mTopMat, dvec3(0, -length / 2, 0))
-			* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
-		upload(cMat);
-		mBottomMesh->render();
+		renderMain(modelViewMat); // Cuerpo principal
+		renderTop(modelViewMat); // Tapa (primero rotate luego translate)
+		renderBot(modelViewMat); // Culo (primero rotate luego translate)
 
-		// quita la textura del buffer
-		mTexture->unbind();
+		mTexture->unbind(); // quita la textura del buffer
 
 		/// Reseteo
 		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // fill
 	}
+}
+
+void Box::renderTop(const dmat4& modelViewMat) const
+{
+	const auto aMat = modelViewMat * mModelMat; // glm matrix multiplication
+	upload(aMat);
+	mMesh->render();
+}
+
+void Box::renderMain(const dmat4& modelViewMat) const
+{
+	const auto aMat = modelViewMat
+		* translate(mTopMat, dvec3(0, length / 2, 0))
+		* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	upload(aMat);
+	mTopMesh->render();
+}
+
+void Box::renderBot(const dmat4& modelViewMat) const
+{
+	const auto aMat = modelViewMat
+		* translate(mTopMat, dvec3(0, -length / 2, 0))
+		* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
+	upload(aMat);
+	mBottomMesh->render();
+}
+
+void Box::update()
+{
+	Abs_Entity::update();
 }
 
 /// STAR 3D
