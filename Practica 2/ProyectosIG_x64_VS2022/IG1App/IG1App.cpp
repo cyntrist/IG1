@@ -48,6 +48,7 @@ IG1App::init()
 	scenes[2] = new Scene;
 	scenes[3] = new Scene;
 	scenes[4] = new Scene;
+	scenes[5] = new Scene;
 	scenes[0]->addObject(new RegularPolygon(32, 250));
 	scenes[0]->addObject(new RGBRectangle(500,250));
 	scenes[0]->addObject(new RGBTriangle(50, 250));
@@ -55,6 +56,7 @@ IG1App::init()
 	scenes[2]->addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
 	scenes[3]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
 	scenes[4]->addObject(new GlassParapet(200, "./bmps/windowV.bmp"));
+	scenes[5]->addObject(new Photo(mWinH, mWinW));
 	sceneIndex = 3;
 	mCamera->set3D();
 
@@ -176,6 +178,11 @@ IG1App::key(unsigned char key, int x, int y)
 			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
 			mCamera->set3D();
 			sceneIndex = 4;
+			break;
+		case '5':
+			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
+			mCamera->set3D();
+			sceneIndex = 5;
 			break;
 		case 'u':
 			scenes[sceneIndex]->update();

@@ -13,7 +13,7 @@
 #include "Scene.h"
 #include "Viewport.h"
 
-constexpr int MAX_SCENES = 5;
+constexpr int MAX_SCENES = 6;
 
 	static int sceneIndex = 0;
 	static std::array<Scene*, MAX_SCENES> scenes; // array de escenas

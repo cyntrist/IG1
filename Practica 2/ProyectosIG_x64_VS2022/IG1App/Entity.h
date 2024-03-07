@@ -149,10 +149,13 @@ public:
 
 class Photo : public Abs_Entity {
 public:
-	explicit Photo(GLdouble length, std::string t);
+	explicit Photo(GLdouble w, GLdouble h);
 	~Photo() override;
 
 	void render(glm::dmat4 const& modelViewMat) const override;
+	void update() override;
 
+private:
+	int pW, pH;
 };
 #endif //_H_Entities_H_

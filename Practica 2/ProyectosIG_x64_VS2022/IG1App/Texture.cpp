@@ -88,8 +88,6 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) //=G
 
 		// desactiva la textura
 		unbind();
-
-		
 	}
 }
 //-------------------------------------------------------------------------
