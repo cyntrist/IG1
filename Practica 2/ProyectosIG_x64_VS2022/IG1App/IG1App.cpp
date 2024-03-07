@@ -56,7 +56,7 @@ IG1App::init()
 	scenes[2]->addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
 	scenes[3]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
 	scenes[4]->addObject(new GlassParapet(200, "./bmps/windowV.bmp"));
-	scenes[5]->addObject(new Photo(mWinH, mWinW));
+	scenes[5]->addObject(new Photo(mCamera->viewPort().width(), mCamera->viewPort().height()));
 	sceneIndex = 3;
 	mCamera->set3D();
 
