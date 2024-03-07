@@ -282,13 +282,13 @@ Ground::~Ground()
 	mMesh = nullptr;
 }
 
-void Ground::render(glm::dmat4 const& modelViewMat) const
+void Ground::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -330,27 +330,27 @@ BoxOutline::~BoxOutline()
 	mMesh = nullptr;
 }
 
-void BoxOutline::render(glm::dmat4 const& modelViewMat) const
+void BoxOutline::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-			
+
 		glEnable(GL_CULL_FACE);
 
 		// back
-		glPolygonMode(GL_BACK, GL_FILL);	// fill
-		mTexture2->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
-		glCullFace(GL_BACK);				// culleo
-		mMesh->render();					// render
-		mTexture2->unbind();				// unbind
+		glPolygonMode(GL_BACK, GL_FILL); // fill
+		mTexture2->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_BACK); // culleo
+		mMesh->render(); // render
+		mTexture2->unbind(); // unbind
 
 		// front
-		glPolygonMode(GL_FRONT, GL_FILL);	// fill
-		mTexture->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
-		glCullFace(GL_FRONT);				// culleo
-		mMesh->render();					// render
-		mTexture->unbind();					// unbind
+		glPolygonMode(GL_FRONT, GL_FILL); // fill
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_FRONT); // culleo
+		mMesh->render(); // render
+		mTexture->unbind(); // unbind
 
 		glDisable(GL_CULL_FACE);
 
@@ -361,18 +361,15 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 
 
 /// BOX
-Box::Box(GLdouble length, std::string t, std::string t2)
+Box::Box(GLdouble length, const std::string& t, const std::string& t2) : length(length), angle(0)
 {
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
-	mTop = Mesh::generateRectangleTexCor(length, length);
-	mBottom = Mesh::generateRectangleTexCor(length, length);
-
-	mTopMat = rotate(dmat4(1.0), radians(90.0), dvec3(1.0, 0.0, 0.0));
-	mBotMat = rotate(dmat4(1.0), radians(90.0), dvec3(0.0, 0.0, 1.0));
+	mTopMesh = Mesh::generateRectangleTexCor(length, length);
+	mBottomMesh = Mesh::generateRectangleTexCor(length, length);
 
 	mTexture = new Texture();
-	setTexture(t, mTexture, 255);
 	mTexture2 = new Texture();
+	setTexture(t, mTexture, 255);
 	setTexture(t2, mTexture2, 255);
 }
 
@@ -380,44 +377,73 @@ Box::~Box()
 {
 	delete mMesh;
 	delete mTexture;
+	delete mTopMesh;
+	delete mBottomMesh;
+	mTopMesh = nullptr;
+	mBottomMesh = nullptr;
+	mTexture = nullptr;
 	mMesh = nullptr;
 }
 
-void Box::render(glm::dmat4 const& modelViewMat) const
+void Box::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		dmat4 topMat = modelViewMat * mTopMat;
-		dmat4 botMat = modelViewMat * mBotMat;
+		/// Inicializacion de textura, modo y culling para caras traseras
 		glEnable(GL_CULL_FACE);
+		glPolygonMode(GL_BACK, GL_FILL);
+		mTexture2->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_BACK);
 
-		// back
-		glPolygonMode(GL_BACK, GL_FILL);	// fill
-		mTexture2->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
-		glCullFace(GL_BACK);				// culleo
-		mMesh->render();					// render
-		mTop->render();					// render
-		mBottom->render();					// render
-		mTexture2->unbind();				// unbind
-
-		// front
-		glPolygonMode(GL_FRONT, GL_FILL);	// fill
-		mTexture->bind(GL_MODULATE);		// GL_REPLACE, GL_MODULATE, GL_ADD
-		glCullFace(GL_FRONT);				// culleo
-		mMesh->render();					// render
-		mTop->render();					// render
-		mBottom->render();					// render
-		mTexture->unbind();					// unbind
-
-		glDisable(GL_CULL_FACE);
-
-		upload(botMat);
+		/// RENDERIZADO
+		///	Caras traseras
+		// Cuerpo principal
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
-		upload(topMat);
 		mMesh->render();
-		mTop->render();					// render
-		mBottom->render();
+		// Tapa (primero rotate luego translate)
+		dmat4 bMat = modelViewMat
+			* translate(mTopMat, dvec3(0, length / 2, 0))
+			* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+		upload(bMat);
+		mTopMesh->render();
+		// Culo (primero rotate luego translate)
+		dmat4 cMat = modelViewMat
+			* translate(mTopMat, dvec3(0, -length / 2, 0))
+			* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
+		upload(cMat);
+		mBottomMesh->render();
+
+		mTexture2->unbind();
+
+		/// Caras delanteras
+		glPolygonMode(GL_FRONT, GL_FILL);
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+		glCullFace(GL_FRONT);
+
+		// Cuerpo principal
+		aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+		mMesh->render();
+		// Tapa (primero rotate luego translate)
+		bMat = modelViewMat
+			* translate(mTopMat, dvec3(0, length / 2, 0))
+			* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+		upload(bMat);
+		mTopMesh->render();
+		// Culo (primero rotate luego translate)
+		cMat = modelViewMat
+			* translate(mTopMat, dvec3(0, -length / 2, 0))
+			* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
+		upload(cMat);
+		mBottomMesh->render();
+
+		// quita la textura del buffer
+		mTexture->unbind();
+
+		/// Reseteo
+		glDisable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // fill
 	}
 }
 
@@ -436,12 +462,12 @@ Star3D::~Star3D()
 	mMesh = nullptr;
 }
 
-void Star3D::render(glm::dmat4 const& modelViewMat) const
+void Star3D::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
 		glLineWidth(2);
-		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
@@ -454,13 +480,12 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render(); // renderiza la segunda estrella
 
 		mTexture->unbind();
-		glLineWidth(1); 
+		glLineWidth(1);
 	}
 }
 
 void Star3D::update()
 {
-
 	angle += rotationFactor;
 
 	// rotacion en el eje z
@@ -486,21 +511,18 @@ GlassParapet::~GlassParapet()
 	mTexture2 = nullptr;
 }
 
-void GlassParapet::render(glm::dmat4 const& modelViewMat) const
+void GlassParapet::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-
-
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
 		mTexture->unbind();
-
 	}
 }
 
@@ -512,7 +534,6 @@ Photo::Photo(GLdouble w, GLdouble h)
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	//setTexture(t, mTexture, 128);
-
 }
 
 Photo::~Photo()
@@ -524,7 +545,7 @@ Photo::~Photo()
 	mTexture2 = nullptr;
 }
 
-void Photo::render(glm::dmat4 const& modelViewMat) const
+void Photo::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
@@ -532,7 +553,7 @@ void Photo::render(glm::dmat4 const& modelViewMat) const
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -541,7 +562,6 @@ void Photo::render(glm::dmat4 const& modelViewMat) const
 
 		// DESHACERLO AQUI
 	}
-
 }
 
 void Photo::update()
