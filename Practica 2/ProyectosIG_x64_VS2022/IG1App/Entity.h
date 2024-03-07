@@ -146,4 +146,13 @@ public:
 	void render(glm::dmat4 const& modelViewMat) const override;
 
 };
+
+class Photo : public Abs_Entity {
+public:
+	explicit Photo(GLdouble length, std::string t);
+	~Photo() override;
+
+	void render(glm::dmat4 const& modelViewMat) const override;
+
+};
 #endif //_H_Entities_H_

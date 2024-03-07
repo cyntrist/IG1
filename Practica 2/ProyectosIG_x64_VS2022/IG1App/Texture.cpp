@@ -65,8 +65,31 @@ void Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP
 
 void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) //=GL_FRONT
 {
-	// generates a rectangle with the said width
-	Mesh::generateRectangleTexCor(width, height);
+	// si buffer es un buffer valido; aka si es FRONT o BACK, se sigue, si no pasa
+	if (buffer == GL_FRONT || buffer == GL_BACK) {
 
+		glGenTextures(1, &mId);				// se genera 1 textura y se guarda su nombre en mId
+		//glBindTexture(GL_TEXTURE_2D, mId);	// se activa/crea (si no esta creada) la textura a 2D 
+		// no hace falta porque se llama en bind
+
+		// llama al bind, que llama a glBindTexture(GL_TEXTURE_2D, mixMode) y a glTextEnvi(...)
+		// el primero activa la textura y el segundo settea el modo (REPLACE, MODULATE O ADD)
+		bind(GL_REPLACE);
+
+		// lee el buffere especifico que quiere
+		glReadBuffer(buffer);
+
+		// copia en la textura activa de la imagen del Color buffer
+		// glCopyTexImage2D(GL_TEXTURE_2D, level, format, xLeft, yBottom, width, height, border);
+		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, height, 0);
+
+		// devuelve el buffer al defecto (GL_BACK)
+		glReadBuffer(GL_BACK);
+
+		// desactiva la textura
+		unbind();
+
+		
+	}
 }
 //-------------------------------------------------------------------------
