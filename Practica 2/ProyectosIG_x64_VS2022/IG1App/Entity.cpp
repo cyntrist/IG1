@@ -240,7 +240,7 @@ void RGBCube::update()
 	}
 }
 
-mat4 RGBCube::rotateAroundCenter(const mat4& matrix, const vec3& center, float angle, const vec3& axis)
+mat4 Abs_Entity::rotateAroundCenter(const mat4& matrix, const vec3& center, float angle, const vec3& axis)
 {
 	const mat4 translateToOriginMatrix = translate(mat4(1.0f), center);
 	// matriz de traslacion de vuelta al origen inicial
@@ -452,8 +452,11 @@ void Box::renderTop(const dmat4& modelViewMat) const
 void Box::renderMain(const dmat4& modelViewMat) const
 {
 	const auto aMat = modelViewMat
-		* translate(mTopMat, dvec3(0, length / 2, 0))
-		* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+		* translate(mTopMat, dvec3(0, length / 2, 0)) // traslacion final a arriba de la caja
+		* translate(mTopMat, dvec3(0.0, 0.0,-length/2))  // deshacer la traslacion del origen
+		* rotate(mBotMat, radians(-angle), dvec3(1.0, 0.0, 0.0)) // rotacion desde un lado de la tapa
+		* translate(mTopMat, dvec3(0.0, 0.0, length/2)) // traslacion para hacer la rotación con otro origen
+		* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0)); // rotacion inicial para que este tumbada
 	upload(aMat);
 	mTopMesh->render();
 }
@@ -461,7 +464,7 @@ void Box::renderMain(const dmat4& modelViewMat) const
 void Box::renderBot(const dmat4& modelViewMat) const
 {
 	const auto aMat = modelViewMat
-		* translate(mTopMat, dvec3(0, -length / 2, 0))
+		* translate(mBotMat, dvec3(0, -length / 2, 0))
 		* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
 	upload(aMat);
 	mBottomMesh->render();
@@ -469,7 +472,13 @@ void Box::renderBot(const dmat4& modelViewMat) const
 
 void Box::update()
 {
-	Abs_Entity::update();
+	if (clockwise)
+		angle += speed;
+	else
+		angle -= speed;
+
+	if (angle <= 0 || angle >= 180.0)
+		clockwise = !clockwise;
 }
 
 /// STAR 3D
@@ -485,6 +494,7 @@ Star3D::~Star3D()
 {
 	delete mMesh;
 	delete mTexture;
+	mTexture = nullptr;
 	mMesh = nullptr;
 }
 

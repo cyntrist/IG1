@@ -71,7 +71,7 @@ IG1App::init()
 	scenes[5]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
 	
 	
-	sceneIndex = 5;
+	sceneIndex = 6;
 	mCamera->set3D();
 
 	//mScene->init();

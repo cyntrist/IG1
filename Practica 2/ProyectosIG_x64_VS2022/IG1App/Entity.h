@@ -28,7 +28,12 @@ public:
 	glm::dvec4 getmColor() { return mColor; } // getter
 	void setmColor(glm::dvec4 color) { mColor = color; } // setter
 
+	// texture
 	void setTexture(const std::string& text, Texture* mtext, GLubyte alpha) const { mtext->load(text, alpha); }
+
+	// rotate
+	glm::mat4 rotateAroundCenter(const glm::mat4& matrix, const glm::vec3& center, float angle, const glm::vec3& axis);
+
 
 protected:
 	Mesh* mMesh = nullptr; // the mesh
@@ -103,7 +108,6 @@ public:
 	~RGBCube();
 	void render(glm::dmat4 const& modelViewMat) const override;
 	void update() override;
-	glm::mat4 rotateAroundCenter(const glm::mat4& matrix, const glm::vec3& center, float angle, const glm::vec3& axis);
 };
 
 
@@ -132,6 +136,8 @@ class Box : public Abs_Entity
 {
 	GLdouble length;
 	GLdouble angle;
+	GLdouble speed = 1;
+	bool clockwise = true;
 	Mesh* mTopMesh;
 	Mesh* mBottomMesh;
 	glm::dmat4 mTopMat = glm::dmat4(1.0);
