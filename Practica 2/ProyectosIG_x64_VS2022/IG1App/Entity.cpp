@@ -270,7 +270,8 @@ Ground::Ground(GLdouble w, GLdouble h, std::string t) : Ground(w, h)
 Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, rw, rh);
-	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, -150.0, 0.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 }
@@ -290,11 +291,11 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
 		upload(aMat);
-		glLineWidth(2);
 		mMesh->render();
-		glLineWidth(1);
 		mTexture->unbind();
 	}
+
+	
 }
 
 
@@ -302,6 +303,7 @@ void Ground::render(glm::dmat4 const& modelViewMat) const
 BoxOutline::BoxOutline(GLdouble length)
 {
 	mMesh = Mesh::generateBoxOutline(length);
+	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 }
 
 BoxOutline::BoxOutline(GLdouble length, std::string t)
@@ -314,13 +316,20 @@ BoxOutline::BoxOutline(GLdouble length, std::string t)
 
 BoxOutline::BoxOutline(GLdouble length, std::string t, std::string t2)
 {
+
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	//mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0));
+	
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 	mTexture2 = new Texture();
 	setTexture(t2, mTexture2, 255);
+
 }
+
+
+
 
 BoxOutline::~BoxOutline()
 {
@@ -352,6 +361,7 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();					// render
 		mTexture->unbind();					// unbind
 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDisable(GL_CULL_FACE);
 
 		upload(aMat);
@@ -425,6 +435,7 @@ void Box::render(glm::dmat4 const& modelViewMat) const
 Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, std::string text)
 {
 	mMesh = Mesh::generateStar3DTexCor(re, np, h);
+	mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0)); 
 	mTexture = new Texture();
 	setTexture(text, mTexture, 255);
 }
@@ -470,11 +481,12 @@ void Star3D::update()
 	// ambas rotaciones tienen el mismo angulo
 }
 
-GlassParapet::GlassParapet(GLdouble length, std::string t)
+GlassParapet::GlassParapet(GLdouble width, GLdouble height, std::string t)
 {
-	mMesh = Mesh::generateBoxOutlineTexColor(length);
+	mMesh = Mesh::generateGlassParapet(width, height);//Mesh::generateBoxOutlineTexColor(width);
 	mTexture = new Texture();
 	setTexture(t, mTexture, 128);
+	mModelMat = translate(dmat4(1), dvec3(0.0, -100.0, 0.0));
 }
 
 GlassParapet::~GlassParapet()
@@ -508,8 +520,9 @@ Photo::Photo(GLdouble w, GLdouble h)
 {
 	pW = w;
 	pH = h;
-	mMesh = Mesh::generateRectangleTexCor(w, h, 1, 1);
-	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mMesh = Mesh::generateRectangleTexCor(w, h);
+	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, 0.1, 0.0)) * rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	mTexture->loadColorBuffer(w, h);
 	//setTexture(t, mTexture, 128);
