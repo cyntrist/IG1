@@ -383,6 +383,8 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	return mesh;
 }
 
+
+/// Rectangle
 Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 {
 	auto mesh = generateRectangle(w, h);
@@ -408,17 +410,15 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 	return mesh;
 }
 
+
+/// Box Outline
 Mesh* Mesh::generateBoxOutline(GLdouble length)
 {
 	auto* mesh = new Mesh();
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
-	/*glPolygonMode(GL_FRONT, GL_LINE);
-	glPolygonMode(GL_BACK, GL_POINT);*/
 	mesh->mNumVertices = 10;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
-	/// EN CLASE:
-	// 14 VERTICES!!!!!!!
 	const GLdouble m = length / 2;
 
 	mesh->vVertices.emplace_back(m, -m, m); // v0
@@ -434,10 +434,8 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 
 	mesh->vVertices.push_back(mesh->vVertices[0]); // v8
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v9
-	
 
 	mesh->vColors.reserve(mesh->mNumVertices);
-	//mesh->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
 
 	return mesh;
 }
@@ -445,6 +443,7 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 Mesh* Mesh::generateBoxOutlineTexColor(GLdouble longitud)
 {
 	auto mesh = generateBoxOutline(longitud);
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
 
 	for (int i = 0; i < 4; i++) {
 		mesh->vTexCoords.emplace_back(0, 0);
@@ -491,6 +490,23 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 
 
 	glEnd(); //end drawing of line loop
+
+	return mesh;
+}
+
+Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
+{
+	auto mesh = generateStar3D(re, np, h);
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+	mesh->vTexCoords.emplace_back(0.5, 0.5);
+	for (int i = 0; i < 4; i++) {
+		mesh->vTexCoords.emplace_back(0, 1);
+		mesh->vTexCoords.emplace_back(0.5, 1);
+		mesh->vTexCoords.emplace_back(0, 1);
+		mesh->vTexCoords.emplace_back(0, 0.5);
+	}
+	mesh->vTexCoords.emplace_back(0.0, 1.0);
 
 	return mesh;
 }

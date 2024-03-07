@@ -133,7 +133,7 @@ class Star3D : public Abs_Entity
 	GLdouble angle = 0;
 	GLdouble rotationFactor = 5;
 public:
-	explicit Star3D(GLdouble re, GLuint np, GLdouble h);
+	explicit Star3D(GLdouble re, GLuint np, GLdouble h, std::string);
 	void render(glm::dmat4 const& modelViewMat) const override;
 	void update() override;
 };

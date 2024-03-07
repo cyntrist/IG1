@@ -361,9 +361,11 @@ void BoxOutline::render(glm::dmat4 const& modelViewMat) const
 
 
 /// STAR 3D
-Star3D::Star3D(GLdouble re, GLuint np, GLdouble h)
+Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, std::string text)
 {
-	mMesh = Mesh::generateStar3D(re, np, h);
+	mMesh = Mesh::generateStar3DTexCor(re, np, h);
+	mTexture = new Texture();
+	setTexture(text, mTexture, 255);
 }
 
 void Star3D::render(glm::dmat4 const& modelViewMat) const
@@ -371,8 +373,8 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr)
 	{
 		glLineWidth(2);
-		//mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat); // upload de primera estrella
@@ -383,7 +385,7 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 		upload(bMat); // upload de la segunda estrella rotada
 		mMesh->render(); // renderiza la segunda estrella
 
-		//mTexture->unbind();
+		mTexture->unbind();
 		glLineWidth(1); 
 	}
 }
@@ -404,7 +406,6 @@ GlassParapet::GlassParapet(GLdouble length, std::string t)
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	mTexture = new Texture();
 	setTexture(t, mTexture, 128);
-
 }
 
 GlassParapet::~GlassParapet()
