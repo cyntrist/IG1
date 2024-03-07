@@ -496,6 +496,7 @@ Photo::Photo(GLdouble w, GLdouble h)
 	pW = w;
 	pH = h;
 	mMesh = Mesh::generateRectangleTexCor(w, h);
+	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	//setTexture(t, mTexture, 128);
 
