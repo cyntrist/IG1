@@ -556,7 +556,8 @@ Photo::Photo(GLdouble w, GLdouble h)
 	pH = h;
 	mMesh = Mesh::generateRectangleTexCor(w, h);
 	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
-	mModelMat = translate(dmat4(1), dvec3(0.0, 0.1, 0.0)) * rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, -100.0, 0.0)) 
+		* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	mTexture->loadColorBuffer(w, h);
 	//setTexture(t, mTexture, 128);
