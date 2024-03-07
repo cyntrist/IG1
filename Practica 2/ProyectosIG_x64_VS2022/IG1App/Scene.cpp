@@ -66,6 +66,7 @@ Scene::resetGL()
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
 	glDisable(GL_TEXTURE_2D);	  // disable Texture mode
+	glDisable(GLUT_MULTISAMPLE);
 }
 
 void Scene::setCulling()

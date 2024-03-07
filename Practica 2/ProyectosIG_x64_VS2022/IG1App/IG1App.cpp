@@ -64,9 +64,9 @@ IG1App::init()
 	scenes[6]->addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 
 
-	//scenes[5]->addObject(new Photo(200, 100));
+	scenes[5]->addObject(new Photo(200, 100));
 	scenes[5]->addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp"));
-	//scenes[5]->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
+	scenes[5]->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 	scenes[5]->addObject(new GlassParapet(600, 100, "./bmps/windowV.bmp"));
 	scenes[5]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
 	

@@ -281,6 +281,7 @@ Ground::~Ground()
 	delete mMesh;
 	delete mTexture;
 	mMesh = nullptr;
+	mTexture = nullptr;
 }
 
 void Ground::render(const dmat4& modelViewMat) const
@@ -293,6 +294,7 @@ void Ground::render(const dmat4& modelViewMat) const
 		upload(aMat);
 		mMesh->render();
 		mTexture->unbind();
+
 	}
 
 	
@@ -304,12 +306,16 @@ BoxOutline::BoxOutline(GLdouble length)
 {
 	mMesh = Mesh::generateBoxOutline(length);
 	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, 0.0, 0.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 }
 
 BoxOutline::BoxOutline(GLdouble length, std::string t)
 {
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	mModelMat = translate(dmat4(1), dvec3(0.0, 0.0, 0.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 }
@@ -318,8 +324,9 @@ BoxOutline::BoxOutline(GLdouble length, std::string t, std::string t2)
 {
 
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
-	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
-	//mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0));
+	//mMesh = Mesh::generateBoxOutline(length);
+	mModelMat = translate(dmat4(1), dvec3(-300.0, -100.0, -300.0)) *
+		rotate(mModelMat, radians(-90.0), dvec3(0.0, 1.0, 0.0));
 	
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
@@ -337,6 +344,8 @@ BoxOutline::~BoxOutline()
 	delete mTexture;
 	delete mTexture2;
 	mMesh = nullptr;
+	mTexture = nullptr;
+	mTexture2 = nullptr;
 }
 
 void BoxOutline::render(const dmat4& modelViewMat) const
@@ -344,6 +353,8 @@ void BoxOutline::render(const dmat4& modelViewMat) const
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+
+		upload(aMat);
 
 		glEnable(GL_CULL_FACE);
 
@@ -364,8 +375,9 @@ void BoxOutline::render(const dmat4& modelViewMat) const
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDisable(GL_CULL_FACE);
 
-		upload(aMat);
+		
 		mMesh->render();
+		
 	}
 }
 

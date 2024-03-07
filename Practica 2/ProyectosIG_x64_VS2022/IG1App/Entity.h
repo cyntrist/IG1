@@ -124,7 +124,6 @@ public:
 	explicit BoxOutline(GLdouble length);
 	explicit BoxOutline(GLdouble length, std::string t);
 	explicit BoxOutline(GLdouble length, std::string t, std::string t2);
-	explicit BoxOutline(GLdouble length, std::string t, std::string t2, glm::dvec3 pos);
 	~BoxOutline() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 };

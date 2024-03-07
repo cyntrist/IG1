@@ -437,6 +437,8 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 
 	mesh->vColors.reserve(mesh->mNumVertices);
 
+
+
 	return mesh;
 }
 
@@ -445,12 +447,18 @@ Mesh* Mesh::generateBoxOutlineTexColor(GLdouble longitud)
 	auto mesh = generateBoxOutline(longitud);
 	mesh->vTexCoords.reserve(mesh->mNumVertices);
 
-	for (int i = 0; i < 4; i++) {
-		mesh->vTexCoords.emplace_back(0, 0);
-		mesh->vTexCoords.emplace_back(1, 0);
-		mesh->vTexCoords.emplace_back(0, 1);
-		mesh->vTexCoords.emplace_back(1, 1);
-	}
+	mesh->vTexCoords.emplace_back(0, 1);
+	mesh->vTexCoords.emplace_back(0, 0);
+	mesh->vTexCoords.emplace_back(1, 1);
+	mesh->vTexCoords.emplace_back(1, 0);
+
+	mesh->vTexCoords.emplace_back(0, 1);
+	mesh->vTexCoords.emplace_back(0, 0);
+	mesh->vTexCoords.emplace_back(1, 1);
+	mesh->vTexCoords.emplace_back(1, 0);
+
+	mesh->vTexCoords.emplace_back(0, 1);
+	mesh->vTexCoords.emplace_back(0, 0);
 
 	return mesh;
 }
