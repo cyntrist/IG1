@@ -370,20 +370,33 @@ void Star3D::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
 		glLineWidth(2);
-		upload(aMat); // upload de primera estrella
-		mMesh->render();
+		//mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat); // upload de primera estrella
+		mMesh->render(); // renderiza la primera estrella
+
+		// matriz de la segunda estrella
 		dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
 		upload(bMat); // upload de la segunda estrella rotada
+		mMesh->render(); // renderiza la segunda estrella
 
-		mMesh->render();
 		//mTexture->unbind();
-		glLineWidth(1);
+		glLineWidth(1); 
 	}
+}
+
+void Star3D::update()
+{
+	angle += rotationFactor;
+
+	// rotacion en el eje z
+	mModelMat = rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0));
+	// rotacion en el eje y
+	mModelMat = rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 1.0));
+	// ambas rotaciones tienen el mismo angulo
 }
 
 GlassParapet::GlassParapet(GLdouble length, std::string t)

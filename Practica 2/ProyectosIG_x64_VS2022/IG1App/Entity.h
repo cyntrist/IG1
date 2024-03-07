@@ -130,9 +130,12 @@ public:
 
 class Star3D : public Abs_Entity
 {
+	GLdouble angle = 0;
+	GLdouble rotationFactor = 5;
 public:
 	explicit Star3D(GLdouble re, GLuint np, GLdouble h);
 	void render(glm::dmat4 const& modelViewMat) const override;
+	void update() override;
 };
 
 class GlassParapet : public Abs_Entity {
