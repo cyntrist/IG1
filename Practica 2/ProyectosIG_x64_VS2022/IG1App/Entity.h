@@ -28,7 +28,7 @@ public:
 	glm::dvec4 getmColor() { return mColor; } // getter
 	void setmColor(glm::dvec4 color) { mColor = color; } // setter
 
-	void setTexture(std::string text, Texture* mtext, GLubyte alpha) const { mtext->load(text, alpha); }
+	void setTexture(const std::string& text, Texture* mtext, GLubyte alpha) const { mtext->load(text, alpha); }
 
 protected:
 	Mesh* mMesh = nullptr; // the mesh
@@ -131,12 +131,14 @@ public:
 
 class Box : public Abs_Entity
 {
-	Mesh* mTop;
-	Mesh* mBottom;
+	GLdouble length;
+	GLdouble angle;
+	Mesh* mTopMesh;
+	Mesh* mBottomMesh;
 	glm::dmat4 mTopMat = glm::dmat4(1.0);
 	glm::dmat4 mBotMat = glm::dmat4(1.0);
 public:
-	explicit Box(GLdouble length, std::string t, std::string t2);
+	explicit Box(GLdouble length, const std::string& t, const std::string& t2);
 	~Box() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
