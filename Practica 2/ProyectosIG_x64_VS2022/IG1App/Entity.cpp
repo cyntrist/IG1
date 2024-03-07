@@ -508,9 +508,10 @@ Photo::Photo(GLdouble w, GLdouble h)
 {
 	pW = w;
 	pH = h;
-	mMesh = Mesh::generateRectangleTexCor(w, h);
+	mMesh = Mesh::generateRectangleTexCor(w, h, 1, 1);
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
+	mTexture->loadColorBuffer(w, h);
 	//setTexture(t, mTexture, 128);
 
 }
@@ -528,18 +529,19 @@ void Photo::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		// HACER ALGO AQUI
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		mTexture->bind(GL_MODULATE);// GL_REPLACE, GL_MODULATE, GL_ADD
+		mTexture->bind(GL_REPLACE);// GL_REPLACE, GL_MODULATE, GL_ADD
+
+
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
+
+
 		glLineWidth(1);
 		mTexture->unbind();
-
-		// DESHACERLO AQUI
 	}
 
 }
@@ -547,5 +549,5 @@ void Photo::render(glm::dmat4 const& modelViewMat) const
 void Photo::update()
 {
 	// actualiza la textura 
-	mTexture->loadColorBuffer(pW, pH, GL_BACK);
+	mTexture->loadColorBuffer(pW, pH, GL_FRONT);
 }
