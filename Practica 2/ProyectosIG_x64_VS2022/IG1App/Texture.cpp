@@ -62,7 +62,8 @@ void Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wp);  
   glBindTexture(GL_TEXTURE_2D, 0); 
 }
-void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer=GL_FRONT)
+
+void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) //=GL_FRONT
 {
 	// generates a rectangle with the said width
 	Mesh::generateRectangleTexCor(width, height);

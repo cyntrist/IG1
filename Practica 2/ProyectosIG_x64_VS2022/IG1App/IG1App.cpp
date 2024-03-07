@@ -170,7 +170,7 @@ IG1App::key(unsigned char key, int x, int y)
 			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;
 			mCamera->set3D();
 			sceneIndex = 3;
-			scenes[3]->setCulling();
+			//scenes[3]->setCulling();
 			break;
 		case '4':
 			//sceneIndex = (sceneIndex + 1) % MAX_SCENES;

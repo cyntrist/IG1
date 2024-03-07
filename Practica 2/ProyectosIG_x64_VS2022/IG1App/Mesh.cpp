@@ -460,7 +460,7 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 {
 	auto* mesh = new Mesh();
 	mesh->mPrimitive = GL_TRIANGLE_FAN;
-	mesh->mNumVertices = np*2 + 2;
+	mesh->mNumVertices = np * 2 + 2;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
 	// numero de vertices
@@ -475,14 +475,15 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 	for (int i = 0; i < np; i++)
 	{
 		// x = Cx + R*cos(alpha)
-		// y = Cy + R*sen(alpha) 
+		// y = Cy + R*sen(alpha)
+
 		mesh->vVertices.emplace_back(
 			re * cos(offset + radians(alpha * i)), 
 			re * sin(offset + radians(alpha * i)), 
 			h);
 		mesh->vVertices.emplace_back(
-			re/2 * cos(offset + radians(alpha  * i)), 
-			re/2 * sin(offset + radians(alpha * i)), 
+			re/2 * cos(offset + radians((alpha)  * (i + 1)) - radians(alpha/2)), 
+			re/2 * sin(offset + radians((alpha) * (i + 1)) - radians(alpha/2)), 
 			h);
 		
 	}
