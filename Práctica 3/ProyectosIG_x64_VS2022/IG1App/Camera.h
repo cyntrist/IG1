@@ -68,9 +68,12 @@ protected:
 	void setVM();
 	void setPM();
 
+	// practica 3
 	void setAxes();
 	glm::dvec3 row(glm::dmat4, int);
-
+	void moveLR(GLdouble cs); // A izquierda/A derecha
+	void moveFB(GLdouble cs); // Adelante/Atrás
+	void moveUD(GLdouble cs); // Arriba/Abajo
 };
 
 #endif //_H_Camera_H_
