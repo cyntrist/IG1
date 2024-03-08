@@ -40,7 +40,6 @@ protected:
 	glm::dmat4 mModelMat;  // modeling matrix
 	glm::dvec4 mColor;	   // color
 	Texture* mTexture;	   // texture
-	Texture* mTexture2;	   // texture
 	glm::dvec3 translation; // final translation
 	//std::vector<Texture*> mTextureVector:
 
@@ -121,7 +120,7 @@ public:
 
 class BoxOutline : public Abs_Entity
 {
-
+	Texture* mTexture2;	   // texture
 public:
 	explicit BoxOutline(GLdouble length, glm::dvec3 trans = glm::dvec3(0));
 	explicit BoxOutline(GLdouble length, std::string t, glm::dvec3 trans  = glm::dvec3(0));
@@ -132,6 +131,7 @@ public:
 
 class Box : public Abs_Entity
 {
+	Texture* mTexture2;	 
 	GLdouble length;
 	GLdouble angle;
 	GLdouble speed = 1;
@@ -181,5 +181,15 @@ public:
 
 private:
 	int pW, pH;
+};
+
+class Grass : public Abs_Entity
+{
+	GLdouble w, h;
+	int nBlades;
+public:
+	explicit Grass(GLdouble w, GLdouble h, std::string t, glm::dvec3 trans = glm::dvec3(0), GLint n = 3);
+	~Grass() override;
+	void render(glm::dmat4 const& modelViewMat) const override;
 };
 #endif //_H_Entities_H_

@@ -69,6 +69,7 @@ IG1App::init()
 	scenes[5]->addObject(new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-224.5, 75.0, -224.5)));
 	scenes[5]->addObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
 	scenes[5]->addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", glm::dvec3(-225, 200, -225)));
+	scenes[5]->addObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
 	
 	
 	sceneIndex = 5;
