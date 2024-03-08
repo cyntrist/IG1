@@ -19,6 +19,8 @@ Scene::init()
 	// Graphics objects (entities) of the scene
 	gObjects.push_back(new EjesRGB(400.0));
 
+	gObjects.push_back(new RGBTriangle(100, 100));
+
 	// Apartado 3
 	//gObjects.push_back(new RegularPolygon(7, 200));
 

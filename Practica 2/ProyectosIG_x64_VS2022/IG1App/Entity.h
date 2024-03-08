@@ -68,11 +68,12 @@ class RGBTriangle : public Abs_Entity
 {
 	GLdouble angle = 5.0;
 	GLdouble radio;
+	glm::dvec2 trans;
 public:
 	explicit RGBTriangle(GLdouble l); // lado
 	explicit RGBTriangle(GLdouble l, GLdouble x); // distancia x desde el origen
 	explicit RGBTriangle(GLdouble l, GLuint x, GLuint y); // distancia x e y
-	~RGBTriangle();
+	~RGBTriangle() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 	void update() override;
 };

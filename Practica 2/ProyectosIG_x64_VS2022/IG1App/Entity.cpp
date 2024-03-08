@@ -77,21 +77,20 @@ void RegularPolygon::render(const dmat4& modelViewMat) const
 
 
 /// RGB TRIANGLE
-RGBTriangle::RGBTriangle(GLdouble l) : radio(0)
+RGBTriangle::RGBTriangle(GLdouble l) : radio(0), trans(dvec2(0, 0))
 {
 	mMesh = Mesh::generateRGBTriangle(l, 0, 0);
 }
 
-RGBTriangle::RGBTriangle(GLdouble l, GLdouble x) : radio(x)
+RGBTriangle::RGBTriangle(GLdouble l, GLdouble x) : radio(x), trans(dvec2(x, 0))
 {
 	mMesh = Mesh::generateRGBTriangle(l, 0, 0);
 	mModelMat = translate(mModelMat, dvec3(radio, 0, 0));
 }
 
-RGBTriangle::RGBTriangle(GLdouble l, GLuint x, GLuint y) : radio(x)
+RGBTriangle::RGBTriangle(GLdouble l, GLuint x, GLuint y) : radio(x), trans(dvec2(x, y))
 {
 	mMesh = Mesh::generateRGBTriangle(l, x, y);
-	mModelMat = translate(mModelMat, dvec3(x, y, 0));
 }
 
 RGBTriangle::~RGBTriangle()
@@ -104,12 +103,19 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_POINTS);
+		GLdouble nose = 22; // si el radio es 25, por que me sale este numero, no entiendo cual es la ecuacion lo siento!
+
+		dmat4 aMat = modelViewMat
+			* rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
+			* translate(mModelMat, dvec3(trans.x, trans.y, 0)) // traslacion al radio de la circunferencia
+			* rotate(dmat4(1.0), radians(angle * 3), dvec3(0, 0, 1)); // rotación sobre si mismo en sentido horario
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
+
+
 		glLineWidth(1);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
@@ -117,13 +123,7 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 
 void RGBTriangle::update()
 {
-	// 15...
-	// giro sobre si mismo
-	mModelMat = rotate(mModelMat, radians(-angle), dvec3(0, 0.0, 1.0));
-
-	// giro sobre la circunferencia
-	int nose = 22; // si el radio es 25, por que me sale este numero, no entiendo cual es la ecuacion lo siento!
-	mModelMat = translate(mModelMat, dvec3(0.0, -nose, 0.0));
+	angle -= 2.0;
 }
 
 
