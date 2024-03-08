@@ -274,7 +274,7 @@ Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t, 
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, rw, rh);
 	translation = trans;
-	mModelMat = translate(dmat4(1), dvec3(0.0, -150.0, 0.0)) *
+	mModelMat = translate(dmat4(1), translation) *
 		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
@@ -447,11 +447,11 @@ void Box::renderTop(const dmat4& modelViewMat) const
 void Box::renderMain(const dmat4& modelViewMat) const
 {
 	const auto aMat = modelViewMat
-		* translate(mTopMat, translation) // traslación al punto en la escena
+		* translate(mTopMat, translation) // traslacion al punto en la escena
 		* translate(mTopMat, dvec3(0, length / 2, 0)) // traslacion final a arriba de la caja
 		* translate(mTopMat, dvec3(0.0, 0.0,-length/2))  // deshacer la traslacion del origen
 		* rotate(mBotMat, radians(-angle), dvec3(1.0, 0.0, 0.0)) // rotacion desde un lado de la tapa
-		* translate(mTopMat, dvec3(0.0, 0.0, length/2)) // traslacion para hacer la rotación con otro origen
+		* translate(mTopMat, dvec3(0.0, 0.0, length/2)) // traslacion para hacer la rotacion con otro origen
 		* rotate(mTopMat, radians(-90.0), dvec3(1.0, 0.0, 0.0)); // rotacion inicial para que este tumbada
 	upload(aMat);
 	mTopMesh->render();
