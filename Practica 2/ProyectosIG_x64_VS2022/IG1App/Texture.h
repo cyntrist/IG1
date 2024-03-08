@@ -29,14 +29,14 @@ public:
   
   void setWrap(GLuint wp);  // GL_REPEAT, GL_CLAMP 
   void loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer=GL_FRONT);
-protected:
+  void saveBMP(std::string const&);
 
+protected:
   void init();
   
   GLuint mWidth = 0;
   GLuint mHeight = 0;
   GLuint mId = 0;
-  
 };
 
 //-------------------------------------------------------------------------

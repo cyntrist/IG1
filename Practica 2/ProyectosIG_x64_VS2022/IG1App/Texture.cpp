@@ -125,4 +125,14 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) //=G
 
 
 }
+
+void Texture::saveBMP(std::string const& file)
+{
+	auto pixMap = new PixMap32RGBA();
+	pixMap->reserve(800, 600);
+	glBindTexture(GL_TEXTURE_2D, mId);
+	//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap->data());
+	pixMap->save_bmp24BGR(file);
+}
+
 //-------------------------------------------------------------------------

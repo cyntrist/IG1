@@ -45,6 +45,7 @@ protected:
 	void iniWinOpenGL();
 	void free();
 	void update();
+	void screenshot();
 
 	void display() const;                      // the scene
 	void resize(int newWidth, int newHeight);  // the viewport (without changing the scale)
@@ -67,7 +68,7 @@ protected:
 	//Scene* mScene = nullptr; // escena renderizada actual
 
 	bool mStop = false; // main event processing loop
-	bool mUpdate = false;
+	bool mUpdate = false; // scene updates flag
 	int mWinId = 0;     // window's identifier
 	int mWinW = 800;    // window's width
 	int mWinH = 600;    // window's height

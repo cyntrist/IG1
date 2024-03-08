@@ -207,6 +207,9 @@ IG1App::key(unsigned char key, int x, int y)
 		mUpdate = !mUpdate;
 		glutIdleFunc(s_update);
 		break;
+	case 'F':
+		screenshot();
+		break;
 	default:
 		need_redisplay = false;
 		break;
@@ -261,4 +264,11 @@ void IG1App::update()
 		scenes[sceneIndex]->update();
 		glutPostRedisplay();
 	}
+}
+
+void IG1App::screenshot()
+{
+	auto texture = new Texture();
+	texture->loadColorBuffer(800, 600);
+	texture->saveBMP("./bmps/screenshot.bmp");
 }
