@@ -46,6 +46,7 @@ Scene::free()
 		delete el;
 		el = nullptr;
 	}
+	gObjects.resize(0); // ???????? esto no deberia hacerse solo al ser un vector? si no lo hago da error de acceso 
 }
 void
 Scene::setGL()
@@ -79,6 +80,13 @@ void Scene::unsetCulling()
 	glDisable(GL_CULL_FACE);
 }
 
+void Scene::reset()
+{
+	free();
+	resetGL();
+	init();
+}
+
 void Scene::addObject(Abs_Entity* ent)
 {
 	gObjects.push_back(ent);
@@ -90,7 +98,8 @@ Scene::render(Camera const& cam) const
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects) {
-		el->render(cam.viewMat());
+		if (el != nullptr)
+			el->render(cam.viewMat());
 	}
 }
 

@@ -111,6 +111,7 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 
@@ -149,6 +150,7 @@ void RGBRectangle::render(const dmat4& modelViewMat) const
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 
@@ -176,6 +178,7 @@ void Cube::render(const dmat4& modelViewMat) const
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 
@@ -204,6 +207,7 @@ void RGBCube::render(const dmat4& modelViewMat) const
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 

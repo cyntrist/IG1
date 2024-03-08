@@ -111,35 +111,12 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 
 Mesh* Mesh::generateRGBTriangle(GLdouble r, GLuint x, GLuint y)
 {
-	auto mesh = new Mesh();
-	/*glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_POINTS);*/
-	mesh->mNumVertices = 3;
-	mesh->vVertices.reserve(mesh->mNumVertices);
-	// prpara una polilinea (okolilinea)
-
-	// angulo entre vertices
-	double dividido = 360.0 / mesh->mNumVertices;
-
-	// angulo inicial
-	constexpr double alpha = radians(90.0);
-
-	glBegin(mesh->mPrimitive); //start drawing a line loop
-
-	for (int i = 0; i < mesh->mNumVertices; i++)
-	{
-		// x = Cx + R*cos(alpha)
-		// y = Cy + R*sen(alpha) 
-		mesh->vVertices.emplace_back(r * cos((alpha + radians(dividido * i))) + x, (r * sin(alpha + radians(dividido * i))) + y,
-		                             1.0);
-	}
+	auto mesh = generateRegularPolygon(3, r);
 
 	mesh->vColors.reserve(mesh->mNumVertices);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-
-	glEnd(); //end drawing of line loop
 
 	return mesh;
 }
@@ -164,25 +141,13 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 
 Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 {
-	auto* mesh = new Mesh();
-	
-	mesh->mPrimitive = GL_TRIANGLE_STRIP;
-	mesh->mNumVertices = 4;
-	mesh->vVertices.reserve(mesh->mNumVertices);
-
-	glBegin(mesh->mPrimitive); // start drawing a line loop
-	mesh->vVertices.emplace_back(-w/2, h/2, 0.0);
-	mesh->vVertices.emplace_back(w/2, h/2, 0.0);
-	mesh->vVertices.emplace_back(-w/2, -h/2, 0.0);
-	mesh->vVertices.emplace_back(w/2, -h/2, 0.0);
-
+	auto* mesh = generateRectangle(w, h);
 
 	mesh->vColors.reserve(mesh->mNumVertices);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	glEnd(); //end drawing of line loop
 
 	return mesh;
 }
@@ -242,32 +207,6 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	
 	
 	GLdouble m = l / 2;
-	
-	/*
-	constexpr std::array PIVOTS = {
-		dvec2(-1, 1),
-		dvec2(1, -1),
-		dvec2(1, 1)
-	};
-
-	for (int edge = 0; edge < 3; ++edge)
-	{
-		for (int value : {-n, n})
-		{
-			dvec3 center = { 0, 0, 0 };
-			center[edge] = value;
-
-			dvec3 u = { 0, 0, 0 };
-			u[(edge + 1) % 3] = 1;
-			dvec3 v = cross(u, normalize(-center));
-
-			for (double triangle : {n, -n})
-				for (const dvec2& m : PIVOTS)
-					mesh->vVertices.push_back(center + triangle + (m.x * u + m.y * v));
-		}
-	}
-
-	*/
 
 	// triangulo 1 cara 1
 	mesh->vVertices.emplace_back(-m, -m, -m); // v0
@@ -333,49 +272,28 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 
 	mesh->vColors.reserve(mesh->mNumVertices);
 	// cara 1
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+
 	// cara 2
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+
 	// cara 3
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
 	// cara 4
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+
 	// cara 5
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+
 	// cara 6
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-
-
+	for (int i = 0; i < 6; i++)	
+		mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 
 	//mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 	
@@ -436,8 +354,6 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v9
 
 	mesh->vColors.reserve(mesh->mNumVertices);
-
-
 
 	return mesh;
 }
@@ -529,7 +445,6 @@ Mesh* Mesh::generateGlassParapet(GLdouble w, GLdouble h)
 	auto x = w / 2;
 	auto y = h / 2;
 
-
 	mesh->vVertices.emplace_back(x, -y, x); // v0
 	mesh->vVertices.emplace_back(x, y, x); // v1
 	mesh->vVertices.emplace_back(x, -y, -x); // v2
@@ -544,9 +459,8 @@ Mesh* Mesh::generateGlassParapet(GLdouble w, GLdouble h)
 	mesh->vVertices.push_back(mesh->vVertices[0]); // v8
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v9
 
+
 	mesh->vColors.reserve(mesh->mNumVertices);
-
-
 	for (int i = 0; i < 4; i++) {
 		mesh->vTexCoords.emplace_back(0, 0);
 		mesh->vTexCoords.emplace_back(1, 0);

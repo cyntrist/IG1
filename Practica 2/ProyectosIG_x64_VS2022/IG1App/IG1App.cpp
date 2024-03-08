@@ -45,39 +45,14 @@ IG1App::init()
 		new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
 
-	//mScene = new Scene;
-	// apartado 11
-	scenes[0] = new Scene;
-	scenes[1] = new Scene;
-	scenes[2] = new Scene;
-	scenes[3] = new Scene;
-	scenes[4] = new Scene;
-	scenes[5] = new Scene;
-	scenes[6] = new Scene;
-	scenes[0]->addObject(new RegularPolygon(32, 250));
-	scenes[0]->addObject(new RGBRectangle(500, 250));
-	scenes[0]->addObject(new RGBTriangle(50, 250));
-	scenes[1]->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
-	scenes[2]->addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
-	scenes[3]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
-	scenes[4]->addObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
-	scenes[6]->addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
+	mScene = new Scene();
 
-
-	scenes[5]->addObject(new Photo(200, 100, glm::dvec3(0.0, 10.0, 0.0)));
-	scenes[5]->addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", glm::dvec3(0.0, 0.0, 0.0)));
-	scenes[5]->addObject(new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-224.5, 75.0, -224.5)));
-	scenes[5]->addObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
-	scenes[5]->addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", glm::dvec3(-225, 200, -225)));
-	scenes[5]->addObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
-	
-	
-	sceneIndex = 5;
+	//sceneIndex = 5;
 	mCamera->set3D();
 
-	//mScene->init();
-	for (auto i : scenes)
-		i->init();
+	mScene->init();
+	/*for (auto i : scenes)
+		i->init();*/
 }
 
 void
@@ -118,8 +93,10 @@ void
 IG1App::free()
 {
 	// release memory and resources
-	for (auto i : scenes)
-		delete i;
+	/*for (auto i : scenes)
+		delete i;*/
+	delete mScene;
+	mScene = nullptr;
 	delete mCamera;
 	mCamera = nullptr;
 	delete mViewPort;
@@ -133,7 +110,7 @@ IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clears the back buffer
 
-	scenes[sceneIndex]->render(*mCamera); // uploads the viewport and camera to the GPU
+	mScene->render(*mCamera); // uploads the viewport and camera to the GPU
 
 	glutSwapBuffers(); // swaps the front and back buffer
 }
@@ -172,36 +149,66 @@ IG1App::key(unsigned char key, int x, int y)
 	case 'o':
 		mCamera->set2D();
 		break;
+
 	case '0':
 		mCamera->set2D();
-		sceneIndex = 0;
+		changeScene();
+
+		mScene->addObject(new RegularPolygon(32, 250));
+		mScene->addObject(new RGBRectangle(500, 250));
+		mScene->addObject(new RGBTriangle(50, 250));
 		break;
 	case '1':
 		mCamera->set3D();
-		sceneIndex = 1;
+		changeScene();
+
+		mScene->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
+
 		break;
 	case '2':
 		mCamera->set3D();
-		sceneIndex = 2;
+		changeScene();
+
+		mScene->addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
+
 		break;
 	case '3':
 		mCamera->set3D();
-		sceneIndex = 3;
+		changeScene();
+
+		mScene->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
+
 		break;
 	case '4':
 		mCamera->set3D();
-		sceneIndex = 4;
+		changeScene();
+
+		mScene->addObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
+
 		break;
 	case '5':
 		mCamera->set3D();
-		sceneIndex = 5;
+		changeScene();
+
+		mScene->addObject(new Photo(200, 100, glm::dvec3(0.0, 10.0, 0.0)));
+		mScene->addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", glm::dvec3(0.0, 0.0, 0.0)));
+		mScene->addObject(
+			new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-224.5, 75.0, -224.5)));
+		mScene->addObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
+		mScene->addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", glm::dvec3(-225, 200, -225)));
+		mScene->addObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
+
 		break;
 	case '6':
 		mCamera->set3D();
-		sceneIndex = 6;
+		changeScene();
+
+		mScene->addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
+
 		break;
+
 	case 'u':
-		scenes[sceneIndex]->update();
+		mScene->update();
 		break;
 	case 'U':
 		mUpdate = !mUpdate;
@@ -261,9 +268,14 @@ void IG1App::update()
 	// Apartado 16
 	if (mUpdate)
 	{
-		scenes[sceneIndex]->update();
+		mScene->update();
 		glutPostRedisplay();
 	}
+}
+
+void IG1App::changeScene()
+{
+	mScene->reset();
 }
 
 void IG1App::screenshot()

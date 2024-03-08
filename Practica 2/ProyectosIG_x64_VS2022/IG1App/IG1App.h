@@ -13,10 +13,10 @@
 #include "Scene.h"
 #include "Viewport.h"
 
-constexpr int MAX_SCENES = 7;
-
-	static int sceneIndex = 0;
-	static std::array<Scene*, MAX_SCENES> scenes; // array de escenas
+//constexpr int MAX_SCENES = 7;
+//
+//	static int sceneIndex = 0;
+//	static std::array<Scene*, MAX_SCENES> scenes; // array de escenas
 
 class IG1App
 {
@@ -45,6 +45,7 @@ protected:
 	void iniWinOpenGL();
 	void free();
 	void update();
+	void changeScene();
 	void screenshot();
 
 	void display() const;                      // the scene
@@ -65,7 +66,7 @@ protected:
 	// Camera position, view volume and projection
 	Camera* mCamera = nullptr;
 	// Graphics objects of the scene
-	//Scene* mScene = nullptr; // escena renderizada actual
+	Scene* mScene = nullptr; // escena renderizada actual
 
 	bool mStop = false; // main event processing loop
 	bool mUpdate = false; // scene updates flag

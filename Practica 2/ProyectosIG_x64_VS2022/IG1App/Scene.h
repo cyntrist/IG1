@@ -29,7 +29,7 @@ public:
 	void update();
 	void setCulling();
 	void unsetCulling();
-
+	void reset();
 
 protected:
 	void free();
