@@ -11,7 +11,7 @@ class Abs_Entity // abstract class
 {
 public:
 	Abs_Entity()
-	  : mModelMat(1.0){} // 4x4 identity matrix
+	  : mModelMat(1.0), translation(glm::vec3(0)) {} // 4x4 identity matrix
 	virtual ~Abs_Entity() = default;
 
 	Abs_Entity(const Abs_Entity& e) = delete;            // no copy constructor
@@ -41,10 +41,8 @@ protected:
 	glm::dvec4 mColor;	   // color
 	Texture* mTexture;	   // texture
 	Texture* mTexture2;	   // texture
+	glm::dvec3 translation; // final translation
 	//std::vector<Texture*> mTextureVector:
-
-
-	//void setTexture(std::string text) const { mTexture->load(text, 255);}
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const;
@@ -61,9 +59,9 @@ public:
 class RegularPolygon : public Abs_Entity {
 public:
 	RegularPolygon() = default;
-	~RegularPolygon();
-	RegularPolygon(GLuint num, GLdouble r);
-	RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color);
+	~RegularPolygon() override;
+	RegularPolygon(GLuint num, GLdouble r, glm::dvec3 trans = glm::dvec3(0));
+	RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color, glm::dvec3 trans = glm::dvec3(0));
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
 
@@ -110,12 +108,12 @@ public:
 	void update() override;
 };
 
-
+/// PARTE 2
 class Ground : public Abs_Entity {
 public:
-	explicit Ground(GLdouble w, GLdouble h);
-	explicit Ground(GLdouble w, GLdouble h, std::string t);
-	explicit Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t);
+	explicit Ground(GLdouble w, GLdouble h, glm::dvec3 trans = glm::dvec3(0));
+	explicit Ground(GLdouble w, GLdouble h, std::string t, glm::dvec3 trans = glm::dvec3(0));
+	explicit Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t, glm::dvec3 trans = glm::dvec3(0));
 	~Ground() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 	
@@ -125,9 +123,9 @@ class BoxOutline : public Abs_Entity
 {
 
 public:
-	explicit BoxOutline(GLdouble length);
-	explicit BoxOutline(GLdouble length, std::string t);
-	explicit BoxOutline(GLdouble length, std::string t, std::string t2);
+	explicit BoxOutline(GLdouble length, glm::dvec3 trans = glm::dvec3(0));
+	explicit BoxOutline(GLdouble length, std::string t, glm::dvec3 trans  = glm::dvec3(0));
+	explicit BoxOutline(GLdouble length, std::string t, std::string t2, glm::dvec3 trans  = glm::dvec3(0));
 	~BoxOutline() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
@@ -143,7 +141,7 @@ class Box : public Abs_Entity
 	glm::dmat4 mTopMat = glm::dmat4(1.0);
 	glm::dmat4 mBotMat = glm::dmat4(1.0);
 public:
-	explicit Box(GLdouble length, const std::string& t, const std::string& t2);
+	explicit Box(GLdouble length, const std::string& t, const std::string& t2, glm::dvec3 trans = glm::dvec3(0));
 	~Box() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 	void renderTop(glm::dmat4 const& modelViewMat) const;
@@ -158,7 +156,7 @@ class Star3D : public Abs_Entity
 	GLdouble angle = 0;
 	GLdouble rotationFactor = 1;
 public:
-	explicit Star3D(GLdouble re, GLuint np, GLdouble h, std::string);
+	explicit Star3D(GLdouble re, GLuint np, GLdouble h, std::string, glm::dvec3 trans = glm::dvec3(0));
 	~Star3D() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 	void update() override;
@@ -166,7 +164,7 @@ public:
 
 class GlassParapet : public Abs_Entity {
 public:
-	explicit GlassParapet(GLdouble width, GLdouble height, std::string t);
+	explicit GlassParapet(GLdouble width, GLdouble height, std::string t, glm::dvec3 trans = glm::dvec3(0));
 	~GlassParapet() override;
 
 	void render(glm::dmat4 const& modelViewMat) const override;
@@ -175,7 +173,7 @@ public:
 
 class Photo : public Abs_Entity {
 public:
-	explicit Photo(GLdouble w, GLdouble h);
+	explicit Photo(GLdouble w, GLdouble h, glm::dvec3 trans = glm::dvec3(0));
 	~Photo() override;
 
 	void render(glm::dmat4 const& modelViewMat) const override;

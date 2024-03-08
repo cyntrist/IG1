@@ -64,11 +64,11 @@ IG1App::init()
 	scenes[6]->addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 
 
-	scenes[5]->addObject(new Photo(200, 100));
+	scenes[5]->addObject(new Photo(200, 100, glm::dvec3(0.0, -100.0, 0.0)));
 	scenes[5]->addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp"));
-	scenes[5]->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
-	scenes[5]->addObject(new GlassParapet(600, 100, "./bmps/windowV.bmp"));
-	scenes[5]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
+	scenes[5]->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-300.0, -100.0, -300.0)));
+	scenes[5]->addObject(new GlassParapet(600, 100, "./bmps/windowV.bmp", glm::dvec3(0.0, -100.0, 0.0)));
+	scenes[5]->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp", glm::dvec3(0.0, 200.0, 0.0)));
 	
 	
 	sceneIndex = 6;

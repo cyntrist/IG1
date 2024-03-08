@@ -42,9 +42,10 @@ EjesRGB::render(const dmat4& modelViewMat) const
 
 
 /// REGULAR POLYGON
-RegularPolygon::RegularPolygon(GLuint num, GLdouble r)
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r, dvec3 trans)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
+	translation = trans;
 }
 
 RegularPolygon::~RegularPolygon()
@@ -53,9 +54,10 @@ RegularPolygon::~RegularPolygon()
 	mMesh = nullptr;
 }
 
-RegularPolygon::RegularPolygon(GLuint num, GLdouble r, dvec4 color)
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r, dvec4 color, dvec3 trans)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
+	translation = trans;
 	setmColor(color);
 }
 
@@ -255,21 +257,23 @@ mat4 Abs_Entity::rotateAroundCenter(const mat4& matrix, const vec3& center, floa
 
 
 /// GROUND
-Ground::Ground(GLdouble w, GLdouble h)
+Ground::Ground(GLdouble w, GLdouble h, dvec3 trans)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h);
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	translation = trans;
 }
 
-Ground::Ground(GLdouble w, GLdouble h, std::string t) : Ground(w, h)
+Ground::Ground(GLdouble w, GLdouble h, std::string t, dvec3 trans) : Ground(w, h, trans)
 {
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 }
 
-Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t)
+Ground::Ground(GLdouble w, GLdouble h, GLdouble rw, GLdouble rh, std::string t, dvec3 trans)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, rw, rh);
+	translation = trans;
 	mModelMat = translate(dmat4(1), dvec3(0.0, -150.0, 0.0)) *
 		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
@@ -294,49 +298,42 @@ void Ground::render(const dmat4& modelViewMat) const
 		upload(aMat);
 		mMesh->render();
 		mTexture->unbind();
-
 	}
-
-	
 }
 
 
 /// BOX OUTLINE
-BoxOutline::BoxOutline(GLdouble length)
+BoxOutline::BoxOutline(GLdouble length, dvec3 trans)
 {
 	mMesh = Mesh::generateBoxOutline(length);
-	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	translation = trans;
 	mModelMat = translate(dmat4(1), dvec3(0.0, 0.0, 0.0)) *
 		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 }
 
-BoxOutline::BoxOutline(GLdouble length, std::string t)
+BoxOutline::BoxOutline(GLdouble length, std::string t, dvec3 trans)
 {
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
-	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
+	translation = trans;
 	mModelMat = translate(dmat4(1), dvec3(0.0, 0.0, 0.0)) *
 		rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 }
 
-BoxOutline::BoxOutline(GLdouble length, std::string t, std::string t2)
+BoxOutline::BoxOutline(GLdouble length, std::string t, std::string t2, dvec3 trans)
 {
 
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
-	//mMesh = Mesh::generateBoxOutline(length);
-	mModelMat = translate(dmat4(1), dvec3(-300.0, -100.0, -300.0)) *
-		rotate(mModelMat, radians(-90.0), dvec3(0.0, 1.0, 0.0));
+	translation = trans;
+	mModelMat = translate(dmat4(1), translation)
+		* rotate(mModelMat, radians(-90.0), dvec3(0.0, 1.0, 0.0));
 	
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
 	mTexture2 = new Texture();
 	setTexture(t2, mTexture2, 255);
-
 }
-
-
-
 
 BoxOutline::~BoxOutline()
 {
@@ -375,20 +372,19 @@ void BoxOutline::render(const dmat4& modelViewMat) const
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDisable(GL_CULL_FACE);
 
-		
 		mMesh->render();
-		
 	}
 }
 
 
 /// BOX
-Box::Box(GLdouble length, const std::string& t, const std::string& t2) : length(length), angle(0)
+Box::Box(GLdouble length, const std::string& t, const std::string& t2, dvec3 trans) : length(length), angle(0)
 {
 	mMesh = Mesh::generateBoxOutlineTexColor(length);
 	mTopMesh = Mesh::generateRectangleTexCor(length, length);
 	mBottomMesh = Mesh::generateRectangleTexCor(length, length);
 
+	translation = trans;
 	mTexture = new Texture();
 	mTexture2 = new Texture();
 	setTexture(t, mTexture, 255);
@@ -401,6 +397,8 @@ Box::~Box()
 	delete mTexture;
 	delete mTopMesh;
 	delete mBottomMesh;
+	delete mTexture2;
+	mTexture2 = nullptr;
 	mTopMesh = nullptr;
 	mBottomMesh = nullptr;
 	mTexture = nullptr;
@@ -418,22 +416,18 @@ void Box::render(const dmat4& modelViewMat) const
 		glPolygonMode(GL_BACK, GL_FILL);
 		mTexture2->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_BACK);
-
 		renderMain(modelViewMat); // Cuerpo principal
 		renderTop(modelViewMat); // Tapa (primero rotate luego translate)
 		renderBot(modelViewMat); // Culo (primero rotate luego translate)
-
 		mTexture2->unbind(); // quita la textura del buffer
 
 		/// Caras delanteras
 		glPolygonMode(GL_FRONT, GL_FILL);
 		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_FRONT);
-
 		renderMain(modelViewMat); // Cuerpo principal
 		renderTop(modelViewMat); // Tapa (primero rotate luego translate)
 		renderBot(modelViewMat); // Culo (primero rotate luego translate)
-
 		mTexture->unbind(); // quita la textura del buffer
 
 		/// Reseteo
@@ -444,7 +438,8 @@ void Box::render(const dmat4& modelViewMat) const
 
 void Box::renderTop(const dmat4& modelViewMat) const
 {
-	const auto aMat = modelViewMat * mModelMat; // glm matrix multiplication
+	const auto aMat = modelViewMat
+		* translate(mModelMat, translation); // glm matrix multiplication
 	upload(aMat);
 	mMesh->render();
 }
@@ -452,6 +447,7 @@ void Box::renderTop(const dmat4& modelViewMat) const
 void Box::renderMain(const dmat4& modelViewMat) const
 {
 	const auto aMat = modelViewMat
+		* translate(mTopMat, translation) // traslación al punto en la escena
 		* translate(mTopMat, dvec3(0, length / 2, 0)) // traslacion final a arriba de la caja
 		* translate(mTopMat, dvec3(0.0, 0.0,-length/2))  // deshacer la traslacion del origen
 		* rotate(mBotMat, radians(-angle), dvec3(1.0, 0.0, 0.0)) // rotacion desde un lado de la tapa
@@ -464,6 +460,7 @@ void Box::renderMain(const dmat4& modelViewMat) const
 void Box::renderBot(const dmat4& modelViewMat) const
 {
 	const auto aMat = modelViewMat
+		* translate(mBotMat, translation)
 		* translate(mBotMat, dvec3(0, -length / 2, 0))
 		* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
 	upload(aMat);
@@ -482,10 +479,11 @@ void Box::update()
 }
 
 /// STAR 3D
-Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, std::string text)
+Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, std::string text, dvec3 trans)
 {
 	mMesh = Mesh::generateStar3DTexCor(re, np, h);
-	mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0)); 
+	translation = trans;
+	mModelMat = translate(dmat4(1), translation); 
 	mTexture = new Texture();
 	setTexture(text, mTexture, 255);
 }
@@ -511,7 +509,8 @@ void Star3D::render(const dmat4& modelViewMat) const
 		mMesh->render(); // renderiza la primera estrella
 
 		// matriz de la segunda estrella
-		dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
+		dmat4 bMat = modelViewMat * mModelMat
+			* rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
 		upload(bMat); // upload de la segunda estrella rotada
 		mMesh->render(); // renderiza la segunda estrella
 
@@ -530,19 +529,18 @@ void Star3D::update()
 	//mModelMat *= rotate(dmat4(1.0), radians(angle), dvec3(0.0, 0.0, 1.0));
 	//// ambas rotaciones tienen el mismo angulo
 
-	mModelMat = translate(dmat4(1), dvec3(0.0, 200.0, 0.0)) *
-		rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 0.0)) *
-		rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0));
-
-	//rotationSp += .05;
+	mModelMat = translate(dmat4(1), translation)
+		* rotate(dmat4(1), radians(angle), dvec3(0.0, 1.0, 0.0))
+		* rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0));
 }
 
-GlassParapet::GlassParapet(GLdouble width, GLdouble height, std::string t)
+GlassParapet::GlassParapet(GLdouble width, GLdouble height, std::string t, dvec3 trans)
 {
 	mMesh = Mesh::generateGlassParapet(width, height);//Mesh::generateBoxOutlineTexColor(width);
+	translation = trans;
 	mTexture = new Texture();
 	setTexture(t, mTexture, 128);
-	mModelMat = translate(dmat4(1), dvec3(0.0, -100.0, 0.0));
+	mModelMat = translate(dmat4(1), translation);
 }
 
 GlassParapet::~GlassParapet()
@@ -569,13 +567,12 @@ void GlassParapet::render(const dmat4& modelViewMat) const
 	}
 }
 
-Photo::Photo(GLdouble w, GLdouble h)
+Photo::Photo(GLdouble w, GLdouble h, glm::dvec3 trans)
 {
 	pW = w;
 	pH = h;
 	mMesh = Mesh::generateRectangleTexCor(w, h);
-	//mModelMat = rotate(mModelMat, radians(-90.0), dvec3(1.0, 0.0, 0.0));
-	mModelMat = translate(dmat4(1), dvec3(0.0, -100.0, 0.0)) 
+	mModelMat = translate(dmat4(1), trans) 
 		* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
 	mTexture = new Texture();
 	mTexture->loadColorBuffer(800.0, 600.0);
