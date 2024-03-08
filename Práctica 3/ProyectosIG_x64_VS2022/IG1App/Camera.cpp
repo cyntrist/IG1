@@ -110,7 +110,7 @@ Camera::setPM()
 			xRight * mScaleFact, 
 			yBot * mScaleFact, 
 			yTop * mScaleFact , 
-			mNearVal * 500.0 , 
+			mNearVal * 400.0 , 
 			mFarVal);
 	}
 }
