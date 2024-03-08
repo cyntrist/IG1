@@ -42,6 +42,9 @@ public:
 		uploadPM();
 	};
 
+	/// Practica 3
+	void changePrj();
+
 protected:
 	glm::dvec3 mEye = {0.0, 0.0, 500.0}; // camera's position
 	glm::dvec3 mLook = {0.0, 0.0, 0.0};  // target's position
@@ -68,11 +71,11 @@ protected:
 	void setVM();
 	void setPM();
 
-	// practica 3
+	/// practica 3
 	void setAxes();
 	glm::dvec3 row(glm::dmat4, int);
 	void moveLR(GLdouble cs); // A izquierda/A derecha
-	void moveFB(GLdouble cs); // Adelante/Atrás
+	void moveFB(GLdouble cs); // Adelante/Atras
 	void moveUD(GLdouble cs); // Arriba/Abajo
 };
 

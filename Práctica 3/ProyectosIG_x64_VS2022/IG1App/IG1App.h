@@ -45,7 +45,7 @@ protected:
 	void iniWinOpenGL();
 	void free();
 	void update();
-	void changeScene();
+	void changeScene(int id);
 	void screenshot();
 
 	void display() const;                      // the scene
