@@ -105,7 +105,6 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 	{
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_POINTS);
-		GLdouble nose = 22; // si el radio es 25, por que me sale este numero, no entiendo cual es la ecuacion lo siento!
 
 		dmat4 aMat = modelViewMat
 			* rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
