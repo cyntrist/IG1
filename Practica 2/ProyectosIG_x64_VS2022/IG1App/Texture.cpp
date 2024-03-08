@@ -128,10 +128,12 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) //=G
 
 void Texture::saveBMP(std::string const& file)
 {
-	auto pixMap = new PixMap32RGBA();
-	pixMap->reserve(800, 600);
+	const auto pixMap = new PixMap32RGBA();
+	pixMap->reserve(800, 600); // importante, si no da error
 	glBindTexture(GL_TEXTURE_2D, mId);
-	//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap->data());
+	// https://stackoverflow.com/questions/31417914/opengl-reading-pixels-from-texture
+	// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetTexImage.xhtml
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap->data());
 	pixMap->save_bmp24BGR(file);
 }
 
