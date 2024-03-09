@@ -14,20 +14,24 @@ public:
 	~Camera() = default;
 
 	// viewPort
-	Viewport const& viewPort() const { return *mViewPort; };
+	const Viewport& viewPort() const { return *mViewPort; };
 
 	// view matrix
-	glm::dmat4 const& viewMat() const { return mViewMat; };
+	const glm::dmat4& viewMat() const { return mViewMat; };
 
 	void set2D();
 	void set3D();
 
 	void pitch(GLdouble a); // rotates a degrees on the X axis
-	void yaw(GLdouble a);   // rotates a degrees on the Y axis
-	void roll(GLdouble a);  // rotates a degrees on the Z axis
+	void yaw(GLdouble a); // rotates a degrees on the Y axis
+	void roll(GLdouble a); // rotates a degrees on the Z axis
+
+	void pitchReal(GLdouble cs);
+	void yawReal(GLdouble cs);
+	void rollReal(GLdouble cs);
 
 	// projection matrix
-	glm::dmat4 const& projMat() const { return mProjMat; };
+	const glm::dmat4& projMat() const { return mProjMat; };
 
 	// sets scene visible area size
 	void setSize(GLdouble xw, GLdouble yh);
@@ -44,27 +48,30 @@ public:
 
 	/// Practica 3
 	void changePrj();
+	void moveLR(GLdouble cs); // A izquierda/A derecha
+	void moveFB(GLdouble cs); // Adelante/Atras
+	void moveUD(GLdouble cs); // Arriba/Abajo
 
 protected:
 	glm::dvec3 mEye = {0.0, 0.0, 500.0}; // camera's position
-	glm::dvec3 mLook = {0.0, 0.0, 0.0};  // target's position
-	glm::dvec3 mUp = {0.0, 1.0, 0.0};    // the up vector
+	glm::dvec3 mLook = {0.0, 0.0, 0.0}; // target's position
+	glm::dvec3 mUp = {0.0, 1.0, 0.0}; // the up vector
 
 	// marco de coordenadas
 	glm::dvec3 mRight; // right = u
 	glm::dvec3 mUpward; // upward = v
 	glm::dvec3 mFront; // front = -n
 
-	glm::dmat4 mViewMat;   // view matrix = inverse of modeling matrix
+	glm::dmat4 mViewMat; // view matrix = inverse of modeling matrix
 	void uploadVM() const; // transfers viewMat to the GPU
 
-	glm::dmat4 mProjMat;   // projection matrix
+	glm::dmat4 mProjMat; // projection matrix
 	void uploadPM() const; // transfers projMat to the GPU
 
-	GLdouble xRight, xLeft, yTop, yBot;     // size of scene visible area
+	GLdouble xRight, xLeft, yTop, yBot; // size of scene visible area
 	GLdouble mNearVal = 1, mFarVal = 10000; // view volume
-	GLdouble mScaleFact = 1;                // scale factor
-	bool bOrto = true;                      // orthogonal or perspective projection
+	GLdouble mScaleFact = 1; // scale factor
+	bool bOrto = true; // orthogonal or perspective projection
 
 	Viewport* mViewPort; // the viewport
 
@@ -74,9 +81,6 @@ protected:
 	/// practica 3
 	void setAxes();
 	glm::dvec3 row(glm::dmat4, int);
-	void moveLR(GLdouble cs); // A izquierda/A derecha
-	void moveFB(GLdouble cs); // Adelante/Atras
-	void moveUD(GLdouble cs); // Arriba/Abajo
 };
 
 #endif //_H_Camera_H_

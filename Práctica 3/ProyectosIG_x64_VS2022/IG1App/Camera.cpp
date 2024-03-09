@@ -71,6 +71,18 @@ Camera::roll(GLdouble a)
 	// glm::rotate returns mViewMat * rotationMatrix
 }
 
+void Camera::pitchReal(GLdouble cs)
+{
+}
+
+void Camera::yawReal(GLdouble cs)
+{
+}
+
+void Camera::rollReal(GLdouble cs)
+{
+}
+
 void
 Camera::setSize(GLdouble xw, GLdouble yh)
 {
