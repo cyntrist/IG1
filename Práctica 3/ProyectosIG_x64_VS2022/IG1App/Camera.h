@@ -37,6 +37,8 @@ public:
 	void setSize(GLdouble xw, GLdouble yh);
 	// updates the scale factor
 	void setScale(GLdouble s);
+	//
+	void setRadius(GLdouble r);
 
 	// transfers its viewport, the view matrix and projection matrix to the GPU
 	void upload() const
@@ -51,6 +53,7 @@ public:
 	void moveLR(GLdouble cs); // A izquierda/A derecha
 	void moveFB(GLdouble cs); // Adelante/Atras
 	void moveUD(GLdouble cs); // Arriba/Abajo
+	void orbit(GLdouble incAng, GLdouble incY); 
 
 protected:
 	glm::dvec3 mEye = {0.0, 0.0, 500.0}; // camera's position
@@ -61,6 +64,8 @@ protected:
 	glm::dvec3 mRight; // right = u
 	glm::dvec3 mUpward; // upward = v
 	glm::dvec3 mFront; // front = -n
+
+	GLdouble mRadio = 0, mAng = 0;
 
 	glm::dmat4 mViewMat; // view matrix = inverse of modeling matrix
 	void uploadVM() const; // transfers viewMat to the GPU

@@ -102,6 +102,11 @@ Camera::setScale(GLdouble s)
 	setPM();
 }
 
+void Camera::setRadius(GLdouble r)
+{
+	mRadio = r;
+}
+
 void
 Camera::setPM()
 {
@@ -158,6 +163,18 @@ void Camera::moveUD(GLdouble cs)
 	mEye += mUpward * cs;
 	mLook += mUpward * cs;
 	setVM();
+}
+
+void Camera::orbit(GLdouble incAng, GLdouble incY)
+{
+	// x = Cx + R*cos(alpha)
+	// y = Cy + R*sen(alpha)
+	mAng += incAng;
+	mEye.x = mLook.x + cos(radians(mAng)) * mRadio;
+	mEye.z = mLook.z - sin(radians(mAng)) * mRadio;
+	mEye.y += incAng;
+	setVM();
+
 }
 
 void Camera::changePrj()
