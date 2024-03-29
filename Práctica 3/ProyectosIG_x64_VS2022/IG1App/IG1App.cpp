@@ -56,11 +56,12 @@ void IG1App::mouseWheel(int n, int d, int x, int y)
 {
 	int mod = glutGetModifiers();
 
+	// nada
 	if (mod == 0) {
 		mCamera->moveFB(d);
 	}
 	// CTRL
-	else if (mod == 3 && GLUT_ACTIVE_CTRL) {
+	if (mod == 2 && GLUT_ACTIVE_CTRL) {
 		//
 		mCamera->setScale(d);
 	}
