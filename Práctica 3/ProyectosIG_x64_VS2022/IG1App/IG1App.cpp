@@ -27,6 +27,7 @@ void IG1App::mouse(int button, int state, int x, int y)
 	mMouseCoord.x = glutGet(GLUT_WINDOW_WIDTH) - x;			// settea las coordenadas
 	mMouseCoord.y = glutGet(GLUT_WINDOW_HEIGHT) - y;
 	mMouseState = state;									// settea el estado (pulsado no pulsado)
+
 }
 
 void IG1App::motion(int x, int y)
@@ -34,16 +35,18 @@ void IG1App::motion(int x, int y)
 	glm::dvec2 mp = { mMouseCoord.x - x, mMouseCoord.y - y };
 	mMouseCoord = { x, y };
 
-	// izq
-	if (mMouseButt == 1) {
+	mCamera->setRadius(20);
+
+	// izq = 0 (en mi raton(ines))
+	if (mMouseButt == 0) {
 		//
-		mCamera->orbit(0.05, 0.05);
+		mCamera->orbit(30, 5);
 	}
-	// der
+	// der =  2 (en mi raton(ines))
 	else if (mMouseButt == 2) {
 		//
-		mCamera->moveLR(mp.x);
-		mCamera->moveUD(mp.y);
+		mCamera->moveLR(-mp.y);
+		mCamera->moveUD(mp.x);
 	}
 
 
