@@ -35,7 +35,6 @@ void IG1App::motion(int x, int y)
 	glm::dvec2 mp = { mMouseCoord.x - x, mMouseCoord.y - y };
 	mMouseCoord = { x, y };
 	
-	mCamera->setRadius(500);
 
 	// izq = 0 (en mi raton(ines))
 	if (mMouseButt == 0) {
