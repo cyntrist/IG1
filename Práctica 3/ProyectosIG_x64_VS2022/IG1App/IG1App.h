@@ -34,6 +34,15 @@ public:
 	// Graphics objects of the scene
 	//Scene const& scene() { return *mScene; };
 
+	// mouse callbacks
+	void mouse(int button, int state, int x, int y);
+	void motion(int x, int y);
+	void mouseWheel(int n, int d, int x, int y);
+
+	static void s_mouse(int button, int state, int x, int y);
+	static void s_motion(int x, int y);
+	static void s_mouseWheel(int n, int d, int x, int y);
+
 	void run();   // the main event processing loop
 	void close(); // the application
 
@@ -67,6 +76,14 @@ protected:
 	Camera* mCamera = nullptr;
 	// Graphics objects of the scene
 	Scene* mScene = nullptr; // escena renderizada actual
+
+	// raton
+	glm::dvec2 mMouseCoord;
+	int mMouseButt;
+	bool mMouseState;		// true -> pulsado 
+
+
+
 
 	bool mStop = false; // main event processing loop
 	bool mUpdate = false; // scene updates flag

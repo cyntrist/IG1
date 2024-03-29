@@ -21,6 +21,66 @@ IG1App::close()
 	free();
 }
 
+void IG1App::mouse(int button, int state, int x, int y)
+{
+	mMouseButt = button;									// settea el boton
+	mMouseCoord.x = glutGet(GLUT_WINDOW_WIDTH) - x;			// settea las coordenadas
+	mMouseCoord.y = glutGet(GLUT_WINDOW_HEIGHT) - y;
+	mMouseState = state;									// settea el estado (pulsado no pulsado)
+}
+
+void IG1App::motion(int x, int y)
+{
+	glm::dvec2 mp = { mMouseCoord.x - x, mMouseCoord.y - y };
+	mMouseCoord = { x, y };
+
+	// izq
+	if (mMouseButt == 1) {
+		//
+		mCamera->orbit(0.05, 0.05);
+	}
+	// der
+	else if (mMouseButt == 2) {
+		//
+		mCamera->moveLR(mp.x);
+		mCamera->moveUD(mp.y);
+	}
+
+
+	glutPostRedisplay();
+}
+
+void IG1App::mouseWheel(int n, int d, int x, int y)
+{
+	int mod = glutGetModifiers();
+
+	if (mod == 0) {
+		mCamera->moveFB(d);
+	}
+	// CTRL
+	else if (mod == 3 && GLUT_ACTIVE_CTRL) {
+		//
+		mCamera->setScale(d);
+	}
+	glutPostRedisplay();
+}
+
+void IG1App::s_mouse(int button, int state, int x, int y)
+{
+	
+	s_ig1app.mouse(button, state, x, y);
+}
+
+void IG1App::s_motion(int x, int y)
+{
+	s_ig1app.motion(x, y);
+}
+
+void IG1App::s_mouseWheel(int n, int d, int x, int y)
+{
+	s_ig1app.mouseWheel(n, d, x, y);
+}
+
 void
 IG1App::run() // enters the main event processing loop
 {
@@ -52,6 +112,11 @@ IG1App::init()
 	mScene->init();
 	/*for (auto i : scenes)
 		i->init();*/
+
+	// registra los callbacks
+	glutMouseFunc(s_mouse);
+	glutMotionFunc(s_motion);
+	glutMouseWheelFunc(s_mouseWheel);
 }
 
 void
