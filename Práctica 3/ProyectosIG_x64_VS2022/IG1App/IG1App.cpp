@@ -176,7 +176,13 @@ IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clears the back buffer
 
-	mScene->render(*mCamera); // uploads the viewport and camera to the GPU
+	if (m2Vistas) {
+		render2Vistas();
+	}
+	else
+	{
+		mScene->render(*mCamera); // uploads the viewport and camera to the GPU
+	}
 
 	glutSwapBuffers(); // swaps the front and back buffer
 }
@@ -370,4 +376,19 @@ void IG1App::screenshot()
 	auto texture = new Texture();
 	texture->loadColorBuffer(800, 600);
 	texture->saveBMP("./bmps/screenshot.bmp");
+}
+
+void IG1App::render2Vistas() const
+{
+	Camera auxCam = *mCamera;	// Camara auxiliar copiando mCamera
+
+	mViewPort->setSize(mWinW / 2, mWinH);
+	auxCam.setSize(mViewPort->width(), mViewPort->height());
+
+	mViewPort->setPos(0, 0);
+	mScene->render(auxCam);
+
+	mViewPort->setPos(mWinW / 2, 0);
+	auxCam.setCenital();
+	mScene->render(auxCam);
 }

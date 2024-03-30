@@ -56,6 +56,7 @@ protected:
 	void update();
 	void changeScene(int id);
 	void screenshot();
+	void render2Vistas() const;
 
 	void display() const;                      // the scene
 	void resize(int newWidth, int newHeight);  // the viewport (without changing the scale)

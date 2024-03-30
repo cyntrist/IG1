@@ -54,6 +54,7 @@ public:
 	void moveFB(GLdouble cs); // Adelante/Atras
 	void moveUD(GLdouble cs); // Arriba/Abajo
 	void orbit(GLdouble incAng, GLdouble incY); 
+	void setCenital();
 
 protected:
 	glm::dvec3 mEye = {0.0, 0.0, 500.0}; // camera's position
@@ -85,7 +86,6 @@ protected:
 
 	/// practica 3
 	void setAxes();
-	void setCenital();
 };
 
 #endif //_H_Camera_H_
