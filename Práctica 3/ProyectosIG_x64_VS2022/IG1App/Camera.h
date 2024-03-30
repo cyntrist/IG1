@@ -85,7 +85,7 @@ protected:
 
 	/// practica 3
 	void setAxes();
-	glm::dvec3 row(glm::dmat4, int);
+	void setCenital();
 };
 
 #endif //_H_Camera_H_

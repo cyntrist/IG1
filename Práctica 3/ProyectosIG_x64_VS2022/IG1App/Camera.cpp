@@ -2,7 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-// #include <glm/gtc/matrix_access.hpp>
+#include <glm/gtc/matrix_access.hpp>
 
 using namespace glm;
 
@@ -77,14 +77,17 @@ Camera::roll(GLdouble a)
 
 void Camera::pitchReal(GLdouble cs)
 {
+	mViewMat = rotate(mViewMat, radians(cs), mRight);
 }
 
 void Camera::yawReal(GLdouble cs)
 {
+	mViewMat = rotate(mViewMat, radians(cs), mUpward);
 }
 
 void Camera::rollReal(GLdouble cs)
 {
+	mViewMat = rotate(mViewMat, radians(cs), mFront);
 }
 
 void
@@ -143,11 +146,6 @@ void Camera::setAxes()
 	mFront = -row(mViewMat, 2);
 }
 
-dvec3 Camera::row(dmat4 matrix, int index)
-{
-	return matrix[index];
-}
-
 void Camera::moveLR(GLdouble cs)
 {
 	mEye += mRight * cs;
@@ -193,4 +191,13 @@ Camera::uploadPM() const
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU
 	glMatrixMode(GL_MODELVIEW);
+}
+
+void Camera::setCenital() {
+	mEye = dvec3(0.1, 500, 0);
+	mLook = dvec3(0, 0, 0);
+	mUp = dvec3(0, 1, 0);
+	mAng = 0;
+	mRadio = 0;
+	setVM();
 }
