@@ -181,6 +181,8 @@ IG1App::display() const
 	}
 	else
 	{
+		mViewPort->setSize(mWinW, mWinH);
+		mViewPort->setPos(0, 0);
 		mScene->render(*mCamera); // uploads the viewport and camera to the GPU
 	}
 
