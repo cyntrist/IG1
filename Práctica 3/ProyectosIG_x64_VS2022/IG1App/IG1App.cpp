@@ -115,6 +115,7 @@ IG1App::init()
 	mScene2 = new Scene;
 
 	mCamera->set3D();
+	mCamera2->set2D();
 
 	mScene->init();
 	mScene2->init();
@@ -174,6 +175,13 @@ IG1App::free()
 	mCamera = nullptr;
 	delete mViewPort;
 	mViewPort = nullptr;
+
+	delete mScene2;
+	mScene2 = nullptr;
+	delete mCamera2;
+	mCamera2 = nullptr;
+	delete mViewPort2;
+	mViewPort2 = nullptr;
 }
 
 void
@@ -190,7 +198,10 @@ IG1App::display() const
 	{
 		mViewPort->setSize(mWinW, mWinH);
 		mViewPort->setPos(0, 0);
+		mCamera->setSize(mViewPort->width(), mViewPort->height());
+
 		mScene->render(*mCamera); // uploads the viewport and camera to the GPU
+
 	}
 
 	glutSwapBuffers(); // swaps the front and back buffer
@@ -204,9 +215,11 @@ IG1App::resize(int newWidth, int newHeight)
 
 	// Resize Viewport to the new window size
 	mViewPort->setSize(newWidth, newHeight);
+	mViewPort2->setSize(newWidth/2, newHeight);
 
 	// Resize Scene Visible Area such that the scale is not modified
 	mCamera->setSize(mViewPort->width(), mViewPort->height());
+	mCamera2->setSize(mViewPort2->width(), mViewPort2->height());
 }
 
 void
