@@ -104,16 +104,20 @@ IG1App::init()
 	// create the scene after creating the context
 	// allocate memory and resources
 	mViewPort =
-		new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
+	  new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
+
 	mCamera = new Camera(mViewPort);
 
-	mScene = new Scene();
+	mScene = new Scene;
+	mScene2 = new Scene;
 
-	changeScene(5);
+	mCamera->set3D();
 
 	mScene->init();
-	/*for (auto i : scenes)
-		i->init();*/
+	mScene2->init();
+
+	mScene->setScene(5);
+	mScene2->setScene(1);
 
 	// registra los callbacks
 	glutMouseFunc(s_mouse);
@@ -365,5 +369,5 @@ void IG1App::render2Vistas() const
 
 	mViewPort->setPos(mWinW / 2, 0);
 	auxCam.setCenital();
-	mScene->render(auxCam);
+	mScene2->render(auxCam);
 }

@@ -76,10 +76,10 @@ protected:
 
 	// Viewport position and size
 	Viewport* mViewPort = nullptr;
-	Viewport* mViewPort2 = nullptr;
+	//Viewport* mViewPort2 = nullptr; // no hace falta un 2o viewport pero voy a probar
 	// Camera position, view volume and projection
 	Camera* mCamera = nullptr;
-	Camera* mCamera2 = nullptr;
+	//Camera* mCamera2 = nullptr;
 	// Graphics objects of the scene
 	Scene* mScene = nullptr; // escena renderizada actual
 	Scene* mScene2 = nullptr; // escena renderizada actual
