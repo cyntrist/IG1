@@ -81,6 +81,7 @@ void RegularPolygon::render(const dmat4& modelViewMat) const
 RGBTriangle::RGBTriangle(GLdouble l) : radio(0), trans(dvec2(0, 0))
 {
 	mMesh = Mesh::generateRGBTriangle(l, 0, 0);
+
 }
 
 RGBTriangle::RGBTriangle(GLdouble l, GLdouble x) : radio(x), trans(dvec2(x, 0))

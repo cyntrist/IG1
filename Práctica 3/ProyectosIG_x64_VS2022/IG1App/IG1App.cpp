@@ -245,6 +245,7 @@ IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'p':
 		mCamera->changePrj();
+		mCamera2->changePrj();
 		break;
 
 	case '0':
@@ -272,6 +273,7 @@ IG1App::key(unsigned char key, int x, int y)
 
 	case 'u':
 		mScene->update();
+		mScene2->update();
 		break;
 	case 'U':
 		toggleUpdate();
@@ -303,31 +305,46 @@ IG1App::specialKey(int key, int x, int y)
 	{
 	case GLUT_KEY_RIGHT:
 		if (mdf == GLUT_ACTIVE_CTRL)
+		{
 			mCamera->pitchReal(-1);
+			mCamera2->pitchReal(-1);
+		}
 			//mCamera->moveLR(1);
 			//mCamera->pitch(-1); // rotates -1 on the X axis
 		else
+		{
 			mCamera->pitchReal(1);
+			mCamera2->pitchReal(1);
+		}
 			//mCamera->moveLR(-1);
 			//mCamera->pitch(1); // rotates 1 on the X axis
 		break;
 	case GLUT_KEY_LEFT:
 		if (mdf == GLUT_ACTIVE_CTRL)
+		{
 			mCamera->yawReal(-1);
+			mCamera2->yawReal(-1);
+		}
 			//mCamera->moveUD(1);
 			//mCamera->yaw(1); // rotates 1 on the Y axis
 		else
+		{
 			mCamera->yawReal(1);
+			mCamera2->yawReal(1);
+			
+		}
 			//mCamera->moveUD(-1);
 			//mCamera->yaw(-1); // rotate -1 on the Y axis
 		break;
 	case GLUT_KEY_UP:
 		mCamera->rollReal(-1);
+		mCamera2->rollReal(-1);
 		//mCamera->moveFB(1);
 		//mCamera->roll(1); // rotates 1 on the Z axis
 		break;
 	case GLUT_KEY_DOWN:
 		mCamera->rollReal(1);
+		mCamera2->rollReal(1);
 		//mCamera->moveFB(-1);
 		//mCamera->roll(-1); // rotates -1 on the Z axis
 		break;
@@ -376,14 +393,16 @@ void IG1App::screenshot()
 
 void IG1App::render2Vistas() const
 {
+	int nViews = 2;
 
 	mViewPort->setSize(mWinW / 2, mWinH);
-	mCamera->setSize(mViewPort->width(), mViewPort->height());
-
+	mCamera->setSize(mViewPort->width() * nViews, mViewPort->height() * nViews);
 	mViewPort->setPos(0, 0);
 	mScene->render(*mCamera);
 
+	mViewPort2->setSize(mWinW / 2, mWinH);
+	mCamera2->setSize(mViewPort->width() * nViews, mViewPort->height() * nViews);
 	mViewPort2->setPos(mWinW / 2, 0);
-	mCamera2->setCenital();
+	//mCamera2->setCenital();
 	mScene2->render(*mCamera2);
 }
