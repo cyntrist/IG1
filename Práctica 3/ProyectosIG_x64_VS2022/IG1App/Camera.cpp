@@ -80,17 +80,23 @@ Camera::roll(GLdouble a)
 
 void Camera::pitchReal(GLdouble cs)
 {
-	mViewMat = rotate(mViewMat, radians(cs), mRight);
+	//mViewMat = rotate(mViewMat, radians(cs), mRight);
+	mLook += mFront * cs;
+	setVM();
 }
 
 void Camera::yawReal(GLdouble cs)
 {
-	mViewMat = rotate(mViewMat, radians(cs), mUpward);
+	//mViewMat = rotate(mViewMat, radians(cs), mUpward);
+	mLook += mUp * cs;
+	setVM();
 }
 
 void Camera::rollReal(GLdouble cs)
 {
-	mViewMat = rotate(mViewMat, radians(cs), mFront);
+	//mViewMat = rotate(mViewMat, radians(cs), mFront);
+	mLook += mFront * cs;
+	setVM();
 }
 
 void
