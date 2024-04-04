@@ -60,7 +60,7 @@ IG1App::init()
 
 	mScene->setScene(5);
 	mScene2->setScene(0);
-	mCamera2->setEjer47(true, 250.0);
+	mCamera2->setEjer47(true, 500.0);
 
 	toggle2Vistas();
 
@@ -219,6 +219,7 @@ IG1App::key(unsigned char key, int x, int y)
 
 	case 'u':
 		currentScene->update();
+		currentCam->update();
 		break;
 	case 'U':
 		toggleUpdate();
@@ -292,7 +293,6 @@ void IG1App::toggleUpdate()
 
 void IG1App::update()
 {
-
 	if (mUpdate)
 	{
 		auto currentScene = mScene;
@@ -307,11 +307,6 @@ void IG1App::update()
 		currentCam->update();
 		glutPostRedisplay();
 	}
-}
-
-void IG1App::changeScene(int id)
-{
-	mScene->setScene(id);
 }
 
 void IG1App::screenshot()

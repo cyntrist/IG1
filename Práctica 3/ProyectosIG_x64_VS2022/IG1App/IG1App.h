@@ -54,7 +54,6 @@ protected:
 	void iniWinOpenGL();
 	void free();
 	void update();
-	void changeScene(int id);
 	void screenshot();
 	void render2Vistas() const;
 

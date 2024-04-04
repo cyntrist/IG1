@@ -15,8 +15,8 @@ Camera::Camera(Viewport* vp)
 	  , yBot(-yTop)
 	  , mViewPort(vp)
 	  , mRadio(0.0)
-	  , mAng(0.0)
-	  , mSpeed(1.0)
+	  , mAng(90.0)
+	  , mSpeed(2.0)
 {
 	setPM();
 }
@@ -215,7 +215,7 @@ void Camera::update()
 
 		mEye.x = cos(radians(mAng)) * mRadio;
 		mEye.y = sin(radians(mAng)) * mRadio;
-
+		
 		mLook.x = cos(radians(mAng)) * mRadio;
 		mLook.y = sin(radians(mAng)) * mRadio;
 
