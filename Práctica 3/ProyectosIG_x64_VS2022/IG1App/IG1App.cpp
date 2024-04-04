@@ -344,6 +344,7 @@ void IG1App::update()
 	if (mUpdate)
 	{
 		mScene->update();
+		mScene2->update();
 		glutPostRedisplay();
 	}
 }
@@ -362,15 +363,14 @@ void IG1App::screenshot()
 
 void IG1App::render2Vistas() const
 {
-	Camera auxCam = *mCamera;	// Camara auxiliar copiando mCamera
 
 	mViewPort->setSize(mWinW / 2, mWinH);
-	auxCam.setSize(mViewPort->width(), mViewPort->height());
+	mCamera->setSize(mViewPort->width(), mViewPort->height());
 
 	mViewPort->setPos(0, 0);
-	mScene->render(auxCam);
+	mScene->render(*mCamera);
 
-	mViewPort->setPos(mWinW / 2, 0);
-	auxCam.setCenital();
-	mScene2->render(auxCam);
+	mViewPort2->setPos(mWinW / 2, 0);
+	mCamera2->setCenital();
+	mScene2->render(*mCamera2);
 }
