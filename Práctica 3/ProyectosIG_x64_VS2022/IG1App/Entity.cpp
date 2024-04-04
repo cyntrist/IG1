@@ -418,18 +418,14 @@ void Box::render(const dmat4& modelViewMat) const
 		glPolygonMode(GL_BACK, GL_FILL);
 		mTexture2->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_BACK);
-		renderMain(modelViewMat); // Cuerpo principal
-		renderTop(modelViewMat); // Tapa (primero rotate luego translate)
-		renderBot(modelViewMat); // Culo (primero rotate luego translate)
+		renderBox(modelViewMat);
 		mTexture2->unbind(); // quita la textura del buffer
 
 		/// Caras delanteras
 		glPolygonMode(GL_FRONT, GL_FILL);
 		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
 		glCullFace(GL_FRONT);
-		renderMain(modelViewMat); // Cuerpo principal
-		renderTop(modelViewMat); // Tapa (primero rotate luego translate)
-		renderBot(modelViewMat); // Culo (primero rotate luego translate)
+		renderBox(modelViewMat);
 		mTexture->unbind(); // quita la textura del buffer
 
 		/// Reseteo
@@ -467,6 +463,13 @@ void Box::renderBot(const dmat4& modelViewMat) const
 		* rotate(mBotMat, radians(90.0), dvec3(1.0, 0.0, 0.0));
 	upload(aMat);
 	mBottomMesh->render();
+}
+
+void Box::renderBox(glm::dmat4 const& modelViewMat) const
+{
+	renderMain(modelViewMat); // Cuerpo principal
+	renderTop(modelViewMat); // Tapa (primero rotate luego translate)
+	renderBot(modelViewMat); // Culo (primero rotate luego translate)
 }
 
 void Box::update()

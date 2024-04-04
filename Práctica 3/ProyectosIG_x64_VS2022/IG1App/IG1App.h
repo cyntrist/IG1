@@ -73,10 +73,13 @@ protected:
 
 	// Viewport position and size
 	Viewport* mViewPort = nullptr;
+	Viewport* mViewPort2 = nullptr;
 	// Camera position, view volume and projection
 	Camera* mCamera = nullptr;
+	Camera* mCamera2 = nullptr;
 	// Graphics objects of the scene
 	Scene* mScene = nullptr; // escena renderizada actual
+	Scene* mScene2 = nullptr; // escena renderizada actual
 
 	// raton
 	glm::dvec2 mMouseCoord;

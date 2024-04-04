@@ -148,6 +148,7 @@ public:
 	void renderTop(glm::dmat4 const& modelViewMat) const;
 	void renderMain(glm::dmat4 const& modelViewMat) const;
 	void renderBot(glm::dmat4 const& modelViewMat) const;
+	void renderBox(glm::dmat4 const& modelViewMat) const;
 	void update() override;
 
 };
