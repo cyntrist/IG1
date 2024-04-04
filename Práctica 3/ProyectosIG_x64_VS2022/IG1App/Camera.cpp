@@ -216,15 +216,10 @@ void Camera::update()
 	if (ejercicio47)
 	{
 		mAng += mSpeed;
-
-		rollReal(-mSpeed);
-
 		mEye.x = cos(radians(mAng)) * mRadio;
 		mEye.y = sin(radians(mAng)) * mRadio;
-		
 		mLook.x = cos(radians(mAng)) * mRadio;
 		mLook.y = sin(radians(mAng)) * mRadio;
-
-		setVM();
+		rollReal(-mSpeed);
 	}
 }
