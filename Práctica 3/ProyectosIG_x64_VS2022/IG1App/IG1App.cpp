@@ -105,8 +105,11 @@ IG1App::init()
 	// allocate memory and resources
 	mViewPort =
 	  new Viewport(mWinW, mWinH); // glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
+	mViewPort2 =
+	  new Viewport(mWinW/2, mWinH);
 
 	mCamera = new Camera(mViewPort);
+	mCamera2 = new Camera(mViewPort2);
 
 	mScene = new Scene;
 	mScene2 = new Scene;
@@ -117,7 +120,7 @@ IG1App::init()
 	mScene2->init();
 
 	mScene->setScene(5);
-	mScene2->setScene(1);
+	mScene2->setScene(0);
 
 	// registra los callbacks
 	glutMouseFunc(s_mouse);
