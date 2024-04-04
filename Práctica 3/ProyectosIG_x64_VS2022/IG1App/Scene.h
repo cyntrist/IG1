@@ -30,6 +30,7 @@ public:
 	void setCulling();
 	void unsetCulling();
 	void reset();
+	void setScene(int);
 
 protected:
 	void free();

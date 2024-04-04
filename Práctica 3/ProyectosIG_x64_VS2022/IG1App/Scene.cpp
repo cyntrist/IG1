@@ -94,6 +94,46 @@ void Scene::addObject(Abs_Entity* ent)
 	gObjects.push_back(ent);
 }
 
+void Scene::setScene(int index)
+{
+	reset();
+	switch (index)
+	{
+	case 0:
+		addObject(new RegularPolygon(32, 250));
+		addObject(new RGBRectangle(500, 250));
+		addObject(new RGBTriangle(50, 250));
+		break;
+	case 1:
+		addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
+		break;
+	case 2:
+		addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
+		break;
+	case 3:
+		addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
+		break;
+	case 4:
+		addObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
+		break;
+	case 5:
+		addObject(new Photo(200, 100, glm::dvec3(0.0, 10.0, 0.0)));
+		addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", glm::dvec3(0.0, 0.0, 0.0)));
+		addObject(
+			new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-224.5, 75.0, -224.5)));
+		addObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
+		addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", glm::dvec3(-225, 200, -225)));
+		addObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
+
+		break;
+	case 6:
+		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
+		break;
+	default:
+		break;
+	}
+}
+
 void
 Scene::render(Camera const& cam) const
 {

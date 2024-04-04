@@ -333,44 +333,7 @@ void IG1App::update()
 
 void IG1App::changeScene(int id)
 {
-	mScene->reset();
-	mCamera->set3D();
-
-	switch (id)
-	{
-	case 0:
-		mScene->addObject(new RegularPolygon(32, 250));
-		mScene->addObject(new RGBRectangle(500, 250));
-		mScene->addObject(new RGBTriangle(50, 250));
-		break;
-	case 1:
-		mScene->addObject(new BoxOutline(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
-		break;
-	case 2:
-		mScene->addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
-		break;
-	case 3:
-		mScene->addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
-		break;
-	case 4:
-		mScene->addObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
-		break;
-	case 5:
-		mScene->addObject(new Photo(200, 100, glm::dvec3(0.0, 10.0, 0.0)));
-		mScene->addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", glm::dvec3(0.0, 0.0, 0.0)));
-		mScene->addObject(
-			new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-224.5, 75.0, -224.5)));
-		mScene->addObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
-		mScene->addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", glm::dvec3(-225, 200, -225)));
-		mScene->addObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
-
-		break;
-	case 6:
-		mScene->addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
-		break;
-	default:
-		break;
-	}
+	mScene->setScene(id);
 }
 
 void IG1App::screenshot()
