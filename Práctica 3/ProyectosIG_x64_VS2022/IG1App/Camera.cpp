@@ -14,6 +14,9 @@ Camera::Camera(Viewport* vp)
 	  , yTop(vp->height() / 2.0)
 	  , yBot(-yTop)
 	  , mViewPort(vp)
+	  , mRadio(0.0)
+	  , mAng(0.0)
+	  , mSpeed(1.0)
 {
 	setPM();
 }
@@ -200,4 +203,22 @@ void Camera::setCenital() {
 	mAng = 0;
 	mRadio = 0;
 	setVM();
+}
+
+void Camera::update()
+{
+	if (ejercicio47)
+	{
+		mAng += mSpeed;
+
+		rollReal(-mSpeed);
+
+		mEye.x = cos(radians(mAng)) * mRadio;
+		mEye.y = sin(radians(mAng)) * mRadio;
+
+		mLook.x = cos(radians(mAng)) * mRadio;
+		mLook.y = sin(radians(mAng)) * mRadio;
+
+		setVM();
+	}
 }

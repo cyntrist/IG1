@@ -60,6 +60,7 @@ IG1App::init()
 
 	mScene->setScene(5);
 	mScene2->setScene(0);
+	mCamera2->setEjer47(true, 250.0);
 
 	toggle2Vistas();
 
@@ -139,9 +140,7 @@ IG1App::display() const
 		mViewPort->setSize(mWinW, mWinH);
 		mViewPort->setPos(0, 0);
 		mCamera->setSize(mViewPort->width(), mViewPort->height());
-
 		mScene->render(*mCamera); // uploads the viewport and camera to the GPU
-
 	}
 
 	glutSwapBuffers(); // swaps the front and back buffer
@@ -296,11 +295,16 @@ void IG1App::update()
 
 	if (mUpdate)
 	{
-		auto& currentScene = mScene;
+		auto currentScene = mScene;
+		auto currentCam = mCamera;
 		if (mMouseCoord.x > mWinW/2)
+		{
 			currentScene = mScene2;
+			currentCam = mCamera2;
+		}
 
 		currentScene->update();
+		currentCam->update();
 		glutPostRedisplay();
 	}
 }
@@ -359,14 +363,11 @@ void IG1App::mouseWheel(int n, int d, int x, int y)
 		currentCam = mCamera2;
 
 	// nada
-	if (mod == 0) {
+	if (mod == 0)
 		currentCam->moveFB(d);
-	}
 	// CTRL
-	if (mod == 2 && GLUT_ACTIVE_CTRL) {
-		//
+	if (mod == 2 && GLUT_ACTIVE_CTRL) 
 		currentCam->setScale(d);
-	}
 	glutPostRedisplay();
 }
 
