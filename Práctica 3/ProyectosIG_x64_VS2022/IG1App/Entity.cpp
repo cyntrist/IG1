@@ -72,6 +72,7 @@ void RegularPolygon::render(const dmat4& modelViewMat) const
 		mMesh->render();
 		glLineWidth(1);
 		glColor4d(0, 0, 0, 0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 
