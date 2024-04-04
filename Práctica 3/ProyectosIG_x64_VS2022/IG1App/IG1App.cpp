@@ -254,14 +254,14 @@ IG1App::key(unsigned char key, int x, int y)
 		mScene->update();
 		break;
 	case 'U':
-		mUpdate = !mUpdate;
+		toggleUpdate();
 		glutIdleFunc(s_update);
 		break;
 	case 'F':
 		screenshot();
 		break;
 	case 'k':
-		m2Vistas = !m2Vistas;
+		toggle2Vistas();
 		break;
 	default:
 		need_redisplay = false;
@@ -319,6 +319,16 @@ IG1App::specialKey(int key, int x, int y)
 	if (need_redisplay)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to
 	// display()
+}
+
+void IG1App::toggle2Vistas()
+{
+	m2Vistas = !m2Vistas;
+}
+
+void IG1App::toggleUpdate()
+{
+	mUpdate = !mUpdate;
 }
 
 void IG1App::update()
