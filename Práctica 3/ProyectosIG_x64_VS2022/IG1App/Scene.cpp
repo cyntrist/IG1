@@ -49,7 +49,13 @@ Scene::free()
 		el = nullptr;
 	}
 	gObjects.resize(0); // ???????? esto no deberia hacerse solo al ser un vector? si no lo hago da error de acceso 
+	for (Abs_Entity* el : gTransparentObjects) {
+		delete el;
+		el = nullptr;
+	}
+	gTransparentObjects.resize(0);
 }
+
 void
 Scene::setGL()
 {
@@ -94,6 +100,11 @@ void Scene::addObject(Abs_Entity* ent)
 	gObjects.push_back(ent);
 }
 
+void Scene::addTransparentObject(Abs_Entity* ent)
+{
+	gTransparentObjects.push_back(ent);
+}
+
 void Scene::setScene(int index)
 {
 	reset();
@@ -114,16 +125,16 @@ void Scene::setScene(int index)
 		addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
 		break;
 	case 4:
-		addObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
+		addTransparentObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
 		break;
 	case 5:
 		addObject(new Photo(200, 100, glm::dvec3(0.0, 10.0, 0.0)));
 		addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", glm::dvec3(0.0, 0.0, 0.0)));
 		addObject(
 			new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-224.5, 75.0, -224.5)));
-		addObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
+		addTransparentObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
 		addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", glm::dvec3(-225, 200, -225)));
-		addObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
+		addTransparentObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
 
 		break;
 	case 6:
@@ -143,11 +154,18 @@ Scene::render(Camera const& cam) const
 		if (el != nullptr)
 			el->render(cam.viewMat());
 	}
+
+	for (Abs_Entity* el : gTransparentObjects) {
+		if (el != nullptr)
+			el->render(cam.viewMat());
+	}
 }
 
 void Scene::update()
 {
 	glutPostRedisplay();
 	for (auto* i : gObjects)
+		i->update();
+	for (auto* i : gTransparentObjects)
 		i->update();
 }

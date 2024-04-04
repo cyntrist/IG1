@@ -25,6 +25,7 @@ public:
 	void init();
 	// apartado 11
 	void addObject(Abs_Entity* ent);
+	void addTransparentObject(Abs_Entity* ent);
 	void render(Camera const& cam) const;
 	void update();
 	void setCulling();
@@ -39,6 +40,7 @@ protected:
 	
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
+	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
 };
 
 #endif //_H_Scene_H_
