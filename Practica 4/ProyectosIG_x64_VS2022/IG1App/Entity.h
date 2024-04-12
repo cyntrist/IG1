@@ -194,4 +194,30 @@ public:
 	~Grass() override;
 	void render(glm::dmat4 const& modelViewMat) const override;
 };
+
+
+
+// ------------------------------------------ PRACTICA 4 ----------------------------------------
+
+class QuadricEntity : public Abs_Entity { 
+public: 
+	QuadricEntity(); 
+	~QuadricEntity() { gluDeleteQuadric(q); }; 
+protected: 
+	GLUquadricObj* q; 
+}; 
+
+QuadricEntity::QuadricEntity() {
+	q = gluNewQuadric(); 
+}
+
+class Sphere : public QuadricEntity {
+public: 
+	Sphere(GLdouble rr); // r es el radio de la esfera 
+	void render(glm::dmat4 const& modelViewMat) const; 
+protected: 
+	GLdouble r; 
+};
+
+
 #endif //_H_Entities_H_
