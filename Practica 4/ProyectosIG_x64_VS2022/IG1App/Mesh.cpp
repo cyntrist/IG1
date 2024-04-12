@@ -20,32 +20,51 @@ Mesh::render() const
 {
 	if (vVertices.size() > 0)
 	{
-		// transfer data
-		// transfer the coordinates of the vertices
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(
-			3, GL_DOUBLE, 0, vVertices.data()); // number of coordinates per vertex, type of
-		// each coordinate, stride, pointer
-		if (vColors.size() > 0)
-		{
-			// transfer colors
-			glEnableClientState(GL_COLOR_ARRAY);
-			glColorPointer(
-				4, GL_DOUBLE, 0, vColors.data()); // components number (rgba=4), type of
-			// each component, stride, pointer
-		}
-
-		if (vTexCoords.size() > 0)
-		{
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());
-		}
+		setGL();
 		draw();
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-
+		resetGL();
 	}
+}
+
+void Mesh::setGL() const
+{
+	// transfer data
+	// transfer the coordinates of the vertices
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(
+		3, GL_DOUBLE, 0, vVertices.data()); // number of coordinates per vertex, type of
+	// each coordinate, stride, pointer
+
+	/// si tiene vertices de color
+	if (!vColors.empty())
+	{
+		// transfer colors
+		glEnableClientState(GL_COLOR_ARRAY);
+		glColorPointer(
+			4, GL_DOUBLE, 0, vColors.data()); // components number (rgba=4), type of
+		// each component, stride, pointer
+	}
+
+	/// si tiene vertices de textura
+	if (!vTexCoords.empty())
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());
+	}
+
+	if (!vNormals.empty())
+	{
+		glEnable(GL_NORMALIZE);
+		glNormalPointer(3, 0, vNormals.data()); 
+	}
+}
+
+void Mesh::resetGL() const
+{
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState ( GL_NORMAL_ARRAY );
 }
 
 Mesh*
@@ -101,7 +120,8 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	{
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha) 
-		mesh->vVertices.emplace_back(r * cos(alpha + radians(dividido * i)),r * sin(alpha + radians(dividido * i)), 1.0);
+		mesh->vVertices.emplace_back(r * cos(alpha + radians(dividido * i)), r * sin(alpha + radians(dividido * i)),
+		                             1.0);
 	}
 
 	glEnd(); //end drawing of line loop
@@ -130,10 +150,10 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
 	glBegin(mesh->mPrimitive); // start drawing a line loop
-	mesh->vVertices.emplace_back(-w/2, h/2, 0.0);
-	mesh->vVertices.emplace_back(w/2, h/2, 0.0);
-	mesh->vVertices.emplace_back(-w/2, -h/2, 0.0);
-	mesh->vVertices.emplace_back(w/2, -h/2, 0.0);
+	mesh->vVertices.emplace_back(-w / 2, h / 2, 0.0);
+	mesh->vVertices.emplace_back(w / 2, h / 2, 0.0);
+	mesh->vVertices.emplace_back(-w / 2, -h / 2, 0.0);
+	mesh->vVertices.emplace_back(w / 2, -h / 2, 0.0);
 	glEnd(); //end drawing of line loop
 
 	return mesh;
@@ -204,8 +224,8 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	///	algo tiene que estar mal de lo que he copiado de la pizarra porque no funciona
 	///	prefiero hacerlo de manera manual, pero lo dejo aqui como referencia
 	///	o por si acaso
-	
-	
+
+
 	GLdouble m = l / 2;
 
 	// triangulo 1 cara 1
@@ -216,7 +236,6 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	mesh->vVertices.emplace_back(m, -m, m); // v3
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v4 = v1
 	mesh->vVertices.push_back(mesh->vVertices[2]); // v5 = v2
-
 
 
 	// triangulo 1 cara 2
@@ -237,7 +256,7 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	mesh->vVertices.push_back(mesh->vVertices[9]); // v12 = v9
 	mesh->vVertices.push_back(mesh->vVertices[0]); // v13 = v0
 	mesh->vVertices.push_back(mesh->vVertices[1]); // v14 = v1
-	
+
 	// triangulo 1 cara 4
 	mesh->vVertices.emplace_back(-m, m, -m); // v15 = -v0
 	mesh->vVertices.emplace_back(m, m, -m); // v16 = -v1
@@ -265,7 +284,7 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	mesh->vVertices.emplace_back(-m, m, m); // v29
 	// triangulo 2 cara 6
 	mesh->vVertices.emplace_back(m, m, m); // v30 = v27
-	mesh->vVertices.emplace_back(-m,- m, m); // v31 = v28
+	mesh->vVertices.emplace_back(-m, -m, m); // v31 = v28
 	mesh->vVertices.emplace_back(m, -m, m); // v32 = v3
 	// ^^^^ - en z
 
@@ -292,11 +311,11 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 		mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
 
 	// cara 6
-	for (int i = 0; i < 6; i++)	
+	for (int i = 0; i < 6; i++)
 		mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 
 	//mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	
+
 
 	return mesh;
 }
@@ -307,10 +326,10 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 {
 	auto mesh = generateRectangle(w, h);
 
-	mesh->vTexCoords.emplace_back(0,0);
-	mesh->vTexCoords.emplace_back(1,0);
-	mesh->vTexCoords.emplace_back(0,1);
-	mesh->vTexCoords.emplace_back(1,1);
+	mesh->vTexCoords.emplace_back(0, 0);
+	mesh->vTexCoords.emplace_back(1, 0);
+	mesh->vTexCoords.emplace_back(0, 1);
+	mesh->vTexCoords.emplace_back(1, 1);
 
 	return mesh;
 }
@@ -320,10 +339,10 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 	auto mesh = generateRectangle(w, h);
 
 	mesh->vTexCoords.reserve(mesh->vVertices.size());
-	mesh->vTexCoords.emplace_back(0,0);
-	mesh->vTexCoords.emplace_back(rw,0);
-	mesh->vTexCoords.emplace_back(0,rh);
-	mesh->vTexCoords.emplace_back(rw,rh);
+	mesh->vTexCoords.emplace_back(0, 0);
+	mesh->vTexCoords.emplace_back(rw, 0);
+	mesh->vTexCoords.emplace_back(0, rh);
+	mesh->vTexCoords.emplace_back(rw, rh);
 
 	return mesh;
 }
@@ -344,7 +363,7 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	mesh->vVertices.emplace_back(m, -m, -m); // v2
 
 	mesh->vVertices.emplace_back(m, m, -m); // v3
-	mesh->vVertices.emplace_back(-m,-m, -m); // v4
+	mesh->vVertices.emplace_back(-m, -m, -m); // v4
 	mesh->vVertices.emplace_back(-m, m, -m); // v5
 
 	mesh->vVertices.emplace_back(-m, -m, m); // v6
@@ -394,21 +413,20 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 
 	glBegin(mesh->mPrimitive); //start drawing a line loop
 
-	mesh->vVertices.emplace_back(0,0,0);
+	mesh->vVertices.emplace_back(0, 0, 0);
 	for (int i = 0; i < np; i++)
 	{
 		// x = Cx + R*cos(alpha)
 		// y = Cy + R*sen(alpha)
 
 		mesh->vVertices.emplace_back(
-			re * cos(offset + radians(alpha * i)), 
-			re * sin(offset + radians(alpha * i)), 
+			re * cos(offset + radians(alpha * i)),
+			re * sin(offset + radians(alpha * i)),
 			h);
 		mesh->vVertices.emplace_back(
-			re/2 * cos(offset + radians((alpha)  * (i + 1)) - radians(alpha/2)), 
-			re/2 * sin(offset + radians((alpha) * (i + 1)) - radians(alpha/2)), 
+			re / 2 * cos(offset + radians((alpha) * (i + 1)) - radians(alpha / 2)),
+			re / 2 * sin(offset + radians((alpha) * (i + 1)) - radians(alpha / 2)),
 			h);
-		
 	}
 	mesh->vVertices.push_back(mesh->vVertices[1]);
 
@@ -424,7 +442,8 @@ Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
 	mesh->vTexCoords.reserve(mesh->mNumVertices);
 
 	mesh->vTexCoords.emplace_back(0.5, 0.5);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		mesh->vTexCoords.emplace_back(0, 1);
 		mesh->vTexCoords.emplace_back(0.5, 1);
 		mesh->vTexCoords.emplace_back(0, 1);
@@ -461,7 +480,8 @@ Mesh* Mesh::generateGlassParapet(GLdouble w, GLdouble h)
 
 
 	mesh->vColors.reserve(mesh->mNumVertices);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		mesh->vTexCoords.emplace_back(0, 0);
 		mesh->vTexCoords.emplace_back(1, 0);
 		mesh->vTexCoords.emplace_back(0, 1);
