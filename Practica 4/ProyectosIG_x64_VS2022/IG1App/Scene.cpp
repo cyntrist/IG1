@@ -119,6 +119,10 @@ void Scene::setScene(int index)
 	case 6:
 		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 		break;
+	case 7:
+
+
+		break;
 	default:
 		break;
 	}

@@ -220,4 +220,42 @@ protected:
 };
 
 
+class Cylinder : public QuadricEntity {
+public:
+	Cylinder(GLdouble brr, GLdouble trr, GLdouble hh); // r es el radio de la esfera 
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble br, tr, h;
+};
+
+class Disk : public QuadricEntity {
+public:
+	Disk(GLdouble irr, GLdouble orr); // r es el radio de la esfera 
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble iR, oR ;
+};
+
+class PartialDisk : public QuadricEntity {
+public:
+	PartialDisk(GLdouble irr, GLdouble orr, GLdouble sAng, GLdouble swAng); // r es el radio de la esfera 
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble iR, oR, sa, swa;
+};
+
+
+class CompoundEntity : public Abs_Entity {
+public:
+	CompoundEntity();
+	~CompoundEntity();
+	void addEntity(Abs_Entity* ae);
+	void render(glm::dmat4 const& modelViewMat) const override;
+	
+protected:
+	GLUquadricObj* q;
+	std::vector<Abs_Entity*> gObjects;
+};
+
+
 #endif //_H_Entities_H_
