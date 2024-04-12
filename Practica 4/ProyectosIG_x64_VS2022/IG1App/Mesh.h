@@ -16,6 +16,8 @@ public:
 	Mesh& operator=(const Mesh& m) = delete; // no copy assignment
 
 	virtual void render() const;
+	virtual void setGL() const;
+	virtual void resetGL() const;
 
 	GLuint size() const { return mNumVertices; }; // number of elements
 	std::vector<glm::dvec3> const& vertices() const { return vVertices; };
@@ -45,7 +47,7 @@ protected:
 	std::vector<glm::dvec3> vVertices; // vertex array
 	std::vector<glm::dvec4> vColors;   // color array
 	virtual void draw() const;
-
+	std::vector<glm::dvec3> vNormals; // vectores normales de los vertices
 	std::vector<glm::dvec2> vTexCoords;	// vertices de texturas (analogo a vVertices vColor)
 };
 
