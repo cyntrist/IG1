@@ -766,3 +766,19 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 	// Aquí se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
+
+CompoundEntity::CompoundEntity()
+{
+}
+
+CompoundEntity::~CompoundEntity()
+{
+}
+
+void CompoundEntity::addEntity(Abs_Entity* ae)
+{
+}
+
+void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
+{
+}

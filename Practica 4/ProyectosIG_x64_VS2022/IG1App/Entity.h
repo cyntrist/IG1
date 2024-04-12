@@ -245,4 +245,17 @@ protected:
 };
 
 
+class CompoundEntity : public Abs_Entity {
+public:
+	CompoundEntity();
+	~CompoundEntity();
+	void addEntity(Abs_Entity* ae);
+	void render(glm::dmat4 const& modelViewMat) const override;
+	
+protected:
+	GLUquadricObj* q;
+	std::vector<Abs_Entity*> gObjects;
+};
+
+
 #endif //_H_Entities_H_
