@@ -32,6 +32,7 @@ public:
 	void unsetCulling();
 	void reset();
 	void setScene(int);
+	void sceneDirLight(Camera const&cam) const;
 
 protected:
 	void free();

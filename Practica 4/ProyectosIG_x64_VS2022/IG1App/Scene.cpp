@@ -11,45 +11,21 @@ void
 Scene::init()
 {
 	setGL(); // OpenGL settings
-
-	// allocate memory and load resources
-	// Lights
-	// Textures
-
-	// Graphics objects (entities) of the scene
 	gObjects.push_back(new EjesRGB(400.0));
-
-	//gObjects.push_back(new RGBTriangle(100, 100));
-
-	// Apartado 3
-	//gObjects.push_back(new RegularPolygon(7, 200));
-
-	// Apartado 4 y 5
-	//gObjects.push_back(new RegularPolygon(3, 200, glm::dvec4(0, 1, 1, 1)));
-	//gObjects.push_back(new RegularPolygon(64, 200, glm::dvec4(1, 0, 1, 1)));
-
-	// Apartado 6 y 7	
-	//gObjects.push_back(new RGBTriangle(3, 200));
-
-	// Apartado 8
-	//gObjects.push_back(new RGBRectangle(400,200));
-
-	// Apartado 9
-	//gObjects.push_back(new Cube(100));
-
-	// Apartado 10
-	//gObjects.push_back(new RGBCube(100));
 }
 
 void
 Scene::free()
-{ // release memory and resources
-	for (Abs_Entity* el : gObjects) {
+{
+	// release memory and resources
+	for (Abs_Entity* el : gObjects)
+	{
 		delete el;
 		el = nullptr;
 	}
 	gObjects.resize(0); // ???????? esto no deberia hacerse solo al ser un vector? si no lo hago da error de acceso 
-	for (Abs_Entity* el : gTransparentObjects) {
+	for (Abs_Entity* el : gTransparentObjects)
+	{
 		delete el;
 		el = nullptr;
 	}
@@ -61,21 +37,24 @@ Scene::setGL()
 {
 	// OpenGL basic setting
 	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
-	glEnable(GL_DEPTH_TEST);          // enable Depth test
-	glEnable(GL_TEXTURE_2D);		  // enable Texture mode
+	glEnable(GL_DEPTH_TEST); // enable Depth test
+	glEnable(GL_TEXTURE_2D); // enable Texture mode
 	glEnable(GLUT_MULTISAMPLE);
 	//glEnable(GL_CULL_FACE);
-	glEnable(GL_BLEND);									// enable Blending
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	// enable Alpha channel
+	glEnable(GL_BLEND); // enable Blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // enable Alpha channel
+	glEnable(GL_COLOR_MATERIAL);
 }
+
 void
 
 Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
-	glDisable(GL_DEPTH_TEST);     // disable Depth test
-	glDisable(GL_TEXTURE_2D);	  // disable Texture mode
+	glDisable(GL_DEPTH_TEST); // disable Depth test
+	glDisable(GL_TEXTURE_2D); // disable Texture mode
 	glDisable(GLUT_MULTISAMPLE);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 void Scene::setCulling()
@@ -128,13 +107,13 @@ void Scene::setScene(int index)
 		addTransparentObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
 		break;
 	case 5:
-		addObject(new Photo(200, 100, glm::dvec3(0.0, 10.0, 0.0)));
-		addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", glm::dvec3(0.0, 0.0, 0.0)));
+		addObject(new Photo(200, 100, dvec3(0.0, 10.0, 0.0)));
+		addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", dvec3(0.0, 0.0, 0.0)));
 		addObject(
-			new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", glm::dvec3(-224.5, 75.0, -224.5)));
-		addTransparentObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", glm::dvec3(0.0, 0.0, 0.0)));
-		addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", glm::dvec3(-225, 200, -225)));
-		addTransparentObject(new Grass(200, 200, "./bmps/grass.bmp", glm::dvec3(200, 0, 200)));
+			new Box(150, "./bmps/container.bmp", "./bmps/papelC.bmp", dvec3(-224.5, 75.0, -224.5)));
+		addTransparentObject(new GlassParapet(600, 300, "./bmps/windowV.bmp", dvec3(0.0, 0.0, 0.0)));
+		addObject(new Star3D(75, 8, 100, "./bmps/baldosaP.bmp", dvec3(-225, 200, -225)));
+		addTransparentObject(new Grass(200, 200, "./bmps/grass.bmp", dvec3(200, 0, 200)));
 
 		break;
 	case 6:
@@ -145,17 +124,36 @@ void Scene::setScene(int index)
 	}
 }
 
-void
-Scene::render(Camera const& cam) const
+void Scene::sceneDirLight(const Camera& cam) const
 {
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	fvec4 posDir = {1, 1, 1, 0};
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixd(value_ptr(cam.viewMat()));
+	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
+	fvec4 ambient = {0, 0, 0, 1};
+	fvec4 diffuse = {1, 1, 1, 1};
+	fvec4 specular = {0.5, 0.5, 0.5, 1};
+	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+}
+
+void
+Scene::render(const Camera& cam) const
+{
+	sceneDirLight(cam);
 	cam.upload();
 
-	for (Abs_Entity* el : gObjects) {
+	for (Abs_Entity* el : gObjects)
+	{
 		if (el != nullptr)
 			el->render(cam.viewMat());
 	}
 
-	for (Abs_Entity* el : gTransparentObjects) {
+	for (Abs_Entity* el : gTransparentObjects)
+	{
 		if (el != nullptr)
 			el->render(cam.viewMat());
 	}

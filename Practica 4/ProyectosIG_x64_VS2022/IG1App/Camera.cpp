@@ -220,7 +220,7 @@ void Camera::update()
 		mEye.y = sin(radians(mAng)) * mRadio;
 		mLook.x = cos(radians(mAng)) * mRadio;
 		mLook.y = sin(radians(mAng)) * mRadio;
-		rollReal(-mSpeed);
-		/// estoooo tiene que ser un setVM
+		rollReal(mAng);
+		setVM();
 	}
 }
