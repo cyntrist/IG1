@@ -14,6 +14,10 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell()
 	return normalize(n);
 }
 
+IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
+{
+}
+
 void IndexMesh::render() const
 {
 	// Comandos OpenGL para enviar datos de arrays a GPU

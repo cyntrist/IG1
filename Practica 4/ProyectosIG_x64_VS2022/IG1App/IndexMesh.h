@@ -14,5 +14,7 @@ public:
 	void render() const override;
 	void draw() const override;
 	//...
+
 	glm::vec3 calculoVectorNormalPorNewell();
+	static IndexMesh* generateIndexedBox(GLdouble l);
 };
