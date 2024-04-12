@@ -769,16 +769,27 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 
 CompoundEntity::CompoundEntity()
 {
+
+
 }
 
 CompoundEntity::~CompoundEntity()
 {
+	for (auto& ae : gObjects) {
+
+		ae->~Abs_Entity(); // ????
+	}
 }
 
 void CompoundEntity::addEntity(Abs_Entity* ae)
 {
+	gObjects.push_back(ae);
 }
 
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 {
+	for (auto& ae : gObjects) {
+
+		ae->render(mModelMat);
+	}
 }
