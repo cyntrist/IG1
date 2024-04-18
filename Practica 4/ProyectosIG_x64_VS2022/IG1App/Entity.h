@@ -257,5 +257,16 @@ protected:
 	std::vector<Abs_Entity*> gObjects;
 };
 
+class IndexedBox : public Abs_Entity
+{
+public:
+	IndexedBox(GLdouble);
+	~IndexedBox();
+	void render(glm::dmat4 const& modelViewMat) const override;
+	void update() override;
+protected:
+
+};
+
 
 #endif //_H_Entities_H_

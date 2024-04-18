@@ -1,5 +1,5 @@
 #include "Entity.h"
-
+#include "IndexMesh.h"
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -792,4 +792,36 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 
 		ae->render(mModelMat);
 	}
+}
+
+IndexedBox::IndexedBox(GLdouble l)
+{
+	mMesh = IndexMesh::generateIndexedBox(l);
+}
+
+IndexedBox::~IndexedBox()
+{
+}
+
+void IndexedBox::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		if (mTexture != nullptr) 
+			mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+
+		upload(aMat);
+		mMesh->render();
+
+		if (mTexture != nullptr) 
+			mTexture->unbind();
+	}
+}
+
+void IndexedBox::update()
+{
+	Abs_Entity::update();
 }
