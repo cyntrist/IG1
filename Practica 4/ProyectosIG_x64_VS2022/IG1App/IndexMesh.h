@@ -16,5 +16,6 @@ public:
 	//...
 
 	glm::vec3 calculoVectorNormalPorNewell();
+	void buildNormalVectors();
 	static IndexMesh* generateIndexedBox(GLdouble l);
 };

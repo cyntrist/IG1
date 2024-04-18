@@ -14,6 +14,10 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell()
 	return normalize(n);
 }
 
+void IndexMesh::buildNormalVectors()
+{
+}
+
 IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 {
 	const auto mesh = new IndexMesh();
