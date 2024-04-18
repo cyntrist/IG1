@@ -41,9 +41,9 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	/// en sentido anti-horario según se mira el cubo desde su exterior
 	mesh->vIndices = new GLuint[36];
 
-	mesh->vIndices[0] =  5;
-	mesh->vIndices[1] =  1;
-	mesh->vIndices[2] =  0;
+	mesh->vIndices[0] = 5;
+	mesh->vIndices[1] = 1;
+	mesh->vIndices[2] = 0;
 	mesh->vIndices[3] = 0;
 	mesh->vIndices[4] = 4;
 	mesh->vIndices[5] = 5;
@@ -78,9 +78,71 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vIndices[34] = 7;
 	mesh->vIndices[35] = 2;
 
+#pragma region RGBCUBE original
+	//GLdouble m = l / 2;
+
+	//// triangulo 1 cara 1
+	//mesh->vVertices.emplace_back(-m, -m, -m); // v0
+	//mesh->vVertices.emplace_back(m, -m, -m); // v1
+	//mesh->vVertices.emplace_back(-m, -m, m); // v2
+	//// triangulo 2 cara 1
+	//mesh->vVertices.emplace_back(m, -m, m); // v3
+	//mesh->vVertices.push_back(mesh->vVertices[1]); // v4 = v1
+	//mesh->vVertices.push_back(mesh->vVertices[2]); // v5 = v2
+
+
+	//// triangulo 1 cara 2
+	//mesh->vVertices.push_back(mesh->vVertices[3]); // v6 = v3
+	//mesh->vVertices.emplace_back(m, m, m); // v7
+	//mesh->vVertices.push_back(mesh->vVertices[1]); // v8 = v5 = v2
+	//// triangulo 2 cara 2
+	//mesh->vVertices.emplace_back(m, m, -m); // v9
+	//mesh->vVertices.push_back(mesh->vVertices[7]); // v10 = v7
+	//mesh->vVertices.push_back(mesh->vVertices[1]); // v11 = v1
+
+
+	//// triangulo 1 cara 3
+	//mesh->vVertices.push_back(mesh->vVertices[9]); // v12 = v9
+	//mesh->vVertices.push_back(mesh->vVertices[0]); // v13 = v0
+	//mesh->vVertices.emplace_back(-m, m, -m); // v14
+	//// triangulo 2 cara 3
+	//mesh->vVertices.push_back(mesh->vVertices[9]); // v12 = v9
+	//mesh->vVertices.push_back(mesh->vVertices[0]); // v13 = v0
+	//mesh->vVertices.push_back(mesh->vVertices[1]); // v14 = v1
+
+	//// triangulo 1 cara 4
+	//mesh->vVertices.emplace_back(-m, m, -m); // v15 = -v0
+	//mesh->vVertices.emplace_back(m, m, -m); // v16 = -v1
+	//mesh->vVertices.emplace_back(-m, m, m); // v17 = -v2
+	//// triangulo 2 cara 4
+	//mesh->vVertices.emplace_back(m, m, m); // v18 = -v3
+	//mesh->vVertices.emplace_back(m, m, -m); // v19 = v16 = -v4 = -v1
+	//mesh->vVertices.emplace_back(-m, m, m); // v20 = v17 = -v5 = -v2
+	//// ^^^^ - en y
+
+
+	//// triangulo 1 cara 5
+	//mesh->vVertices.emplace_back(-m, -m, m); // v21 = -v6 = -v3
+	//mesh->vVertices.emplace_back(-m, m, m); // v22 = -v7
+	//mesh->vVertices.emplace_back(-m, -m, -m); // v23 = 
+	//// triangulo 2 cara 5
+	//mesh->vVertices.emplace_back(-m, m, -m); // v24 = -v9
+	//mesh->vVertices.emplace_back(-m, m, m); // v25 = -v10 = -v7
+	//mesh->vVertices.emplace_back(-m, -m, -m); // v26 = -v11 = -v1
+	//// ^^^^ - en x
+
+	//// triangulo 1 cara 6
+	//mesh->vVertices.emplace_back(m, m, m); // v27 = -v9
+	//mesh->vVertices.emplace_back(-m, -m, m); // v28 = -v0
+	//mesh->vVertices.emplace_back(-m, m, m); // v29
+	//// triangulo 2 cara 6
+	//mesh->vVertices.emplace_back(m, m, m); // v30 = v27
+	//mesh->vVertices.emplace_back(-m, -m, m); // v31 = v28
+	//mesh->vVertices.emplace_back(m, -m, m); // v32 = v3
+	//// ^^^^ - en z
+#pragma endregion
 
 	return mesh;
-
 }
 
 void IndexMesh::render() const
