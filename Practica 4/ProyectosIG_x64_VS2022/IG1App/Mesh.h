@@ -40,11 +40,6 @@ public:
 	static Mesh* generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h);
 	static Mesh* generateGlassParapet(GLdouble w, GLdouble h);
 
-	/// PRACTICA 4
-	static Mesh* generateTIEWing(GLdouble h, GLdouble w, GLdouble d); // h = altura del ala; w = anchura del ala; d = distancia entre los
-																	  // vertices exteriores con la base (dist entre las puntas de arriba de
-																	  // la v con la punta de abajo por ejemplo)
-
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
