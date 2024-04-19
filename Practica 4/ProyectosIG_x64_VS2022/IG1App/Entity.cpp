@@ -801,6 +801,8 @@ IndexedBox::IndexedBox(GLdouble l)
 
 IndexedBox::~IndexedBox()
 {
+	delete mMesh;
+	mMesh = nullptr;
 }
 
 void IndexedBox::render(glm::dmat4 const& modelViewMat) const
