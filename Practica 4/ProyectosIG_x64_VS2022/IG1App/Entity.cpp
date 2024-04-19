@@ -809,14 +809,12 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 
 		mMesh->render();
-		glColor4d(255, 255, 255, 255);
 	}
 }
 

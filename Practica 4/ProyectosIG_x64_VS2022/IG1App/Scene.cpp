@@ -156,16 +156,13 @@ Scene::render(const Camera& cam) const
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)
-	{
 		if (el != nullptr)
 			el->render(cam.viewMat());
-	}
 
 	for (Abs_Entity* el : gTransparentObjects)
-	{
 		if (el != nullptr)
 			el->render(cam.viewMat());
-	}
+
 }
 
 void Scene::update()

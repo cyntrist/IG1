@@ -1,16 +1,27 @@
 ﻿#include "IndexMesh.h"
 
+#include "Cara.h"
+
 glm::vec3 IndexMesh::calculoVectorNormalPorNewell()
 {
 	glm::vec3 n = {0, 0, 0};
-	//for (auto i : 10)
-	//{
-	//	/*vertActual = vertice[C->getVerticeIndice(i)];
-	//	vertSiguiente = vertice[C->getVerticeIndice((i + 1) % C.numeroVertices)];
-	//	n.x += (vertActual.y - vertSiguiente.y) * (vertActual.z + vertSiguiente.z);
-	//	n.y += (vertActual.z - vertSiguiente.z) * (vertActual.x + vertSiguiente.x);
-	//	n.z += (vertActual.x - vertSiguiente.x) * (vertActual.y + vertSiguiente.y);
-	//*/}
+	for (int i = 0; i < nNumIndices; i++)
+	{
+		/*
+	      Set Vertex Current to Polygon.verts[Index]
+	      Set Vertex Next    to Polygon.verts[(Index plus 1) mod Polygon.vertexNumber]
+
+	      Set Normal.x to Sum of Normal.x and (multiply (Current.y minus Next.y) by (Current.z plus Next.z))
+	      Set Normal.y to Sum of Normal.y and (multiply (Current.z minus Next.z) by (Current.x plus Next.x))
+	      Set Normal.z to Sum of Normal.z and (multiply (Current.x minus Next.x) by (Current.y plus Next.y))
+		 **/
+
+		auto vertActual = vVertices[i];
+		auto vertSiguiente = vVertices[(i+1)%mNumVertices];
+		n.x +=( vertActual .y- vertSiguiente .y) * ( vertActual .z+ vertSiguiente .z);
+		n.y +=( vertActual .z- vertSiguiente .z) * ( vertActual .x+ vertSiguiente .x);
+		n.z +=( vertActual .x- vertSiguiente .x) * ( vertActual .y+ vertSiguiente .y);
+	}
 	return normalize(n);
 }
 
@@ -36,12 +47,12 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vVertices.emplace_back(-l, l, l); // v7
 
 
-
 	/// Define cuidadosamente los 36 índices que, de 3 en 3,
 	/// determinan las 12 caras triangulares de la malla.
 	/// Recuerda que los índices de estas caras deben darse
 	/// en sentido anti-horario según se mira el cubo desde su exterior
-	mesh->vIndices = new GLuint[36];
+	mesh->nNumIndices = 36;
+	mesh->vIndices = new GLuint[mesh->nNumIndices];
 
 	// cara de abajo
 	mesh->vIndices[0] = 0;
@@ -99,7 +110,7 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 
 	/// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);
-	for (int i = 0; i < mesh->mNumVertices; i++) 
+	for (int i = 0; i < mesh->mNumVertices; i++)
 		mesh->vColors.emplace_back(0, 1, 0, 1);
 
 	return mesh;

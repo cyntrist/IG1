@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Mesh.h"
-
+class Cara;
 class IndexMesh : public Mesh
 {
 protected :
