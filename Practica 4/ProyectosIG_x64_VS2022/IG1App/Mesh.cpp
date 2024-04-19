@@ -491,9 +491,35 @@ Mesh* Mesh::generateGlassParapet(GLdouble w, GLdouble h)
 	return mesh;
 }
 
-Mesh* Mesh::generateTIEWing()
+Mesh* Mesh::generateTIEWing(GLdouble h, GLdouble w, GLdouble d)
 {
 	auto* mesh = new Mesh();
+	auto x = h/2;
+	auto y = w / 2;
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+	mesh->mNumVertices = 8;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+
+	// 
+	mesh->vVertices.emplace_back(x, y, d); // v0
+	mesh->vVertices.emplace_back(x, -y, d); // v1
+	mesh->vVertices.emplace_back(x, y, 0); // v2
+	mesh->vVertices.emplace_back(x, -y, 0); // v3
+	mesh->vVertices.emplace_back(-x, y, 0); // v4
+	mesh->vVertices.emplace_back(-x, -y, 0); // v5
+	mesh->vVertices.emplace_back(-x, y, d); // v0
+	mesh->vVertices.emplace_back(-x, -y, d); // v0
+
+	/*mesh->vColors.reserve(mesh->mNumVertices);
+	for (int i = 0; i < 4; i++)
+	{
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(1, 0);
+		mesh->vTexCoords.emplace_back(0, 1);
+		mesh->vTexCoords.emplace_back(1, 1);
+	}*/
 
 
 	return mesh;

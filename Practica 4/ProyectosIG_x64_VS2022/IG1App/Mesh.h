@@ -41,7 +41,9 @@ public:
 	static Mesh* generateGlassParapet(GLdouble w, GLdouble h);
 
 	/// PRACTICA 4
-	static Mesh* generateTIEWing();
+	static Mesh* generateTIEWing(GLdouble h, GLdouble w, GLdouble d); // h = altura del ala; w = anchura del ala; d = distancia entre los
+																	  // vertices exteriores con la base (dist entre las puntas de arriba de
+																	  // la v con la punta de abajo por ejemplo)
 
 protected:
 	GLuint mPrimitive =
