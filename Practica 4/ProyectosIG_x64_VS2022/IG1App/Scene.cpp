@@ -84,6 +84,11 @@ void Scene::addTransparentObject(Abs_Entity* ent)
 	gTransparentObjects.push_back(ent);
 }
 
+void Scene::addCompoundObject(CompoundEntity* ent)
+{
+	gObjects.push_back(ent); // AQUI INES
+}
+
 void Scene::setScene(int index)
 {
 	reset();
@@ -120,7 +125,7 @@ void Scene::setScene(int index)
 		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 		break;
 	case 7:
-
+		addCompoundObject(new AdvancedTIE());
 
 		break;
 	default:

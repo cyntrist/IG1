@@ -829,7 +829,7 @@ void IndexedBox::update()
 
 // -------------- TIE FIGHTER
 
-IndexedBox::AdvancedTIE::AdvancedTIE()
+AdvancedTIE::AdvancedTIE()
 {
 	// genera las partes por separado
 	leftWing = new WingAdvancedTIE();
@@ -846,36 +846,40 @@ IndexedBox::AdvancedTIE::AdvancedTIE()
 	CompoundEntity::addEntity(cyl);
 }
 
-IndexedBox::AdvancedTIE::~AdvancedTIE()
+AdvancedTIE::~AdvancedTIE()
 {
 	CompoundEntity::~CompoundEntity();
 }
 
-void IndexedBox::AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 }
 
 // -------------- ALA DEL TIE
 
-IndexedBox::WingAdvancedTIE::WingAdvancedTIE()
+WingAdvancedTIE::WingAdvancedTIE()
 {
-	wing = Mesh::generateTIEWing();
+	wing = Mesh::generateTIEWing(3, 2, 1);
+	
+	// hay que rotar el ala porque se genera apoyada en el plano xy 
+	//dmat4 aMat = modelViewMat * rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
+	
 }
 
-IndexedBox::WingAdvancedTIE::~WingAdvancedTIE()
+WingAdvancedTIE::~WingAdvancedTIE()
 {
 	//
 }
 
-void IndexedBox::WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
 	// render como en las primeras practicas, todo con mesh
 }
 
 // ----------------- MORRO DEL TIE
 
-IndexedBox::BaseAdvancedTIE::BaseAdvancedTIE()
+BaseAdvancedTIE::BaseAdvancedTIE()
 {
 	cyl = new Cylinder(2, 2, 5);
 	disk = new Disk(1, 3);
@@ -884,12 +888,12 @@ IndexedBox::BaseAdvancedTIE::BaseAdvancedTIE()
 	CompoundEntity::addEntity(disk);
 }
 
-IndexedBox::BaseAdvancedTIE::~BaseAdvancedTIE()
+BaseAdvancedTIE::~BaseAdvancedTIE()
 {
 	CompoundEntity::~CompoundEntity();
 }
 
-void IndexedBox::BaseAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void BaseAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 }
