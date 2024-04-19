@@ -3,14 +3,14 @@
 glm::vec3 IndexMesh::calculoVectorNormalPorNewell()
 {
 	glm::vec3 n = {0, 0, 0};
-	for (auto i : 10)
-	{
-		/*vertActual = vertice[C->getVerticeIndice(i)];
-		vertSiguiente = vertice[C->getVerticeIndice((i + 1) % C.numeroVertices)];
-		n.x += (vertActual.y - vertSiguiente.y) * (vertActual.z + vertSiguiente.z);
-		n.y += (vertActual.z - vertSiguiente.z) * (vertActual.x + vertSiguiente.x);
-		n.z += (vertActual.x - vertSiguiente.x) * (vertActual.y + vertSiguiente.y);
-	*/}
+	//for (auto i : 10)
+	//{
+	//	/*vertActual = vertice[C->getVerticeIndice(i)];
+	//	vertSiguiente = vertice[C->getVerticeIndice((i + 1) % C.numeroVertices)];
+	//	n.x += (vertActual.y - vertSiguiente.y) * (vertActual.z + vertSiguiente.z);
+	//	n.y += (vertActual.z - vertSiguiente.z) * (vertActual.x + vertSiguiente.x);
+	//	n.z += (vertActual.x - vertSiguiente.x) * (vertActual.y + vertSiguiente.y);
+	//*/}
 	return normalize(n);
 }
 
