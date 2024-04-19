@@ -39,7 +39,7 @@ public:
 	static Mesh* generateStar3D(GLdouble re, GLuint np, GLdouble h);
 	static Mesh* generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h);
 	static Mesh* generateGlassParapet(GLdouble w, GLdouble h);
-
+	static Mesh* generateTIEWing(GLdouble h, GLdouble w, GLdouble d);
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
