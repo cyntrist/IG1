@@ -810,14 +810,8 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		if (mTexture != nullptr) 
-			mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
-
 		upload(aMat);
 		mMesh->render();
-
-		if (mTexture != nullptr) 
-			mTexture->unbind();
 	}
 }
 
