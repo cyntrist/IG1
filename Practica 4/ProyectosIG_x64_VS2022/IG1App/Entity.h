@@ -218,7 +218,7 @@ protected:
 
 class Cylinder : public QuadricEntity {
 public:
-	Cylinder(GLdouble brr, GLdouble trr, GLdouble hh); // r es el radio de la esfera 
+	Cylinder(GLdouble brr, GLdouble trr, GLdouble hh); // brr = radio base; tr = radio top; h = altura
 	void render(glm::dmat4 const& modelViewMat) const;
 protected:
 	GLdouble br, tr, h;
@@ -226,7 +226,7 @@ protected:
 
 class Disk : public QuadricEntity {
 public:
-	Disk(GLdouble irr, GLdouble orr); // r es el radio de la esfera 
+	Disk(GLdouble irr, GLdouble orr); // irr radio interior; orr raido exterior (outter)
 	void render(glm::dmat4 const& modelViewMat) const;
 protected:
 	GLdouble iR, oR ;
@@ -275,6 +275,7 @@ protected:
 	Abs_Entity* rightWing;
 	Abs_Entity* morro;
 	Abs_Entity* base;
+	Abs_Entity* cyl;
 
 		
 };
@@ -287,7 +288,6 @@ protected:
 
 	protected:
 		Mesh* wing;
-		Mesh* cyl; 
 	};
 
 	class BaseAdvancedTIE : public CompoundEntity {
@@ -297,9 +297,8 @@ protected:
 		void render(glm::dmat4 const& modelViewMat) const override;
 
 	protected:
-		Mesh* cyl;
-		Mesh* disk;
-
+		Abs_Entity* cyl;
+		Abs_Entity* disk;
 	};
 
 };

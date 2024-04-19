@@ -826,15 +826,24 @@ void IndexedBox::update()
 	Abs_Entity::update();
 }
 
+
+// -------------- TIE FIGHTER
+
 IndexedBox::AdvancedTIE::AdvancedTIE()
 {
-
+	// genera las partes por separado
 	leftWing = new WingAdvancedTIE();
 	rightWing = new WingAdvancedTIE();
+	base = new Sphere(10);
+	morro = new BaseAdvancedTIE();
+	cyl = new Cylinder(3, 3, 10);
 
-	base;
-	morro;
-	
+	// añade las entidades al vector de entidades del compound entity
+	CompoundEntity::addEntity(leftWing);
+	CompoundEntity::addEntity(rightWing);
+	CompoundEntity::addEntity(base);
+	CompoundEntity::addEntity(morro);
+	CompoundEntity::addEntity(cyl);
 }
 
 IndexedBox::AdvancedTIE::~AdvancedTIE()
@@ -844,8 +853,10 @@ IndexedBox::AdvancedTIE::~AdvancedTIE()
 
 void IndexedBox::AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
-
+	CompoundEntity::render(modelViewMat);
 }
+
+// -------------- ALA DEL TIE
 
 IndexedBox::WingAdvancedTIE::WingAdvancedTIE()
 {
@@ -854,17 +865,23 @@ IndexedBox::WingAdvancedTIE::WingAdvancedTIE()
 
 IndexedBox::WingAdvancedTIE::~WingAdvancedTIE()
 {
-	CompoundEntity::~CompoundEntity();
+	//
 }
 
 void IndexedBox::WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
-	CompoundEntity::render(modelViewMat);
+	// render como en las primeras practicas, todo con mesh
 }
+
+// ----------------- MORRO DEL TIE
 
 IndexedBox::BaseAdvancedTIE::BaseAdvancedTIE()
 {
-	Mesh::generateTIEWing();
+	cyl = new Cylinder(2, 2, 5);
+	disk = new Disk(1, 3);
+
+	CompoundEntity::addEntity(cyl);
+	CompoundEntity::addEntity(disk);
 }
 
 IndexedBox::BaseAdvancedTIE::~BaseAdvancedTIE()
