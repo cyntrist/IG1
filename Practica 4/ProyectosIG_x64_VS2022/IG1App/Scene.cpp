@@ -103,7 +103,7 @@ void Scene::setScene(int index)
 		addObject(new IndexedBox(200));
 		break;
 	case 2:
-		addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)
+
 		break;
 	case 3:
 		addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
