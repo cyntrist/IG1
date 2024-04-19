@@ -103,7 +103,27 @@ void Scene::setScene(int index)
 		addObject(new IndexedBox(200));
 		break;
 	case 2:
+		{
+			auto head = new Sphere(100);
+			auto hat = new Disk(50, 150);
+			auto smile = new PartialDisk(50, 100, 90, 180);
 
+			auto br = 30;
+			auto tr = 1;
+			auto h = 50;
+			auto eye1 = new Cylinder(br, tr, h);
+			auto eye2 = new Cylinder(br, tr, h);
+
+			eye1->setRGB(0, 0, 1);
+			eye2->setRGB(0, 0.5, 1);
+
+
+			addObject(head);
+			addObject(hat);
+			addObject(smile);
+			addObject(eye1);
+			addObject(eye2);
+		}
 		break;
 	case 3:
 		addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
@@ -162,7 +182,6 @@ Scene::render(const Camera& cam) const
 	for (Abs_Entity* el : gTransparentObjects)
 		if (el != nullptr)
 			el->render(cam.viewMat());
-
 }
 
 void Scene::update()
