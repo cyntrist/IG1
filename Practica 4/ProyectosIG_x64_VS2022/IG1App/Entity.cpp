@@ -807,11 +807,17 @@ void IndexedBox::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
+		glColor4d(mColor.r, mColor.g, mColor.b, mColor.a);
+		glLineWidth(2);
+
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		upload(aMat);
+
 		mMesh->render();
+		glLineWidth(1);
+		glColor4d(255, 255, 255, 255);
 	}
 }
 
@@ -854,7 +860,7 @@ void IndexedBox::AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 
 IndexedBox::WingAdvancedTIE::WingAdvancedTIE()
 {
-	wing = Mesh::generateTIEWing();
+	//wing = Mesh::generateTIEWing();
 }
 
 IndexedBox::WingAdvancedTIE::~WingAdvancedTIE()

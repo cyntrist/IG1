@@ -58,11 +58,12 @@ IG1App::init()
 	mScene->init();
 	mScene2->init();
 
-	mScene->setScene(5);
-	mScene2->setScene(0);
+	mScene->setScene(1);
+	//mScene2->setScene(0);
 	mCamera2->setEjer47(true, 500.0);
 
-	toggle2Vistas();
+	m2Vistas = false;
+	//toggle2Vistas();
 
 	// registra los callbacks
 	glutMouseFunc(s_mouse);
@@ -166,7 +167,7 @@ IG1App::key(unsigned char key, int x, int y)
 {
 	auto currentCam = mCamera;
 	auto currentScene = mScene;
-	if (mMouseCoord.x > mWinW/2)
+	if (m2Vistas && mMouseCoord.x > mWinW/2)
 	{
 		currentCam = mCamera2;
 		currentScene = mScene2;
@@ -251,7 +252,7 @@ IG1App::specialKey(int key, int x, int y)
 	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
 
 	auto currentCam = mCamera;
-	if (mMouseCoord.x > mWinW/2)
+	if (m2Vistas && mMouseCoord.x > mWinW/2)
 		currentCam = mCamera2;
 
 	switch (key)
@@ -300,7 +301,7 @@ void IG1App::update()
 	{
 		auto currentScene = mScene;
 		auto currentCam = mCamera;
-		if (mMouseCoord.x > mWinW/2)
+		if (m2Vistas && mMouseCoord.x > mWinW/2)
 		{
 			currentScene = mScene2;
 			currentCam = mCamera2;
@@ -334,7 +335,7 @@ void IG1App::motion(int x, int y)
 	mMouseCoord = { x, y };
 
 	auto currentCam = mCamera;
-	if (mMouseCoord.x > mWinW/2)
+	if (m2Vistas && mMouseCoord.x > mWinW/2)
 		currentCam = mCamera2;
 
 	// izq = 0 (en mi raton(ines))

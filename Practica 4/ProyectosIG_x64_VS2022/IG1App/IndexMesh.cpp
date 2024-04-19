@@ -36,7 +36,6 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vVertices.emplace_back(-l, l, l); // v7
 
 
-
 	/// Define cuidadosamente los 36 índices que, de 3 en 3,
 	/// determinan las 12 caras triangulares de la malla.
 	/// Recuerda que los índices de estas caras deben darse
@@ -99,7 +98,7 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 
 	/// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);
-	for (int i = 0; i < mesh->mNumVertices; i++) 
+	for (int i = 0; i < mesh->mNumVertices; i++)
 		mesh->vColors.emplace_back(0, 1, 0, 1);
 
 	return mesh;
@@ -107,19 +106,69 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 
 void IndexMesh::render() const
 {
-	setGL();
-	// Comandos OpenGL para enviar datos de arrays a GPU
-	// Nuevos comandos para la tabla de índices
-	if (vIndices != nullptr)
+	//setGL();
+	//// Comandos OpenGL para enviar datos de arrays a GPU
+	//// Nuevos comandos para la tabla de índices
+	//if (vIndices != nullptr)
+	//{
+	//	glEnableClientState(GL_INDEX_ARRAY);
+	//	glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
+	//}
+	//// Comandos OpenGL para deshabilitar datos enviados
+	//// Nuevo comando para la tabla de índices :
+	//draw();
+	//glDisableClientState(GL_INDEX_ARRAY);
+	//resetGL();
+
+	if (vVertices.size() > 0)
 	{
-		glEnableClientState(GL_INDEX_ARRAY);
-		glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
+		// transfer data
+
+		// Comandos OpenGL para enviar datos de arrays a GPU
+		// Nuevos comandos para la tabla de índices
+
+		// transfer the coordinates of the vertices
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(
+			3, GL_DOUBLE, 0, vVertices.data()); // number of coordinates per vertex, type of
+		// each coordinate, stride, pointer
+		if (vColors.size() > 0)
+		{
+			// transfer colors
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(
+				4, GL_DOUBLE, 0, vColors.data()); // components number (rgba=4), type of
+			// each component, stride, pointer
+		}
+
+		if (vTexCoords.size() > 0)
+		{
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());
+		}
+
+		if (vNormals.size() > 0)
+		{
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, vNormals.data());
+		}
+
+		if (vIndices != nullptr)
+		{
+			glEnableClientState(GL_INDEX_ARRAY);
+			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
+		}
+
+		draw();
+
+		// Comandos OpenGL para deshabilitar datos enviados
+		// Nuevo comando para la tabla de índices :
+		glDisableClientState(GL_INDEX_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
 	}
-	// Comandos OpenGL para deshabilitar datos enviados
-	// Nuevo comando para la tabla de índices :
-	draw();
-	glDisableClientState(GL_INDEX_ARRAY);
-	resetGL();
 }
 
 void IndexMesh::draw() const
