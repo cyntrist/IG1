@@ -209,11 +209,11 @@ public:
 class QuadricEntity : public Abs_Entity
 {
 public:
-	QuadricEntity() : r(), g(), b() { q = gluNewQuadric(); };
+	QuadricEntity() : red(), green(), blue() { q = gluNewQuadric(); };
 	~QuadricEntity() override { gluDeleteQuadric(q); };
 	void setRGB(GLdouble, GLdouble, GLdouble);
 protected:
-	GLdouble r, g, b;
+	GLdouble red, green, blue;
 	GLUquadricObj* q;
 };
 

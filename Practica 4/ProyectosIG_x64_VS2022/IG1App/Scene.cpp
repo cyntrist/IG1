@@ -114,6 +114,9 @@ void Scene::setScene(int index)
 			auto eye1 = new Cylinder(br, tr, h);
 			auto eye2 = new Cylinder(br, tr, h);
 
+			head->setRGB(1, 0.5, 0);
+			hat->setRGB(1, 0, 0);
+			smile->setRGB(0, 1, 0);
 			eye1->setRGB(0, 0, 1);
 			eye2->setRGB(0, 0.5, 1);
 

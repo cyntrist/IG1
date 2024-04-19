@@ -664,11 +664,11 @@ void Grass::render(const dmat4& modelViewMat) const
 
 
 /////////////////////////////////////////////////////
-void QuadricEntity::setRGB(GLdouble rv, GLdouble gv, GLdouble bv)
+void QuadricEntity::setRGB(GLdouble rv = 1.0, GLdouble gv = 1.0, GLdouble bv = 1.0)
 {
-	r = rv;
-	g = gv;
-	b = bv;
+	red = rv;
+	green = gv;
+	blue = bv;
 }
 
 Sphere::Sphere(GLdouble rr)
@@ -682,7 +682,7 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const
 	upload(aMat); 
 	// Aqu� se puede fijar el color de la esfera as�: 
 	glEnable(GL_COLOR_MATERIAL); 
-	glColor3f(1.0, 0.5, 0.0); 
+	glColor3f(red, green, blue); 
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL); 
 	// GLU_LINE
@@ -708,7 +708,7 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const
 	upload(aMat);
 	// Aqu� se puede fijar el color de la esfera as�: 
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(r, g, b);
+	glColor3f(red, green, blue); 
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
@@ -734,7 +734,7 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 	upload(aMat);
 	// Aqu� se puede fijar el color de la esfera as�: 
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(red, green, blue); 
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
@@ -761,7 +761,7 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 	upload(aMat);
 	// Aqu� se puede fijar el color de la esfera as�: 
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(0.0, 1.0, 0.0);
+	glColor3f(red, green, blue); 
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
