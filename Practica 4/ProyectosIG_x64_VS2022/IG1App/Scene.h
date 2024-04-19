@@ -26,6 +26,7 @@ public:
 	// apartado 11
 	void addObject(Abs_Entity* ent);
 	void addTransparentObject(Abs_Entity* ent);
+	void addCompoundObject(CompoundEntity* ent);
 	void render(Camera const& cam) const;
 	void update();
 	void setCulling();

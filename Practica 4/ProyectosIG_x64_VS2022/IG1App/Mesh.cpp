@@ -521,6 +521,7 @@ Mesh* Mesh::generateTIEWing(GLdouble h, GLdouble w, GLdouble d)
 		mesh->vTexCoords.emplace_back(1, 1);
 	}*/
 
+	
 
 	return mesh;
 }

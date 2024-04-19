@@ -261,6 +261,7 @@ public:
 	void render(glm::dmat4 const& modelViewMat) const override;
 	void update() override;
 protected:
+};
 
 
 	// -------------------------  TIE FIGHTER -----------------
@@ -288,6 +289,7 @@ protected:
 
 	protected:
 		Mesh* wing;
+		glm::dmat4 mMat = glm::dmat4();
 	};
 
 	class BaseAdvancedTIE : public CompoundEntity {
@@ -301,7 +303,7 @@ protected:
 		Abs_Entity* disk;
 	};
 
-};
+
 
 
 #endif //_H_Entities_H_

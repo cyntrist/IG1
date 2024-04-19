@@ -111,7 +111,7 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 		dmat4 aMat = modelViewMat
 			* rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
 			* translate(mModelMat, dvec3(trans.x, trans.y, 0)) // traslacion al radio de la circunferencia
-			* rotate(dmat4(1.0), radians(angle * 3), dvec3(0, 0, 1)); // rotación sobre si mismo en sentido horario
+			* rotate(dmat4(1.0), radians(angle * 3), dvec3(0, 0, 1)); // rotaciï¿½n sobre si mismo en sentido horario
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -671,17 +671,17 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat; 
 	upload(aMat); 
-	// Aquí se puede fijar el color de la esfera así: 
+	// Aquï¿½ se puede fijar el color de la esfera asï¿½: 
 	glEnable(GL_COLOR_MATERIAL); 
 	glColor3f(1.0, 0.0, 0.0); 
-	// Aquí se puede fijar el modo de dibujar la esfera: 
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL); 
 	// GLU_LINE
 	// GLU_SILHOUETTE
 	// GLU_POINT
 
 	gluSphere(q, r, 50, 50); 
-	// Aquí se debe recuperar el color: 
+	// Aquï¿½ se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
 
@@ -697,10 +697,10 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const
 
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	// Aquí se puede fijar el color de la esfera así: 
+	// Aquï¿½ se puede fijar el color de la esfera asï¿½: 
 	glEnable(GL_COLOR_MATERIAL);
 	glColor3f(1.0, 0.0, 0.0);
-	// Aquí se puede fijar el modo de dibujar la esfera: 
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
 	// GLU_SILHOUETTE
@@ -708,7 +708,7 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const
 
 	
 	gluCylinder(q, br, tr, h, 50, 50);
-	// Aquí se debe recuperar el color: 
+	// Aquï¿½ se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
 
@@ -725,17 +725,17 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	// Aquí se puede fijar el color de la esfera así: 
+	// Aquï¿½ se puede fijar el color de la esfera asï¿½: 
 	glEnable(GL_COLOR_MATERIAL);
 	glColor3f(1.0, 0.0, 0.0);
-	// Aquí se puede fijar el modo de dibujar la esfera: 
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
 	// GLU_SILHOUETTE
 	// GLU_POINT
 
 	gluDisk(q, iR, oR, 50, 50);
-	// Aquí se debe recuperar el color: 
+	// Aquï¿½ se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
 
@@ -752,10 +752,10 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	// Aquí se puede fijar el color de la esfera así: 
+	// Aquï¿½ se puede fijar el color de la esfera asï¿½: 
 	glEnable(GL_COLOR_MATERIAL);
 	glColor3f(1.0, 0.0, 0.0);
-	// Aquí se puede fijar el modo de dibujar la esfera: 
+	// Aquï¿½ se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
 	// GLU_SILHOUETTE
@@ -763,7 +763,7 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 
 	gluPartialDisk(q, iR, oR, 50, 50, sa, swa);
 
-	// Aquí se debe recuperar el color: 
+	// Aquï¿½ se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
 
@@ -831,7 +831,7 @@ void IndexedBox::update()
 
 // -------------- TIE FIGHTER
 
-IndexedBox::AdvancedTIE::AdvancedTIE()
+AdvancedTIE::AdvancedTIE()
 {
 	// genera las partes por separado
 	leftWing = new WingAdvancedTIE();
@@ -840,7 +840,7 @@ IndexedBox::AdvancedTIE::AdvancedTIE()
 	morro = new BaseAdvancedTIE();
 	cyl = new Cylinder(3, 3, 10);
 
-	// añade las entidades al vector de entidades del compound entity
+	// aï¿½ade las entidades al vector de entidades del compound entity
 	CompoundEntity::addEntity(leftWing);
 	CompoundEntity::addEntity(rightWing);
 	CompoundEntity::addEntity(base);
@@ -848,36 +848,40 @@ IndexedBox::AdvancedTIE::AdvancedTIE()
 	CompoundEntity::addEntity(cyl);
 }
 
-IndexedBox::AdvancedTIE::~AdvancedTIE()
+AdvancedTIE::~AdvancedTIE()
 {
 	CompoundEntity::~CompoundEntity();
 }
 
-void IndexedBox::AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 }
 
 // -------------- ALA DEL TIE
 
-IndexedBox::WingAdvancedTIE::WingAdvancedTIE()
+WingAdvancedTIE::WingAdvancedTIE()
 {
-	//wing = Mesh::generateTIEWing();
+	//wing = Mesh::generateTIEWing(3, 2, 1);
+	
+	// hay que rotar el ala porque se genera apoyada en el plano xy 
+	//dmat4 aMat = modelViewMat * rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
+	
 }
 
-IndexedBox::WingAdvancedTIE::~WingAdvancedTIE()
+WingAdvancedTIE::~WingAdvancedTIE()
 {
 	//
 }
 
-void IndexedBox::WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
 	// render como en las primeras practicas, todo con mesh
 }
 
 // ----------------- MORRO DEL TIE
 
-IndexedBox::BaseAdvancedTIE::BaseAdvancedTIE()
+BaseAdvancedTIE::BaseAdvancedTIE()
 {
 	cyl = new Cylinder(2, 2, 5);
 	disk = new Disk(1, 3);
@@ -886,12 +890,12 @@ IndexedBox::BaseAdvancedTIE::BaseAdvancedTIE()
 	CompoundEntity::addEntity(disk);
 }
 
-IndexedBox::BaseAdvancedTIE::~BaseAdvancedTIE()
+BaseAdvancedTIE::~BaseAdvancedTIE()
 {
 	CompoundEntity::~CompoundEntity();
 }
 
-void IndexedBox::BaseAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void BaseAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 }
