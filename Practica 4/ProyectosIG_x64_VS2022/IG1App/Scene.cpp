@@ -100,7 +100,7 @@ void Scene::setScene(int index)
 		addObject(new RGBTriangle(50, 250));
 		break;
 	case 1:
-		addObject(new IndexedBox(500));
+		addObject(new IndexedBox(200));
 		break;
 	case 2:
 		addObject(new Ground(300, 300, 4, 4, "./bmps/baldosaC.bmp")); // new Ground(20, 20, 0)

@@ -1,11 +1,11 @@
 ﻿#include "IndexMesh.h"
 
-#include "Cara.h"
+#include <iostream>
 
 glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 {
 	glm::vec3 n = {0, 0, 0};
-	for (int i = 0; i < nNumIndices; i++)
+	for (int i = 0; i < c.numeroVertices; i++)
 	{
 		/*
 	      Set Vertex Current to Polygon.verts[Index]
@@ -16,9 +16,18 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 	      Set Normal.z to Sum of Normal.z and (multiply (Current.x minus Next.x) by (Current.y plus Next.y))
 		 **/
 
-		/// O ES ESTE
-		const auto vertActual = vVertices[i];
-		const auto vertSiguiente = vVertices[(i + 1) % mNumVertices];
+		/*std::cout << c.getIndiceVertice(c.vertices[i], vVertices) << std::endl;
+		std::cout << c.getIndiceVertice(c.vertices[(i + 1) % c.numeroVertices]) << std::endl;
+
+		const auto vertActual = vVertices[c.getIndiceVertice(c.vertices[i], vVertices)];
+		const auto vertSiguiente = vVertices[c.getIndiceVertice(c.vertices[(i + 1) % c.numeroVertices])];*/
+
+		std::cout << c.getIndice(i) << std::endl;
+		//std::cout << c.getIndice((i + 1) % c.numeroVertices) << std::endl;
+
+		const auto vertActual = vVertices[c.getIndice(i)];
+		const auto vertSiguiente = vVertices[c.getIndice((i + 1) % c.numeroVertices)];
+
 
 		n.x += (vertActual.y - vertSiguiente.y) * (vertActual.z + vertSiguiente.z);
 		n.y += (vertActual.z - vertSiguiente.z) * (vertActual.x + vertSiguiente.x);
@@ -29,18 +38,23 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 
 void IndexMesh::buildNormalVectors()
 {
-
-
+	int i = 0;
+	vNormals.resize(vCaras.size());
+	for (const auto cara : vCaras)
+	{
+		vNormals[i] = calculoVectorNormalPorNewell(cara);
+		i++;
+	}
 }
 
 IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 {
 	const auto mesh = new IndexMesh();
 
+	/// VERTICES
 	mesh->mNumVertices = 8;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
-	/// vertices del cubo
 	mesh->vVertices.emplace_back(l, l, -l); // v0
 	mesh->vVertices.emplace_back(l, -l, -l); // v1
 	mesh->vVertices.emplace_back(-l, -l, -l); // v2
@@ -51,6 +65,7 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vVertices.emplace_back(-l, l, l); // v7
 
 
+	/// INDICES
 	/// Define cuidadosamente los 36 índices que, de 3 en 3,
 	/// determinan las 12 caras triangulares de la malla.
 	/// Recuerda que los índices de estas caras deben darse
@@ -112,10 +127,36 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vIndices[34] = 3;
 	mesh->vIndices[35] = 7;
 
+	/// CARAS
+	int nV = 3;
+	mesh->vCaras.resize(mesh->nNumIndices / nV);
+	for (int i = 0; i < mesh->nNumIndices / nV; i++)
+	{
+		std::cout << mesh->vIndices[i * nV] << std::endl;
+		std::cout << mesh->vIndices[i * nV + 1] << std::endl;
+		std::cout << mesh->vIndices[i * nV + 2] << std::endl;
+
+		//mesh->vCaras[i] = Cara(
+		//	mesh->vVertices[mesh->vIndices[i * nV]],
+		//	mesh->vVertices[mesh->vIndices[i * nV + 1]],
+		//	mesh->vVertices[mesh->vIndices[i * nV + 2]]
+		//);
+
+		mesh->vCaras[i] = Cara(
+			mesh->vIndices[i * nV],
+			mesh->vIndices[i * nV + 1],
+			mesh->vIndices[i * nV + 2]
+		);
+	}
+	std::cout << std::endl;
+
 	/// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);
 	for (int i = 0; i < mesh->mNumVertices; i++)
 		mesh->vColors.emplace_back(0, 1, 0, 1);
+
+	/// NORMALES
+	mesh->buildNormalVectors();
 
 	return mesh;
 }
