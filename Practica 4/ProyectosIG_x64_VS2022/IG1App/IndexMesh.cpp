@@ -134,13 +134,13 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vIndices[29] = 4;
 
 	// cara lateral trasera izquierda
-	mesh->vIndices[30] = 4;
-	mesh->vIndices[31] = 7;
-	mesh->vIndices[32] = 6;
+	mesh->vIndices[30] = 2;
+	mesh->vIndices[31] = 3;
+	mesh->vIndices[32] = 7;
 
-	mesh->vIndices[33] = 4;
-	mesh->vIndices[34] = 3;
-	mesh->vIndices[35] = 7;
+	mesh->vIndices[33] = 2;
+	mesh->vIndices[34] = 7;
+	mesh->vIndices[35] = 6;
 
 	/// CARAS
 	int nV = 3;
