@@ -490,3 +490,11 @@ Mesh* Mesh::generateGlassParapet(GLdouble w, GLdouble h)
 
 	return mesh;
 }
+
+Mesh* Mesh::generateTIEWing()
+{
+	auto* mesh = new Mesh();
+
+
+	return mesh;
+}

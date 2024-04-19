@@ -825,3 +825,54 @@ void IndexedBox::update()
 {
 	Abs_Entity::update();
 }
+
+IndexedBox::AdvancedTIE::AdvancedTIE()
+{
+
+	leftWing = new WingAdvancedTIE();
+	rightWing = new WingAdvancedTIE();
+
+	base;
+	morro;
+	
+}
+
+IndexedBox::AdvancedTIE::~AdvancedTIE()
+{
+	CompoundEntity::~CompoundEntity();
+}
+
+void IndexedBox::AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+{
+
+}
+
+IndexedBox::WingAdvancedTIE::WingAdvancedTIE()
+{
+	wing = Mesh::generateTIEWing();
+}
+
+IndexedBox::WingAdvancedTIE::~WingAdvancedTIE()
+{
+	CompoundEntity::~CompoundEntity();
+}
+
+void IndexedBox::WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+{
+	CompoundEntity::render(modelViewMat);
+}
+
+IndexedBox::BaseAdvancedTIE::BaseAdvancedTIE()
+{
+	Mesh::generateTIEWing();
+}
+
+IndexedBox::BaseAdvancedTIE::~BaseAdvancedTIE()
+{
+	CompoundEntity::~CompoundEntity();
+}
+
+void IndexedBox::BaseAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+{
+	CompoundEntity::render(modelViewMat);
+}

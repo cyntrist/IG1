@@ -266,6 +266,46 @@ public:
 	void update() override;
 protected:
 
+
+	// -------------------------  TIE FIGHTER -----------------
+class AdvancedTIE : public CompoundEntity {
+public:
+	AdvancedTIE();
+	~AdvancedTIE();
+	void render(glm::dmat4 const& modelViewMat) const override;
+
+protected:
+	Abs_Entity* leftWing;
+	Abs_Entity* rightWing;
+	Abs_Entity* morro;
+	Abs_Entity* base;
+
+		
+};
+
+	class WingAdvancedTIE : public CompoundEntity {
+	public:
+		WingAdvancedTIE();
+		~WingAdvancedTIE();
+		void render(glm::dmat4 const& modelViewMat) const override;
+
+	protected:
+		Mesh* wing;
+		Mesh* cyl; 
+	};
+
+	class BaseAdvancedTIE : public CompoundEntity {
+	public:
+		BaseAdvancedTIE();
+		~BaseAdvancedTIE();
+		void render(glm::dmat4 const& modelViewMat) const override;
+
+	protected:
+		Mesh* cyl;
+		Mesh* disk;
+
+	};
+
 };
 
 

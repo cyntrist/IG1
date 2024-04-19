@@ -40,6 +40,9 @@ public:
 	static Mesh* generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h);
 	static Mesh* generateGlassParapet(GLdouble w, GLdouble h);
 
+	/// PRACTICA 4
+	static Mesh* generateTIEWing();
+
 protected:
 	GLuint mPrimitive =
 	  GL_TRIANGLES;          // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
