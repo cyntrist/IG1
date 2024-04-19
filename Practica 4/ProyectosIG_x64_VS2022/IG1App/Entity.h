@@ -201,15 +201,11 @@ public:
 
 class QuadricEntity : public Abs_Entity { 
 public: 
-	QuadricEntity(); 
+	QuadricEntity() { q = gluNewQuadric();  }; 
 	~QuadricEntity() { gluDeleteQuadric(q); }; 
 protected: 
 	GLUquadricObj* q; 
 }; 
-
-QuadricEntity::QuadricEntity() {
-	q = gluNewQuadric(); 
-}
 
 class Sphere : public QuadricEntity {
 public: 
