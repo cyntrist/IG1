@@ -1,6 +1,7 @@
 ﻿#include "IndexMesh.h"
 
 #include <iostream>
+#include <string>
 
 glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 {
@@ -22,12 +23,10 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 		const auto vertActual = vVertices[c.getIndiceVertice(c.vertices[i], vVertices)];
 		const auto vertSiguiente = vVertices[c.getIndiceVertice(c.vertices[(i + 1) % c.numeroVertices])];*/
 
-		std::cout << c.getIndice(i) << std::endl;
-		//std::cout << c.getIndice((i + 1) % c.numeroVertices) << std::endl;
+		//std::cout << c.getIndice(i) << std::endl;
 
 		const auto vertActual = vVertices[c.getIndice(i)];
 		const auto vertSiguiente = vVertices[c.getIndice((i + 1) % c.numeroVertices)];
-
 
 		n.x += (vertActual.y - vertSiguiente.y) * (vertActual.z + vertSiguiente.z);
 		n.y += (vertActual.z - vertSiguiente.z) * (vertActual.x + vertSiguiente.x);
@@ -72,6 +71,22 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	/// en sentido ¡¡¡ANTI-HORARIO!!! según se mira el cubo desde su exterior
 	mesh->nNumIndices = 36;
 	mesh->vIndices = new GLuint[mesh->nNumIndices];
+
+	//GLuint auxIndices[] = {
+	//	0, 3, 2,
+	//	0, 2, 1,
+	//	4, 5, 6,
+	//	4, 6, 7,
+	//	0, 4, 7,
+	//	0, 7, 3,
+	//	1, 2, 6,
+	//	1, 6, 5,
+	//	0, 1, 5,
+	//	0, 5, 4,
+	//	4, 7, 6,
+	//	4, 3, 7
+	//};
+	//mesh->vIndices = auxIndices;
 
 	// cara de abajo
 	mesh->vIndices[0] = 0;
@@ -132,15 +147,9 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vCaras.resize(mesh->nNumIndices / nV);
 	for (int i = 0; i < mesh->nNumIndices / nV; i++)
 	{
-		std::cout << mesh->vIndices[i * nV] << std::endl;
-		std::cout << mesh->vIndices[i * nV + 1] << std::endl;
-		std::cout << mesh->vIndices[i * nV + 2] << std::endl;
-
-		//mesh->vCaras[i] = Cara(
-		//	mesh->vVertices[mesh->vIndices[i * nV]],
-		//	mesh->vVertices[mesh->vIndices[i * nV + 1]],
-		//	mesh->vVertices[mesh->vIndices[i * nV + 2]]
-		//);
+		//std::cout << mesh->vIndices[i * nV] << std::endl;
+		//std::cout << mesh->vIndices[i * nV + 1] << std::endl;
+		//std::cout << mesh->vIndices[i * nV + 2] << std::endl;
 
 		mesh->vCaras[i] = Cara(
 			mesh->vIndices[i * nV],
@@ -148,7 +157,7 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 			mesh->vIndices[i * nV + 2]
 		);
 	}
-	std::cout << std::endl;
+	//std::cout << std::endl;
 
 	/// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);
@@ -163,16 +172,16 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 
 void IndexMesh::render() const
 {
+	if (vVertices.empty()) return;
+
 	setGL();
-	// Comandos OpenGL para enviar datos de arrays a GPU
-	// Nuevos comandos para la tabla de índices
 	if (vIndices != nullptr)
 	{
 		glEnableClientState(GL_INDEX_ARRAY);
 		glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 	}
-	// Comandos OpenGL para deshabilitar datos enviados
-	// Nuevo comando para la tabla de índices :
+
+	glColorMaterial(GL_FRONT_AND_BACK, GL_FILL);
 	draw();
 	glDisableClientState(GL_INDEX_ARRAY);
 	resetGL();

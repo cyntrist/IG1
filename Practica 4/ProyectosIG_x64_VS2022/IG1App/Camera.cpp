@@ -6,6 +6,8 @@
 
 using namespace glm;
 
+constexpr int ORBIT_FACTOR = 3;
+
 Camera::Camera(Viewport* vp)
 	: mViewMat(1.0)
 	  , mProjMat(1.0)
@@ -183,7 +185,7 @@ void Camera::orbit(GLdouble incAng, GLdouble incY)
 	mAng += incAng;
 	mEye.x = mLook.x + cos(radians(mAng)) * mRadio;
 	mEye.z = mLook.z - sin(radians(mAng)) * mRadio;
-	mEye.y += incY;
+	mEye.y += incY * ORBIT_FACTOR;
 	setVM();
 
 }

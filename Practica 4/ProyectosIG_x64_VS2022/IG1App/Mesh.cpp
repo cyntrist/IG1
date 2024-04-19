@@ -54,17 +54,19 @@ void Mesh::setGL() const
 
 	if (!vNormals.empty())
 	{
-		glEnable(GL_NORMALIZE);
-		glNormalPointer(3, 0, vNormals.data()); 
+		//glEnable(GL_NORMALIZE);
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glNormalPointer(GL_DOUBLE, 0, vNormals.data()); 
 	}
 }
 
 void Mesh::resetGL() const
 {
+	//glDisable(GL_NORMALIZE);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState ( GL_NORMAL_ARRAY );
+	glDisableClientState(GL_NORMAL_ARRAY );
 }
 
 Mesh*

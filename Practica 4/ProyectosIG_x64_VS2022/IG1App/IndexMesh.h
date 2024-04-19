@@ -10,7 +10,7 @@ protected :
 
 public:
 	IndexMesh() : Mesh() { mPrimitive = GL_TRIANGLES; }
-	~ IndexMesh() override { delete [] vIndices; }
+	~IndexMesh() override { delete [] vIndices; }
 	void render() const override;
 	void draw() const override;
 	//...
