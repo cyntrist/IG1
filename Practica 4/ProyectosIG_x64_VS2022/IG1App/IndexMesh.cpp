@@ -2,7 +2,7 @@
 
 #include "Cara.h"
 
-glm::vec3 IndexMesh::calculoVectorNormalPorNewell()
+glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 {
 	glm::vec3 n = {0, 0, 0};
 	for (int i = 0; i < nNumIndices; i++)
@@ -17,18 +17,20 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell()
 		 **/
 
 		/// O ES ESTE
-		auto vertActual = vVertices[i];
-		auto vertSiguiente = vVertices[(i+1)%mNumVertices];
+		const auto vertActual = vVertices[i];
+		const auto vertSiguiente = vVertices[(i + 1) % mNumVertices];
 
-		n.x +=( vertActual.y- vertSiguiente .y) * ( vertActual .z+ vertSiguiente .z);
-		n.y +=( vertActual.z- vertSiguiente .z) * ( vertActual .x+ vertSiguiente .x);
-		n.z +=( vertActual.x- vertSiguiente .x) * ( vertActual .y+ vertSiguiente .y);
+		n.x += (vertActual.y - vertSiguiente.y) * (vertActual.z + vertSiguiente.z);
+		n.y += (vertActual.z - vertSiguiente.z) * (vertActual.x + vertSiguiente.x);
+		n.z += (vertActual.x - vertSiguiente.x) * (vertActual.y + vertSiguiente.y);
 	}
 	return normalize(n);
 }
 
 void IndexMesh::buildNormalVectors()
 {
+
+
 }
 
 IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
@@ -52,18 +54,18 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	/// Define cuidadosamente los 36 índices que, de 3 en 3,
 	/// determinan las 12 caras triangulares de la malla.
 	/// Recuerda que los índices de estas caras deben darse
-	/// en sentido anti-horario según se mira el cubo desde su exterior
+	/// en sentido ¡¡¡ANTI-HORARIO!!! según se mira el cubo desde su exterior
 	mesh->nNumIndices = 36;
 	mesh->vIndices = new GLuint[mesh->nNumIndices];
 
 	// cara de abajo
 	mesh->vIndices[0] = 0;
-	mesh->vIndices[1] = 1;
+	mesh->vIndices[1] = 3;
 	mesh->vIndices[2] = 2;
 
 	mesh->vIndices[3] = 0;
 	mesh->vIndices[4] = 2;
-	mesh->vIndices[5] = 4;
+	mesh->vIndices[5] = 1;
 
 	// cara de arriba
 	mesh->vIndices[6] = 4;
@@ -75,22 +77,22 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vIndices[11] = 7;
 
 	// cara lateral cercana izquierda
-	mesh->vIndices[12] = 3;
-	mesh->vIndices[13] = 0;
-	mesh->vIndices[14] = 4;
+	mesh->vIndices[12] = 0;
+	mesh->vIndices[13] = 4;
+	mesh->vIndices[14] = 7;
 
-	mesh->vIndices[15] = 3;
-	mesh->vIndices[16] = 4;
-	mesh->vIndices[17] = 7;
+	mesh->vIndices[15] = 0;
+	mesh->vIndices[16] = 7;
+	mesh->vIndices[17] = 3;
 
 	// cara lateral trasera derecha
-	mesh->vIndices[18] = 2;
-	mesh->vIndices[19] = 1;
-	mesh->vIndices[20] = 5;
+	mesh->vIndices[18] = 1;
+	mesh->vIndices[19] = 2;
+	mesh->vIndices[20] = 6;
 
-	mesh->vIndices[21] = 2;
-	mesh->vIndices[22] = 5;
-	mesh->vIndices[23] = 6;
+	mesh->vIndices[21] = 1;
+	mesh->vIndices[22] = 6;
+	mesh->vIndices[23] = 5;
 
 	// cara lateral cercana derecha
 	mesh->vIndices[24] = 0;
@@ -102,12 +104,12 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vIndices[29] = 4;
 
 	// cara lateral trasera izquierda
-	mesh->vIndices[30] = 3;
-	mesh->vIndices[31] = 2;
+	mesh->vIndices[30] = 4;
+	mesh->vIndices[31] = 7;
 	mesh->vIndices[32] = 6;
 
-	mesh->vIndices[33] = 3;
-	mesh->vIndices[34] = 6;
+	mesh->vIndices[33] = 4;
+	mesh->vIndices[34] = 3;
 	mesh->vIndices[35] = 7;
 
 	/// COLORES

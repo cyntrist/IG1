@@ -13,6 +13,7 @@ public:
 
 	int getIndiceVertice(glm::vec3 vec) const
 	{
+		/// ESTO PERO CON LA LISTA DE TODOS LOS VERTICES EN VEZ DE ESTA LOCAL
 		const auto it
 			= std::ranges::find(vertices.begin(), 
 			                    vertices.end(), 

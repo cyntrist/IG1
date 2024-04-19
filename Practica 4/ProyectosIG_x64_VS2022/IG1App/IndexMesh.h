@@ -15,7 +15,7 @@ public:
 	void draw() const override;
 	//...
 
-	glm::vec3 calculoVectorNormalPorNewell();
+	glm::vec3 calculoVectorNormalPorNewell(Cara c);
 	void buildNormalVectors();
 	static IndexMesh* generateIndexedBox(GLdouble l);
 };
