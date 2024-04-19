@@ -16,11 +16,13 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell()
 	      Set Normal.z to Sum of Normal.z and (multiply (Current.x minus Next.x) by (Current.y plus Next.y))
 		 **/
 
+		/// O ES ESTE
 		auto vertActual = vVertices[i];
 		auto vertSiguiente = vVertices[(i+1)%mNumVertices];
-		n.x +=( vertActual .y- vertSiguiente .y) * ( vertActual .z+ vertSiguiente .z);
-		n.y +=( vertActual .z- vertSiguiente .z) * ( vertActual .x+ vertSiguiente .x);
-		n.z +=( vertActual .x- vertSiguiente .x) * ( vertActual .y+ vertSiguiente .y);
+
+		n.x +=( vertActual.y- vertSiguiente .y) * ( vertActual .z+ vertSiguiente .z);
+		n.y +=( vertActual.z- vertSiguiente .z) * ( vertActual .x+ vertSiguiente .x);
+		n.z +=( vertActual.x- vertSiguiente .x) * ( vertActual .y+ vertSiguiente .y);
 	}
 	return normalize(n);
 }
