@@ -1,4 +1,4 @@
-#include "Scene.h"
+﻿#include "Scene.h"
 
 #include <iostream>
 
@@ -105,18 +105,48 @@ void Scene::setScene(int index)
 	case 2:
 		{
 			auto head = new Sphere(100);
-			auto hat = new Disk(50, 150);
-			auto smile = new PartialDisk(50, 100, 90, 180);
+			auto hat = new Disk(50, 100);
+			auto smile = new PartialDisk(50, 80, 90, 180);
 
-			auto br = 30;
-			auto tr = 1;
-			auto h = 50;
+			auto br = 15;
+			auto tr = 0;
+			auto h = 30;
 			auto eye1 = new Cylinder(br, tr, h);
 			auto eye2 = new Cylinder(br, tr, h);
 
 			eye1->setRGB(0, 0, 1);
 			eye2->setRGB(0, 0.5, 1);
 
+			auto rPos = 80;
+			auto lPos = 34;
+			auto dist = 33;
+
+			eye1->setModelMat(
+				translate(dmat4(1.0), dvec3(lPos, dist, rPos))
+				* rotate(dmat4(1.0), radians(45.0), dvec3(0.0, 1.0, 0.0))
+				* eye1->modelMat()
+			);
+
+			eye2->setModelMat(
+				translate(dmat4(1.0), dvec3(rPos, dist, lPos))
+				* rotate(dmat4(1.0), radians(45.0), dvec3(0.0, 1.0, 0.0))
+				* eye2->modelMat()
+			);
+
+			hat->setModelMat(
+				translate(dmat4(1.0), dvec3(-10, 80, -10))
+				* rotate(dmat4(1.0), radians(90.0), dvec3(1.0, 0.0, 0.0))
+				* rotate(dmat4(1.0), radians(10.0), dvec3(0.0, 1.0, 0.0))
+				* rotate(dmat4(1.0), radians(-10.0), dvec3(1.0, 0.0, 1.0))
+				* hat->modelMat()
+			);
+
+			smile->setModelMat(
+				translate(dmat4(1.0), dvec3(55, 10, 55))
+				* rotate(dmat4(1.0), radians(0.0), dvec3(1.0, 0.0, 0.0))
+				* rotate(dmat4(1.0), radians(45.0), dvec3(0.0, 1.0, 0.0))
+				* smile->modelMat()
+			);
 
 			addObject(head);
 			addObject(hat);

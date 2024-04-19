@@ -58,7 +58,7 @@ IG1App::init()
 	mScene->init();
 	mScene2->init();
 
-	mScene->setScene(1);
+	mScene->setScene(2);
 	//mScene2->setScene(0);
 	mCamera2->setEjer47(true, 500.0);
 
