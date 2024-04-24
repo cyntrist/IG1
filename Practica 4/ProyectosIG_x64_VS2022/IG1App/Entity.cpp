@@ -889,6 +889,12 @@ void AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 	CompoundEntity::render(modelViewMat);
 }
 
+void AdvancedTIE::update()
+{
+
+	
+}
+
 // -------------- ALA DEL TIE
 
 WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std::string& t)

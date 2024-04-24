@@ -35,6 +35,10 @@ public:
 	void setScene(int);
 	void sceneDirLight(Camera const&cam) const;
 
+	// PRACTICA 4 ej 68
+	void rotateEntity();
+	void orbit(CompoundEntity e);
+
 protected:
 	void free();
 	void setGL();
@@ -43,6 +47,10 @@ protected:
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
+
+	CompoundEntity* inventedNode;
+
+
 };
 
 #endif //_H_Scene_H_
