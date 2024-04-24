@@ -295,8 +295,8 @@ protected:
 	Abs_Entity* leftWing;
 	Abs_Entity* rightWing;
 	Abs_Entity* morro;
-	Abs_Entity* base;
-	Abs_Entity* cyl;
+	QuadricEntity* base;
+	QuadricEntity* cyl;
 };
 
 class WingAdvancedTIE : public Abs_Entity
@@ -319,8 +319,8 @@ public:
 	void render(const glm::dmat4& modelViewMat) const override;
 
 protected:
-	Abs_Entity* cyl;
-	Abs_Entity* disk;
+	QuadricEntity* cyl;
+	QuadricEntity* disk;
 };
 
 

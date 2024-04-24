@@ -850,9 +850,6 @@ AdvancedTIE::AdvancedTIE()
 	);
 	base->setmColor(dvec4(0, 65, 105, 0));
 
-	
-
-	
 	morro = new BaseAdvancedTIE();
 	morro->setModelMat(
 		translate(dmat4(1.0), dvec3(0, -100, 0))
@@ -868,6 +865,10 @@ AdvancedTIE::AdvancedTIE()
 		* cyl->modelMat()
 	);
 
+
+	// colores de las entidades cuadricas
+	base->setRGB(0.0, 0.2, 0.3);
+	cyl->setRGB(0.0, 0.2, 0.3);
 	
 
 	// a�ade las entidades al vector de entidades del compound entity
@@ -913,8 +914,7 @@ void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		glPolygonMode(GL_BACK, GL_FILL);
-		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->bind(GL_MODULATE);
 		
 		
@@ -951,6 +951,9 @@ BaseAdvancedTIE::BaseAdvancedTIE()
 		* scale(dmat4(1.0), dvec3(4, 4, 1))
 		* disk->modelMat()
 	);
+
+	cyl->setRGB(0.0, 0.2, 0.3);
+	disk->setRGB(0.0, 0.2, 0.3);
 
 	CompoundEntity::addEntity(cyl);
 	CompoundEntity::addEntity(disk);
