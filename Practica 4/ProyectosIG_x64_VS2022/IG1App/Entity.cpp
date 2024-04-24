@@ -843,13 +843,13 @@ AdvancedTIE::AdvancedTIE()
 {
 	// ./bmps/noche.bmp
 	// genera las partes por separado
-	leftWing = new WingAdvancedTIE(40, 20, 0, "./bmps/noche.bmp");
-	rightWing = new WingAdvancedTIE(40, -20, 180, "./bmps/noche.bmp"); // FALTA
+	leftWing = new WingAdvancedTIE(40, 10, 0, "./bmps/noche.bmp");
+	rightWing = new WingAdvancedTIE(40, -10, 180, "./bmps/noche.bmp"); // FALTA
 	
 	// base
 	base = new Sphere(20);
 	base->setModelMat(
-		translate(dmat4(1.0), dvec3(0, 10, 0))
+		translate(dmat4(1.0), dvec3(0, 10, 5))
 		* base->modelMat()
 	);
 	base->setmColor(dvec4(0, 65, 105, 0));
@@ -862,10 +862,10 @@ AdvancedTIE::AdvancedTIE()
 	);
 
 	// cyl
-	cyl = new Cylinder(3, 3, 50);
+	cyl = new Cylinder(3, 3, 100);
 	cyl->setModelMat(
-		translate(dmat4(1.0), dvec3(-40, 27, 0))
-		* rotate(dmat4(1.0), radians(90.0), dvec3(0.0, 1.0, 0.0))
+		translate(dmat4(1.0), dvec3(-30, 10, -5))
+		* rotate(dmat4(1.0), radians(45.0), dvec3(0.0, 1.0, 0.0))
 		* scale(dmat4(1.0), dvec3(1, 1, 1))
 		* cyl->modelMat()
 	);
