@@ -671,9 +671,12 @@ void QuadricEntity::setRGB(GLdouble rv = 1.0, GLdouble gv = 1.0, GLdouble bv = 1
 	blue = bv;
 }
 
-Sphere::Sphere(GLdouble rr)
+Sphere::Sphere(GLdouble rr, GLdouble x, GLdouble y, GLdouble z)
 {
 	r = rr;
+	mModelMat = translate(mModelMat, dvec3(-x, y, z));
+
+
 }
 
 void Sphere::render(glm::dmat4 const& modelViewMat) const
@@ -692,6 +695,12 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const
 	gluSphere(q, r, 50, 50); 
 	// Aqu� se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
+}
+
+void Sphere::setPosition(GLdouble x, GLdouble y, GLdouble z)
+{
+	mModelMat = translate(mModelMat, dvec3(-x, y, z));
+
 }
 
 Cylinder::Cylinder(GLdouble brr, GLdouble trr, GLdouble hh)
@@ -836,18 +845,20 @@ void IndexedBox::update()
 AdvancedTIE::AdvancedTIE()
 {
 	// genera las partes por separado
-	leftWing = new WingAdvancedTIE();
-	rightWing = new WingAdvancedTIE();
-	base = new Sphere(10);
-	morro = new BaseAdvancedTIE();
-	cyl = new Cylinder(3, 3, 10);
+	leftWing = new WingAdvancedTIE(30, 40, 90);
+	rightWing = new WingAdvancedTIE(30, -40, -90);
+	base = new Sphere(20, 0, 30, 0);
+
+	
+	//morro = new BaseAdvancedTIE();
+	//cyl = new Cylinder(3, 3, 10);
 
 	// a�ade las entidades al vector de entidades del compound entity
 	CompoundEntity::addEntity(leftWing);
 	CompoundEntity::addEntity(rightWing);
 	CompoundEntity::addEntity(base);
-	CompoundEntity::addEntity(morro);
-	CompoundEntity::addEntity(cyl);
+	//CompoundEntity::addEntity(morro);
+	//CompoundEntity::addEntity(cyl);
 }
 
 AdvancedTIE::~AdvancedTIE()
@@ -862,13 +873,18 @@ void AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 
 // -------------- ALA DEL TIE
 
-WingAdvancedTIE::WingAdvancedTIE()
+WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot)
 {
-	//wing = Mesh::generateTIEWing(3, 2, 1);
+	mMesh = Mesh::generateTIEWing(60, 20, 20);
 	
 	// hay que rotar el ala porque se genera apoyada en el plano xy 
-	//dmat4 aMat = modelViewMat * rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
+	//dmat4 aMat = modelViewMat * rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)); // rotacion alrededor de la circunferencia en sentido antihorario
+	//mModelMat = mModelMat * rotate(dmat4(1.0), radians(90), dvec3(0, 0.0, 1.0));
 	
+	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(0.0, 0.0, 1.0)) *
+				translate(mModelMat, dvec3(-x, y, 0)) *
+				rotate(mModelMat, radians(rot), dvec3(1.0, 0.0, 0.0));
+				//scale(mModelMat, dvec3(0, 0, 0));
 }
 
 WingAdvancedTIE::~WingAdvancedTIE()
@@ -878,7 +894,18 @@ WingAdvancedTIE::~WingAdvancedTIE()
 
 void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
-	// render como en las primeras practicas, todo con mesh
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT, GL_FILL);
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
 }
 
 // ----------------- MORRO DEL TIE
