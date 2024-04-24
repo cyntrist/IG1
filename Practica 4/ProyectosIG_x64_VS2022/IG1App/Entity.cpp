@@ -843,8 +843,8 @@ AdvancedTIE::AdvancedTIE()
 {
 	// ./bmps/noche.bmp
 	// genera las partes por separado
-	leftWing = new WingAdvancedTIE(30, 40, 0, "./bmps/noche.bmp");
-	rightWing = new WingAdvancedTIE(30, -40, 180, "./bmps/noche.bmp"); // FALTA
+	leftWing = new WingAdvancedTIE(40, 20, 0, "./bmps/noche.bmp");
+	rightWing = new WingAdvancedTIE(40, -20, 180, "./bmps/noche.bmp"); // FALTA
 	
 	// base
 	base = new Sphere(20);
@@ -908,7 +908,7 @@ WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std
 	
 	// hay que rotar el ala porque se genera apoyada en el plano xy 
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(0.0, 0.0, 1.0)) *
-				translate(mModelMat, dvec3(-x, y, 0)) *
+				translate(mModelMat, dvec3(-x, y, 20)) *
 				rotate(mModelMat, radians(rot), dvec3(1.0, 0.0, 0.0)) *
 				rotate(mModelMat, radians(90.0), dvec3(0.0, 1.0, 0.0))
 		
