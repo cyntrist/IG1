@@ -179,10 +179,10 @@ void Scene::setScene(int index)
 		break;
 	case 7: {
 
-		auto tie = new AdvancedTIE();
+		tieF = new AdvancedTIE();
 		auto tatooie = new Sphere(1000);
 
-		tie->setModelMat(
+		tieF->setModelMat(
 			translate(dmat4(1.0), dvec3(0, 1000, 0))
 		);
 
@@ -193,7 +193,7 @@ void Scene::setScene(int index)
 		tatooie->setRGB(1, 0.9, 0.0);
 
 		addObject(tatooie);
-		addObject(tie);
+		addObject(tieF);
 
 	}
 		break;
@@ -228,7 +228,9 @@ void Scene::rotateEntity()
 
 	// gira el nodo
 	inventedNode->setModelMat(
-		rotate(inventedNode->modelMat(), radians(90.0), dvec3(0, 1, 0)));
+		rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 1, 0)));
+
+	std::cout << inventedNode->getAngle() << std::endl;
 
 }
 

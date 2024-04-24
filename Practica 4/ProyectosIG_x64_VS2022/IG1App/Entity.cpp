@@ -799,9 +799,11 @@ void CompoundEntity::addEntity(Abs_Entity* ae)
 
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 {
+	dmat4 aMat = modelViewMat * mModelMat;
+	upload(aMat);
 	for (auto& ae : gObjects) {
 
-		ae->render(modelViewMat);
+		ae->render(aMat*ae->modelMat());
 	}
 }
 
@@ -841,27 +843,30 @@ AdvancedTIE::AdvancedTIE()
 {
 	// ./bmps/noche.bmp
 	// genera las partes por separado
-	leftWing = new WingAdvancedTIE(30, 40, 90, "./bmps/noche.bmp");
-	rightWing = new WingAdvancedTIE(30, -40, -90, "./bmps/noche.bmp"); // FALTA
+	leftWing = new WingAdvancedTIE(30, 40, 0, "./bmps/noche.bmp");
+	rightWing = new WingAdvancedTIE(30, -40, 180, "./bmps/noche.bmp"); // FALTA
+	
+	// base
 	base = new Sphere(20);
 	base->setModelMat(
-		translate(dmat4(1.0), dvec3(0, 30, 0))
+		translate(dmat4(1.0), dvec3(0, 10, 0))
 		* base->modelMat()
 	);
 	base->setmColor(dvec4(0, 65, 105, 0));
 
+	// morro
 	morro = new BaseAdvancedTIE();
 	morro->setModelMat(
 		translate(dmat4(1.0), dvec3(0, -100, 0))
 		* morro->modelMat()
 	);
 
-	// CYL WIP
-	cyl = new Cylinder(3, 3, 10);
+	// cyl
+	cyl = new Cylinder(3, 3, 50);
 	cyl->setModelMat(
 		translate(dmat4(1.0), dvec3(-40, 27, 0))
 		* rotate(dmat4(1.0), radians(90.0), dvec3(0.0, 1.0, 0.0))
-		* scale(dmat4(1.0), dvec3(1, 1, 8))
+		* scale(dmat4(1.0), dvec3(1, 1, 1))
 		* cyl->modelMat()
 	);
 
@@ -904,7 +909,10 @@ WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std
 	// hay que rotar el ala porque se genera apoyada en el plano xy 
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(0.0, 0.0, 1.0)) *
 				translate(mModelMat, dvec3(-x, y, 0)) *
-				rotate(mModelMat, radians(rot), dvec3(1.0, 0.0, 0.0));
+				rotate(mModelMat, radians(rot), dvec3(1.0, 0.0, 0.0)) *
+				rotate(mModelMat, radians(90.0), dvec3(0.0, 1.0, 0.0))
+		
+		;
 
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
