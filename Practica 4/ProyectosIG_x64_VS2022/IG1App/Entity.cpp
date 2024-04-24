@@ -848,6 +848,9 @@ AdvancedTIE::AdvancedTIE()
 		translate(dmat4(1.0), dvec3(0, 30, 0))
 		* base->modelMat()
 	);
+	base->setmColor(dvec4(0, 65, 105, 0));
+
+	
 
 	
 	morro = new BaseAdvancedTIE();
