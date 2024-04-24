@@ -857,7 +857,7 @@ AdvancedTIE::AdvancedTIE()
 	// morro
 	morro = new BaseAdvancedTIE();
 	morro->setModelMat(
-		translate(dmat4(1.0), dvec3(0, 5, -5))
+		translate(dmat4(1.0), dvec3(0, 7, -5))
 		* scale(dmat4(1.0), dvec3(1, 1, 1))
 		* morro->modelMat()
 	);
