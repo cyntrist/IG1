@@ -177,9 +177,24 @@ void Scene::setScene(int index)
 	case 6:
 		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 		break;
-	case 7:
-		addCompoundObject(new AdvancedTIE());
+	case 7: {
 
+		auto tie = new AdvancedTIE();
+		auto tatooie = new Sphere(1000);
+
+		tie->setModelMat(
+			translate(dmat4(1.0), dvec3(0, 1000, 0))
+		);
+
+		tatooie->setModelMat(
+			translate(dmat4(1.0), dvec3(0, -1025, 0))
+		);
+
+		tatooie->setRGB(1, 0.9, 0.0);
+
+		addObject(tatooie);
+		addObject(tie);
+	}
 		break;
 	default:
 		break;
