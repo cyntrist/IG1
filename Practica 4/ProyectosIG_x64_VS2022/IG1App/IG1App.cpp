@@ -225,6 +225,14 @@ IG1App::key(unsigned char key, int x, int y)
 		currentScene->update();
 		currentCam->update();
 		break;
+	case 'f':
+		currentScene->rotateEntity();
+		currentCam->update();
+		break;
+	case 'g':
+		currentScene->orbitEntity();
+		currentCam->update();
+		break;
 	case 'U':
 		toggleUpdate();
 		glutIdleFunc(s_update);

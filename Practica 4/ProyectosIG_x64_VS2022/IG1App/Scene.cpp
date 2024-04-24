@@ -195,12 +195,6 @@ void Scene::setScene(int index)
 		addObject(tatooie);
 		addObject(tie);
 
-		inventedNode = new CompoundEntity();
-		inventedNode->addEntity(tie);
-
-		// coloca la entidad justo encima del nodo
-		tie->setModelMat(translate(inventedNode->modelMat(), dvec3(0, 0, 0)));
-
 	}
 		break;
 	default:
@@ -226,22 +220,22 @@ void Scene::sceneDirLight(const Camera& cam) const
 
 void Scene::rotateEntity()
 {
-	// creacion del nodo inventado
-	
-	inventedNode->modelMat();
+	inventedNode = new CompoundEntity();
+	inventedNode->addEntity(tieF);
+
+	// coloca la entidad justo encima del nodo
+	tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(0, 0, 0)));
 
 	// gira el nodo
 	inventedNode->setModelMat(
-		rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 0, 1)));
+		rotate(inventedNode->modelMat(), radians(90.0), dvec3(0, 1, 0)));
 
-	////////// ----------------------
+}
 
-	//GLdouble a = e->getAngle();
-	//e->setModelMat(
-	//	rotate(dmat4(1.0), radians(a), dvec3(0.0, 1.0, 0.0))
-	//	* e->modelMat());
+void Scene::orbitEntity()
+{
 
-	//e->setAng(a++);
+	// orbit idem al anterior
 }
 
 void
@@ -267,6 +261,4 @@ void Scene::update()
 	for (auto* i : gTransparentObjects)
 		i->update();
 
-
-	rotateEntity();
 }

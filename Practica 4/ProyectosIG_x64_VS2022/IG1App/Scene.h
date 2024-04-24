@@ -37,7 +37,7 @@ public:
 
 	// PRACTICA 4 ej 68
 	void rotateEntity();
-	void orbit(CompoundEntity e);
+	void orbitEntity();
 
 protected:
 	void free();
@@ -49,6 +49,7 @@ protected:
 	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
 
 	CompoundEntity* inventedNode;
+	CompoundEntity* tieF;
 
 
 };
