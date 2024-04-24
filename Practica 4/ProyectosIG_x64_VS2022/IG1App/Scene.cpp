@@ -183,7 +183,7 @@ void Scene::setScene(int index)
 		auto tatooie = new Sphere(1000);
 
 		tieF->setModelMat(
-			translate(dmat4(1.0), dvec3(0, 1000, 0))
+			translate(dmat4(1.0), dvec3(0, 100, 0))
 		);
 
 		tatooie->setModelMat(
@@ -194,6 +194,7 @@ void Scene::setScene(int index)
 
 		addObject(tatooie);
 		addObject(tieF);
+
 
 	}
 		break;
@@ -220,6 +221,7 @@ void Scene::sceneDirLight(const Camera& cam) const
 
 void Scene::rotateEntity()
 {
+	
 	inventedNode = new CompoundEntity();
 	inventedNode->addEntity(tieF);
 
