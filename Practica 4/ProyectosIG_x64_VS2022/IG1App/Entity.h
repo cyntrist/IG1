@@ -220,10 +220,8 @@ protected:
 class Sphere : public QuadricEntity
 {
 public:
-	Sphere(GLdouble rr, GLdouble x, GLdouble y, GLdouble z); // r es el radio de la esfera 
+	Sphere(GLdouble rr); // r es el radio de la esfera 
 	void render(const glm::dmat4& modelViewMat) const override;
-
-	void setPosition(GLdouble x, GLdouble y, GLdouble z);
 
 protected:
 	GLdouble r;

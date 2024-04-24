@@ -671,10 +671,9 @@ void QuadricEntity::setRGB(GLdouble rv = 1.0, GLdouble gv = 1.0, GLdouble bv = 1
 	blue = bv;
 }
 
-Sphere::Sphere(GLdouble rr, GLdouble x, GLdouble y, GLdouble z)
+Sphere::Sphere(GLdouble rr)
 {
 	r = rr;
-	mModelMat = translate(mModelMat, dvec3(-x, y, z));
 
 
 }
@@ -697,17 +696,13 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const
 	glColor3f(1.0, 1.0, 1.0);
 }
 
-void Sphere::setPosition(GLdouble x, GLdouble y, GLdouble z)
-{
-	mModelMat = translate(mModelMat, dvec3(-x, y, z));
-
-}
-
 Cylinder::Cylinder(GLdouble brr, GLdouble trr, GLdouble hh)
 {
 	br = brr;
 	tr = trr;
 	h = hh;
+
+	
 }
 
 void Cylinder::render(glm::dmat4 const& modelViewMat) const
@@ -847,18 +842,31 @@ AdvancedTIE::AdvancedTIE()
 	// genera las partes por separado
 	leftWing = new WingAdvancedTIE(30, 40, 90);
 	rightWing = new WingAdvancedTIE(30, -40, -90);
-	base = new Sphere(20, 0, 30, 0);
+	base = new Sphere(20);
+	base->setModelMat(
+		translate(dmat4(1.0), dvec3(0, 30, 0))
+		* base->modelMat()
+	);
 
 	
 	//morro = new BaseAdvancedTIE();
-	//cyl = new Cylinder(3, 3, 10);
+
+	// CYL WIP
+	cyl = new Cylinder(3, 3, 10);
+	cyl->setModelMat(
+		translate(dmat4(1.0), dvec3(0, 0, 0))
+		* rotate(dmat4(1.0), radians(90.0), dvec3(0.0, 1.0, 0.0))
+		* cyl->modelMat()
+	);
+
+	
 
 	// a�ade las entidades al vector de entidades del compound entity
 	CompoundEntity::addEntity(leftWing);
 	CompoundEntity::addEntity(rightWing);
 	CompoundEntity::addEntity(base);
 	//CompoundEntity::addEntity(morro);
-	//CompoundEntity::addEntity(cyl);
+	CompoundEntity::addEntity(cyl);
 }
 
 AdvancedTIE::~AdvancedTIE()

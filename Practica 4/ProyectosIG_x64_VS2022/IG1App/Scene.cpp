@@ -104,7 +104,7 @@ void Scene::setScene(int index)
 		break;
 	case 2:
 		{
-			auto head = new Sphere(100, 0,0,0);
+			auto head = new Sphere(100);
 			auto hat = new Disk(50, 100);
 			auto smile = new PartialDisk(50, 80, 90, 180);
 
