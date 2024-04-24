@@ -849,7 +849,11 @@ AdvancedTIE::AdvancedTIE()
 	);
 
 	
-	//morro = new BaseAdvancedTIE();
+	morro = new BaseAdvancedTIE();
+	morro->setModelMat(
+		translate(dmat4(1.0), dvec3(0, -100, 0))
+		* morro->modelMat()
+	);
 
 	// CYL WIP
 	cyl = new Cylinder(3, 3, 10);
@@ -866,7 +870,7 @@ AdvancedTIE::AdvancedTIE()
 	CompoundEntity::addEntity(leftWing);
 	CompoundEntity::addEntity(rightWing);
 	CompoundEntity::addEntity(base);
-	//CompoundEntity::addEntity(morro);
+	CompoundEntity::addEntity(morro);
 	CompoundEntity::addEntity(cyl);
 }
 
@@ -921,8 +925,22 @@ void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 
 BaseAdvancedTIE::BaseAdvancedTIE()
 {
-	cyl = new Cylinder(2, 2, 5);
+	cyl = new Cylinder(3, 3, 10);
+	cyl->setModelMat(
+		translate(dmat4(1.0), dvec3(0, 30, 25))
+		* rotate(dmat4(1.0), radians(180.0), dvec3(1.0, 0.0, 0.0))
+		* scale(dmat4(1.0), dvec3(3, 3, 1))
+		* cyl->modelMat()
+	);
+
+
 	disk = new Disk(1, 3);
+	disk->setModelMat(
+		translate(dmat4(1.0), dvec3(-0, 30, 25))
+		* rotate(dmat4(1.0), radians(180.0), dvec3(0.0, 1.0, 0.0))
+		* scale(dmat4(1.0), dvec3(4, 4, 1))
+		* disk->modelMat()
+	);
 
 	CompoundEntity::addEntity(cyl);
 	CompoundEntity::addEntity(disk);
