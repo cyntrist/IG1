@@ -49,6 +49,7 @@ protected:
 	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
 
 	CompoundEntity* inventedNode;
+	CompoundEntity* inventedNodeRotate;
 	CompoundEntity* tieF;
 	QuadricEntity* Tatooie;
 

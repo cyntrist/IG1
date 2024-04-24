@@ -198,6 +198,16 @@ void Scene::setScene(int index)
 		inventedNode = new CompoundEntity();
 		inventedNode->addEntity(tieF);
 
+		inventedNodeRotate = new CompoundEntity();
+		inventedNodeRotate->addEntity(tieF);
+
+		inventedNode->addEntity(inventedNodeRotate);
+
+
+
+
+		dvec3 pos = dvec3(1100, 0, 0);
+
 	}
 		break;
 	default:
@@ -224,14 +234,15 @@ void Scene::sceneDirLight(const Camera& cam) const
 void Scene::rotateEntity()
 {
 
+	//inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
 	// coloca la entidad justo encima del nodo
-	tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(0, 0, 0)));
+	tieF->setModelMat(translate(inventedNodeRotate->modelMat(), dvec3(0, 0, 0)));
+	
 
 	// gira el nodo
-	inventedNode->setModelMat(
+	inventedNodeRotate->setModelMat(
 		rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 1, 0)));
 
-	std::cout << inventedNode->getAngle() << std::endl;
 
 }
 
@@ -241,11 +252,16 @@ void Scene::orbitEntity()
 	// orbit idem al anterior
 	// coloca la entidad justo encima del nodo
 	tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+	inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+	
 
 	// gira el nodo
 	inventedNode->setModelMat(
 		rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 1, 0)));
 }
+
+
+
 
 void
 Scene::render(const Camera& cam) const
