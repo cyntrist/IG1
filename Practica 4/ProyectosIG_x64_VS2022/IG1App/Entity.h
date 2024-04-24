@@ -302,7 +302,7 @@ protected:
 class WingAdvancedTIE : public Abs_Entity
 {
 public:
-	WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot);
+	WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std::string& t);
 	~WingAdvancedTIE() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 

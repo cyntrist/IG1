@@ -839,9 +839,10 @@ void IndexedBox::update()
 
 AdvancedTIE::AdvancedTIE()
 {
+	// ./bmps/noche.bmp
 	// genera las partes por separado
-	leftWing = new WingAdvancedTIE(30, 40, 90);
-	rightWing = new WingAdvancedTIE(30, -40, -90);
+	leftWing = new WingAdvancedTIE(30, 40, 90, "./bmps/noche.bmp");
+	rightWing = new WingAdvancedTIE(30, -40, -90, "./bmps/noche.bmp"); // FALTA
 	base = new Sphere(20);
 	base->setModelMat(
 		translate(dmat4(1.0), dvec3(0, 30, 0))
@@ -886,18 +887,17 @@ void AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 
 // -------------- ALA DEL TIE
 
-WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot)
+WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std::string& t)
 {
 	mMesh = Mesh::generateTIEWing(60, 20, 20);
 	
 	// hay que rotar el ala porque se genera apoyada en el plano xy 
-	//dmat4 aMat = modelViewMat * rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)); // rotacion alrededor de la circunferencia en sentido antihorario
-	//mModelMat = mModelMat * rotate(dmat4(1.0), radians(90), dvec3(0, 0.0, 1.0));
-	
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(0.0, 0.0, 1.0)) *
 				translate(mModelMat, dvec3(-x, y, 0)) *
 				rotate(mModelMat, radians(rot), dvec3(1.0, 0.0, 0.0));
-				//scale(mModelMat, dvec3(0, 0, 0));
+
+	mTexture = new Texture();
+	setTexture(t, mTexture, 255);
 }
 
 WingAdvancedTIE::~WingAdvancedTIE()
@@ -912,11 +912,18 @@ void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_BACK, GL_FILL);
 		glPolygonMode(GL_FRONT, GL_FILL);
+		mTexture->bind(GL_MODULATE);
+		
+		
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
+
+
 		glLineWidth(1);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mTexture->unbind();
+
 	}
 
 }
