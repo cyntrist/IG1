@@ -854,8 +854,9 @@ AdvancedTIE::AdvancedTIE()
 	// CYL WIP
 	cyl = new Cylinder(3, 3, 10);
 	cyl->setModelMat(
-		translate(dmat4(1.0), dvec3(0, 0, 0))
+		translate(dmat4(1.0), dvec3(-40, 27, 0))
 		* rotate(dmat4(1.0), radians(90.0), dvec3(0.0, 1.0, 0.0))
+		* scale(dmat4(1.0), dvec3(1, 1, 8))
 		* cyl->modelMat()
 	);
 
