@@ -180,21 +180,20 @@ void Scene::setScene(int index)
 	case 7: {
 
 		tieF = new AdvancedTIE();
-		auto tatooie = new Sphere(1000);
+		Tatooie = new Sphere(1000);
 
 		tieF->setModelMat(
-			translate(dmat4(1.0), dvec3(0, 100, 0))
+			translate(dmat4(1.0), dvec3(0, 0, 0))
 		);
 
-		tatooie->setModelMat(
-			translate(dmat4(1.0), dvec3(0, -1025, 0))
+		Tatooie->setModelMat(
+			translate(dmat4(1.0), dvec3(0, 0, 0))
 		);
 
-		tatooie->setRGB(1, 0.9, 0.0);
+		Tatooie->setRGB(1, 0.9, 0.0);
 
-		addObject(tatooie);
+		addObject(Tatooie);
 		addObject(tieF);
-
 
 	}
 		break;
@@ -240,6 +239,16 @@ void Scene::orbitEntity()
 {
 
 	// orbit idem al anterior
+
+	inventedNode = new CompoundEntity();
+	inventedNode->addEntity(tieF);
+
+	// coloca la entidad justo encima del nodo
+	tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+
+	// gira el nodo
+	inventedNode->setModelMat(
+		rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 1, 0)));
 }
 
 void

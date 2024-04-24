@@ -50,6 +50,7 @@ protected:
 
 	CompoundEntity* inventedNode;
 	CompoundEntity* tieF;
+	QuadricEntity* Tatooie;
 
 
 };
