@@ -857,7 +857,8 @@ AdvancedTIE::AdvancedTIE()
 	// morro
 	morro = new BaseAdvancedTIE();
 	morro->setModelMat(
-		translate(dmat4(1.0), dvec3(0, -100, 0))
+		translate(dmat4(1.0), dvec3(0, 5, -5))
+		* scale(dmat4(1.0), dvec3(1, 1, 1))
 		* morro->modelMat()
 	);
 
@@ -951,18 +952,18 @@ BaseAdvancedTIE::BaseAdvancedTIE()
 {
 	cyl = new Cylinder(3, 3, 10);
 	cyl->setModelMat(
-		translate(dmat4(1.0), dvec3(0, 30, 25))
+		translate(dmat4(1.0), dvec3(0, 0, 25))
 		* rotate(dmat4(1.0), radians(180.0), dvec3(1.0, 0.0, 0.0))
-		* scale(dmat4(1.0), dvec3(3, 3, 1))
+		* scale(dmat4(1.0), dvec3(2, 2, 1))
 		* cyl->modelMat()
 	);
 
 
 	disk = new Disk(1, 3);
 	disk->setModelMat(
-		translate(dmat4(1.0), dvec3(-0, 30, 25))
+		translate(dmat4(1.0), dvec3(0, 0, 25))
 		* rotate(dmat4(1.0), radians(180.0), dvec3(0.0, 1.0, 0.0))
-		* scale(dmat4(1.0), dvec3(4, 4, 1))
+		* scale(dmat4(1.0), dvec3(2.5, 2.5, 1))
 		* disk->modelMat()
 	);
 
