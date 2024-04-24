@@ -195,6 +195,9 @@ void Scene::setScene(int index)
 		addObject(Tatooie);
 		addObject(tieF);
 
+		inventedNode = new CompoundEntity();
+		inventedNode->addEntity(tieF);
+
 	}
 		break;
 	default:
@@ -220,9 +223,6 @@ void Scene::sceneDirLight(const Camera& cam) const
 
 void Scene::rotateEntity()
 {
-	
-	inventedNode = new CompoundEntity();
-	inventedNode->addEntity(tieF);
 
 	// coloca la entidad justo encima del nodo
 	tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(0, 0, 0)));
@@ -239,10 +239,6 @@ void Scene::orbitEntity()
 {
 
 	// orbit idem al anterior
-
-	inventedNode = new CompoundEntity();
-	inventedNode->addEntity(tieF);
-
 	// coloca la entidad justo encima del nodo
 	tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
 
