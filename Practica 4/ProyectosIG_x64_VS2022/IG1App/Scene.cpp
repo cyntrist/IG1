@@ -196,15 +196,12 @@ void Scene::setScene(int index)
 		addObject(tieF);
 
 		inventedNode = new CompoundEntity();
-		inventedNode->addEntity(tieF);
-
 		inventedNodeRotate = new CompoundEntity();
+
+
 		inventedNodeRotate->addEntity(tieF);
 
 		inventedNode->addEntity(inventedNodeRotate);
-
-
-
 
 		dvec3 pos = dvec3(1100, 0, 0);
 
@@ -241,7 +238,7 @@ void Scene::rotateEntity()
 
 	// gira el nodo
 	inventedNodeRotate->setModelMat(
-		rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 1, 0)));
+		rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 1, 0)));
 
 
 }
