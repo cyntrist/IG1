@@ -808,16 +808,14 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	for (auto& ae : gObjects) {
-
+	for (auto& ae : gObjects) 
 		ae->render(aMat*ae->modelMat());
-	}
 }
 
 
 IndexedBox::IndexedBox(GLdouble l)
 {
-	mMesh = IndexMesh::generateIndexedBox(l);
+	mMesh = IndexMesh::generateIndexedBoxV2(l);
 }
 
 IndexedBox::~IndexedBox()

@@ -268,7 +268,12 @@ void Scene::rotateEntity()
 	case 0:
 		{
 			inventedNodeRotate->setModelMat(
-				rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 0, 1)));
+				rotate(
+					inventedNodeRotate->modelMat(),
+					radians(3.0), 
+					dvec3(0, 0, 1)
+				)
+			);
 			//inventedNode1->setModelMat(glm::rotate(inventedNode1->modelMat(),
 			//	radians(3.0), dvec3(0, 0, 1)));
 		}
@@ -277,7 +282,12 @@ void Scene::rotateEntity()
 		{
 			// gira el nodo
 			inventedNodeRotate->setModelMat(
-				rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 1, 0)));
+				rotate(
+					inventedNodeRotate->modelMat(), 
+					radians(3.0), 
+					dvec3(0, 1, 0)
+				)
+			);
 
 			// para hacerlo circular y que no salgan numeros muy grandes
 			ang = static_cast<int>(ang + 3.0) % 360;
@@ -312,7 +322,11 @@ void Scene::orbitEntity()
 
 
 		inventedNode->setModelMat(
-			rotate(inventedNode->modelMat(), radians(1.0), dvec3(x, 0, z)));
+			rotate(
+				inventedNode->modelMat(), 
+				radians(1.0), 
+				dvec3(x, 0, z))
+		);
 
 		break;
 	}
