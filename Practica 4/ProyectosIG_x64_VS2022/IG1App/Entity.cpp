@@ -886,11 +886,11 @@ AdvancedTIE::AdvancedTIE()
 	
 
 	// a�ade las entidades al vector de entidades del compound entity
-	addEntity(leftWing);
-	addEntity(rightWing);
-	addEntity(base);
-	addEntity(morro);
-	addEntity(cyl);
+	CompoundEntity::addEntity(leftWing);
+	CompoundEntity::addEntity(rightWing);
+	CompoundEntity::addEntity(base);
+	CompoundEntity::addEntity(morro);
+	CompoundEntity::addEntity(cyl);
 }
 
 AdvancedTIE::~AdvancedTIE()
