@@ -55,7 +55,7 @@ protected:
 	QuadricEntity* Tatooie;
 
 	CompoundEntity* node66;
-
+	CompoundEntity* node66_2;
 	GLdouble ang;
 
 

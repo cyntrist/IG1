@@ -126,7 +126,7 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 
 void RGBTriangle::update()
 {
-	//angle -= 2.0;
+	angle -= 2.0;
 }
 
 void RGBTriangle::rotateObj()

@@ -99,13 +99,20 @@ void Scene::setScene(int index)
 		addObject(new RegularPolygon(32, 250));
 		addObject(new RGBRectangle(500, 250));
 
-		auto t = new RGBTriangle(50, 250);
+
 
 		// TO DO
-		node66 = new CompoundEntity();
-		node66->addEntity(t);
+		inventedNodeRotate = new CompoundEntity();
+		auto t = new RGBTriangle(50, 0);
 
-		addObject(node66);
+		inventedNodeRotate->addEntity(t);
+
+		inventedNode = new CompoundEntity();
+		inventedNode->addEntity(inventedNodeRotate);
+
+		inventedNodeRotate->setModelMat(translate(dmat4(1.0), dvec3(0,0,0)));
+
+		addObject(inventedNode);
 	}
 
 		break;
@@ -256,7 +263,7 @@ void Scene::rotateEntity()
 
 	// gira el nodo
 	inventedNodeRotate->setModelMat(
-		rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(1, 0, 0)));
+		rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 0, 1)));
 
 	// para hacerlo circular y que no salgan numeros muy grandes
 	ang = (int)(ang+3.0)%360;
