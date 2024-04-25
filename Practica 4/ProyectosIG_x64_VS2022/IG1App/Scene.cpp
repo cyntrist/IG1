@@ -97,34 +97,34 @@ void Scene::setScene(int index)
 	switch (index)
 	{
 	case 0:
-	{
-		auto p = new RegularPolygon(32, 250);
-		auto r = new RGBRectangle(500, 250);
-		auto t = new RGBTriangle(50, 0);
+		{
+			auto p = new RegularPolygon(32, 250);
+			auto r = new RGBRectangle(500, 250);
+			auto t = new RGBTriangle(50, 0);
 
 
-		inventedNodeRotate = new CompoundEntity();
-		FatherInventedNode = new CompoundEntity();
-		inventedNode = new CompoundEntity();
+			inventedNodeRotate = new CompoundEntity();
+			fatherInventedNode = new CompoundEntity();
+			inventedNode = new CompoundEntity();
 
-		t->setModelMat(
-			translate(dmat4(1.0), dvec3(0, 0, 0))
-		);
+			t->setModelMat(
+				translate(dmat4(1.0), dvec3(0, 0, 0))
+			);
 
-		FatherInventedNode->addEntity(inventedNode);
-		FatherInventedNode->addEntity(p);
-		FatherInventedNode->addEntity(r);
+			fatherInventedNode->addEntity(inventedNode);
+			fatherInventedNode->addEntity(p);
+			fatherInventedNode->addEntity(r);
 
-		inventedNode->addEntity(inventedNodeRotate);
+			inventedNode->addEntity(inventedNodeRotate);
 
-		// se settea el radio de la esfera para el tie
-		inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(100, 0, 0)));
+			// se settea el radio de la esfera para el tie
+			inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(100, 0, 0)));
 
-		// añade el tie al nodo pequeño
-		inventedNodeRotate->addEntity(t);
+			// añade el tie al nodo pequeño
+			inventedNodeRotate->addEntity(t);
 
-		addObject(FatherInventedNode);
-	}
+			addObject(fatherInventedNode);
+		}
 
 		break;
 	case 1:
@@ -205,43 +205,40 @@ void Scene::setScene(int index)
 	case 6:
 		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 		break;
-	case 7: {
+	case 7:
+		{
+			tieF = new AdvancedTIE();
 
-		tieF = new AdvancedTIE();
-		Tatooie = new Sphere(1000);
+			const GLdouble tatDiam = 200;
+			tatooie = new Sphere(tatDiam);
+			tatooie->setRGB(1, 0.9, 0.0);
 
-		tieF->setModelMat(
-			translate(dmat4(1.0), dvec3(0, 0, 0))
-		);
+			//tieF->setModelMat(
+			//	translate(dmat4(1.0), dvec3(0, 0, 0))
+			//);
 
-		Tatooie->setModelMat(
-			translate(dmat4(1.0), dvec3(0, 0, 0))
-		);
+			//tatooie->setModelMat(
+			//	translate(dmat4(1.0), dvec3(0, 0, 0))
+			//);
 
-		Tatooie->setRGB(1, 0.9, 0.0);
+			fatherInventedNode = new CompoundEntity();
+			inventedNode = new CompoundEntity();
+			inventedNodeRotate = new CompoundEntity();
 
-		FatherInventedNode = new CompoundEntity();
-		inventedNode = new CompoundEntity();
-		inventedNodeRotate = new CompoundEntity();
+			fatherInventedNode->addEntity(tatooie);
+			fatherInventedNode->addEntity(inventedNode);
 
-		FatherInventedNode->addEntity(Tatooie);
-		FatherInventedNode->addEntity(inventedNode);
-		
-		// se mete el el nodo grande el planeta y el nodo pequeño
-		inventedNode->addEntity(inventedNodeRotate);
+			inventedNode->addEntity(inventedNodeRotate); // se mete el el nodo grande el planeta y el nodo pequeño
+			inventedNodeRotate->setModelMat( // se settea el radio de la esfera para el tie
+				translate(
+					inventedNode->modelMat(),
+					dvec3(0, tatDiam/2, 0)
+				)
+			);
+			inventedNodeRotate->addEntity(tieF); // añade el tie al nodo pequeño
 
-		// se settea el radio de la esfera para el tie
-		inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1000, 0, 0)));
-
-		// añade el tie al nodo pequeño
-		inventedNodeRotate->addEntity(tieF);
-
-		addObject(FatherInventedNode);
-
-
-		dvec3 pos = dvec3(1100, 0, 0);
-
-	}
+			addObject(fatherInventedNode);
+		}
 		break;
 	default:
 		break;
@@ -266,52 +263,44 @@ void Scene::sceneDirLight(const Camera& cam) const
 
 void Scene::rotateEntity()
 {
-	switch (sceneID) 
+	switch (sceneID)
 	{
-	case 0: 
-	{
-		inventedNodeRotate->setModelMat(
-			rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 0, 1)));
-		//inventedNode1->setModelMat(glm::rotate(inventedNode1->modelMat(),
-		//	radians(3.0), dvec3(0, 0, 1)));
-
-	}
+	case 0:
+		{
+			inventedNodeRotate->setModelMat(
+				rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 0, 1)));
+			//inventedNode1->setModelMat(glm::rotate(inventedNode1->modelMat(),
+			//	radians(3.0), dvec3(0, 0, 1)));
+		}
 		break;
 	case 7:
-	{
+		{
+			// gira el nodo
+			inventedNodeRotate->setModelMat(
+				rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 1, 0)));
 
-		// gira el nodo
-		inventedNodeRotate->setModelMat(
-			rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 1, 0)));
+			// para hacerlo circular y que no salgan numeros muy grandes
+			ang = static_cast<int>(ang + 3.0) % 360;
+		}
 
-		// para hacerlo circular y que no salgan numeros muy grandes
-		ang = (int)(ang + 3.0) % 360;
-	}
-	
 		break;
 	}
 	//inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
 	// coloca la entidad justo encima del nodo
 	//tieF->setModelMat(translate(inventedNodeRotate->modelMat(), dvec3(0, 0, 0)));
-	
-
-	
-	
 }
 
 void Scene::orbitEntity()
 {
-
 	switch (sceneID)
 	{
 	case 0:
-	{
-		// 
-		inventedNode->setModelMat(
-			rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 0, 1)));
-
-	}
-	break;
+		{
+			// 
+			inventedNode->setModelMat(
+				rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 0, 1)));
+		}
+		break;
 	case 7:
 		/*inventedNodeRotate->setModelMat(
 			rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 0, 1)));*/
@@ -342,8 +331,6 @@ void Scene::orbitEntity()
 }
 
 
-
-
 void
 Scene::render(const Camera& cam) const
 {
@@ -366,5 +353,4 @@ void Scene::update()
 		i->update();
 	for (auto* i : gTransparentObjects)
 		i->update();
-
 }
