@@ -104,16 +104,16 @@ void Scene::setScene(int index)
 
 
 		inventedNodeRotate = new CompoundEntity();
-		FatherInventedNode = new CompoundEntity();
+		fatherInventedNode = new CompoundEntity();
 		inventedNode = new CompoundEntity();
 
 		t->setModelMat(
 			translate(dmat4(1.0), dvec3(0, 0, 0))
 		);
 
-		FatherInventedNode->addEntity(inventedNode);
-		FatherInventedNode->addEntity(p);
-		FatherInventedNode->addEntity(r);
+		fatherInventedNode->addEntity(inventedNode);
+		fatherInventedNode->addEntity(p);
+		fatherInventedNode->addEntity(r);
 
 		inventedNode->addEntity(inventedNodeRotate);
 
@@ -123,7 +123,7 @@ void Scene::setScene(int index)
 		// añade el tie al nodo pequeño
 		inventedNodeRotate->addEntity(t);
 
-		addObject(FatherInventedNode);
+		addObject(fatherInventedNode);
 	}
 
 		break;
@@ -208,24 +208,25 @@ void Scene::setScene(int index)
 	case 7: {
 
 		tieF = new AdvancedTIE();
-		Tatooie = new Sphere(1000);
+		GLdouble tatooieRadius = 200;
+		tatooie = new Sphere(tatooieRadius);
 
 		tieF->setModelMat(
 			translate(dmat4(1.0), dvec3(0, 0, 0))
 		);
 
-		Tatooie->setModelMat(
+		tatooie->setModelMat(
 			translate(dmat4(1.0), dvec3(0, 0, 0))
 		);
 
-		Tatooie->setRGB(1, 0.9, 0.0);
+		tatooie->setRGB(1, 0.9, 0.0);
 
-		FatherInventedNode = new CompoundEntity();
+		fatherInventedNode = new CompoundEntity();
 		inventedNode = new CompoundEntity();
 		inventedNodeRotate = new CompoundEntity();
 
-		FatherInventedNode->addEntity(Tatooie);
-		FatherInventedNode->addEntity(inventedNode);
+		//fatherInventedNode->addEntity(tatooie);
+		fatherInventedNode->addEntity(inventedNode);
 		
 		// se mete el el nodo grande el planeta y el nodo pequeño
 		inventedNode->addEntity(inventedNodeRotate);
@@ -236,7 +237,7 @@ void Scene::setScene(int index)
 		// añade el tie al nodo pequeño
 		inventedNodeRotate->addEntity(tieF);
 
-		addObject(FatherInventedNode);
+		addObject(fatherInventedNode);
 
 
 		dvec3 pos = dvec3(1100, 0, 0);
