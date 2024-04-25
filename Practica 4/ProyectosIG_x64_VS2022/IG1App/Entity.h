@@ -267,8 +267,8 @@ public:
 	void render(const glm::dmat4& modelViewMat) const override;
 
 
-	GLdouble getAngle() { return ang; };
-	void setAng(GLdouble a) { ang = a; };
+	//GLdouble getAngle() { return ang; };
+	//void setAng(GLdouble a) { ang = a; };
 protected:
 	GLUquadricObj* q;
 	std::vector<Abs_Entity*> gObjects;

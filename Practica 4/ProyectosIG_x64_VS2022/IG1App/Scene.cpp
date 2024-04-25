@@ -192,16 +192,24 @@ void Scene::setScene(int index)
 
 		Tatooie->setRGB(1, 0.9, 0.0);
 
-		addObject(Tatooie);
-		addObject(tieF);
-
 		inventedNode = new CompoundEntity();
 		inventedNodeRotate = new CompoundEntity();
 
+		addObject(inventedNode);
 
+		
+
+		
+		// se mete el el nodo grande el planeta y el nodo pequeño
+		inventedNode->addEntity(inventedNodeRotate);
+		inventedNode->addEntity(Tatooie);
+
+		// se settea el radio de la esfera para el tie
+		inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1000, 0, 0)));
+
+		// añade el tie al nodo pequeño
 		inventedNodeRotate->addEntity(tieF);
 
-		inventedNode->addEntity(inventedNodeRotate);
 
 		dvec3 pos = dvec3(1100, 0, 0);
 
@@ -233,12 +241,12 @@ void Scene::rotateEntity()
 
 	//inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
 	// coloca la entidad justo encima del nodo
-	tieF->setModelMat(translate(inventedNodeRotate->modelMat(), dvec3(0, 0, 0)));
+	//tieF->setModelMat(translate(inventedNodeRotate->modelMat(), dvec3(0, 0, 0)));
 	
 
 	// gira el nodo
 	inventedNodeRotate->setModelMat(
-		rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 1, 0)));
+		rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(1, 0, 0)));
 
 
 }
@@ -248,13 +256,14 @@ void Scene::orbitEntity()
 
 	// orbit idem al anterior
 	// coloca la entidad justo encima del nodo
-	tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
-	inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+	//tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+	//inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
 	
+	auto p = tieF->modelMat();
+	dvec3 look(p[0].x, p[0].y, p[0].z);
 
 	// gira el nodo
-	inventedNode->setModelMat(
-		rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 1, 0)));
+	inventedNode->setModelMat( rotate(inventedNode->modelMat(), radians(3.0), dvec3(0,1,0)));
 }
 
 
