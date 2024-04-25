@@ -43,7 +43,8 @@ protected:
 	void free();
 	void setGL();
 	void resetGL();
-	
+
+	int sceneID;
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
