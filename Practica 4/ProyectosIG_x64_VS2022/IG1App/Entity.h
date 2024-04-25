@@ -81,6 +81,8 @@ public:
 	~RGBTriangle() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 	void update() override;
+
+	void rotateObj();
 };
 
 class RGBRectangle : public Abs_Entity
@@ -265,6 +267,7 @@ public:
 	~CompoundEntity() override;
 	void addEntity(Abs_Entity* ae);
 	void render(const glm::dmat4& modelViewMat) const override;
+
 
 
 	//GLdouble getAngle() { return ang; };

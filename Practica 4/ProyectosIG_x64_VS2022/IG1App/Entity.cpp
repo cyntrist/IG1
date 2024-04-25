@@ -108,10 +108,12 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_POINTS);
 
+		// antiguo ejercicio 15
 		dmat4 aMat = modelViewMat
-			* rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
-			* translate(mModelMat, dvec3(trans.x, trans.y, 0)) // traslacion al radio de la circunferencia
-			* rotate(dmat4(1.0), radians(angle * 3), dvec3(0, 0, 1)); // rotaci�n sobre si mismo en sentido horario
+			//* rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
+			//* translate(mModelMat, dvec3(trans.x, trans.y, 0)) // traslacion al radio de la circunferencia
+			//* rotate(dmat4(1.0), radians(angle * 3), dvec3(0, 0, 1)) // rotaci�n sobre si mismo en sentido horario
+			; 
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -124,7 +126,12 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 
 void RGBTriangle::update()
 {
-	angle -= 2.0;
+	//angle -= 2.0;
+}
+
+void RGBTriangle::rotateObj()
+{
+
 }
 
 
@@ -806,6 +813,7 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 		ae->render(aMat*ae->modelMat());
 	}
 }
+
 
 IndexedBox::IndexedBox(GLdouble l)
 {

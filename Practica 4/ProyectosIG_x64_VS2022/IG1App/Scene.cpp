@@ -95,9 +95,19 @@ void Scene::setScene(int index)
 	switch (index)
 	{
 	case 0:
+	{
 		addObject(new RegularPolygon(32, 250));
 		addObject(new RGBRectangle(500, 250));
-		addObject(new RGBTriangle(50, 250));
+
+		auto t = new RGBTriangle(50, 250);
+
+		// TO DO
+		node66 = new CompoundEntity();
+		node66->addEntity(t);
+
+		addObject(node66);
+	}
+
 		break;
 	case 1:
 		addObject(new IndexedBox(200));
@@ -192,23 +202,23 @@ void Scene::setScene(int index)
 
 		Tatooie->setRGB(1, 0.9, 0.0);
 
+		FatherInventedNode = new CompoundEntity();
 		inventedNode = new CompoundEntity();
 		inventedNodeRotate = new CompoundEntity();
 
-		addObject(inventedNode);
-
-		
-
+		FatherInventedNode->addEntity(Tatooie);
+		FatherInventedNode->addEntity(inventedNode);
 		
 		// se mete el el nodo grande el planeta y el nodo pequeño
 		inventedNode->addEntity(inventedNodeRotate);
-		inventedNode->addEntity(Tatooie);
 
 		// se settea el radio de la esfera para el tie
 		inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1000, 0, 0)));
 
 		// añade el tie al nodo pequeño
 		inventedNodeRotate->addEntity(tieF);
+
+		addObject(FatherInventedNode);
 
 
 		dvec3 pos = dvec3(1100, 0, 0);
@@ -248,7 +258,9 @@ void Scene::rotateEntity()
 	inventedNodeRotate->setModelMat(
 		rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(1, 0, 0)));
 
-
+	// para hacerlo circular y que no salgan numeros muy grandes
+	ang = (int)(ang+3.0)%360;
+	
 }
 
 void Scene::orbitEntity()
@@ -258,12 +270,13 @@ void Scene::orbitEntity()
 	// coloca la entidad justo encima del nodo
 	//tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
 	//inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
-	
-	auto p = tieF->modelMat();
-	dvec3 look(p[0].x, p[0].y, p[0].z);
+
+	// calculo con el sen y cos TO DO
+	GLdouble x = sin(radians(ang));
+	GLdouble z = cos(radians(ang));
 
 	// gira el nodo
-	inventedNode->setModelMat( rotate(inventedNode->modelMat(), radians(3.0), dvec3(0,1,0)));
+	inventedNode->setModelMat( rotate(inventedNode->modelMat(), radians(3.0), dvec3(x,0,z)));
 }
 
 
