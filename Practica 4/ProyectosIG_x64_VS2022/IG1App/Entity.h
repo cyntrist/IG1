@@ -81,6 +81,8 @@ public:
 	~RGBTriangle() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 	void update() override;
+
+	void rotateObj();
 };
 
 class RGBRectangle : public Abs_Entity
@@ -266,9 +268,15 @@ public:
 	void addEntity(Abs_Entity* ae);
 	void render(const glm::dmat4& modelViewMat) const override;
 
+
+
+	//GLdouble getAngle() { return ang; };
+	//void setAng(GLdouble a) { ang = a; };
 protected:
 	GLUquadricObj* q;
 	std::vector<Abs_Entity*> gObjects;
+
+	GLdouble ang = 0;
 };
 
 class IndexedBox : public Abs_Entity
@@ -291,18 +299,20 @@ public:
 	~AdvancedTIE() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 
+	void update() override;
+
 protected:
 	Abs_Entity* leftWing;
 	Abs_Entity* rightWing;
 	Abs_Entity* morro;
-	Abs_Entity* base;
-	Abs_Entity* cyl;
+	QuadricEntity* base;
+	QuadricEntity* cyl;
 };
 
-class WingAdvancedTIE : public CompoundEntity
+class WingAdvancedTIE : public Abs_Entity
 {
 public:
-	WingAdvancedTIE();
+	WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std::string& t);
 	~WingAdvancedTIE() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 
@@ -319,8 +329,8 @@ public:
 	void render(const glm::dmat4& modelViewMat) const override;
 
 protected:
-	Abs_Entity* cyl;
-	Abs_Entity* disk;
+	QuadricEntity* cyl;
+	QuadricEntity* disk;
 };
 
 

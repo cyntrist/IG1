@@ -23,7 +23,8 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 		const auto vertActual = vVertices[c.getIndiceVertice(c.vertices[i], vVertices)];
 		const auto vertSiguiente = vVertices[c.getIndiceVertice(c.vertices[(i + 1) % c.numeroVertices])];*/
 
-		//std::cout << c.getIndice(i) << std::endl;
+		std::cout << c.getIndice(i) << std::endl;
+		std::cout << c.getIndice((i + 1) % c.numeroVertices) << std::endl;
 
 		const auto vertActual = vVertices[c.getIndice(i)];
 		const auto vertSiguiente = vVertices[c.getIndice((i + 1) % c.numeroVertices)];
@@ -38,12 +39,41 @@ glm::vec3 IndexMesh::calculoVectorNormalPorNewell(Cara c)
 void IndexMesh::buildNormalVectors()
 {
 	int i = 0;
-	vNormals.resize(vCaras.size());
+	vNormals.resize(mNumVertices);
+	for (int i = 0; i < mNumVertices; i++)
+		vNormals.emplace_back(0, 0, 0);
 	for (const auto cara : vCaras)
 	{
 		vNormals[i] = calculoVectorNormalPorNewell(cara);
 		i++;
 	}
+}
+
+void IndexMesh::buildNormalVectorsV2() // version de la profe
+{
+	vNormals.resize(mNumVertices);
+
+	std::vector<glm::dvec3> vAuxNormals = vNormals; // vector auxiliar
+
+	for (int i = 0; i < nNumIndices / 3; i++)
+	{
+		glm::dvec3 v0 = vVertices[vIndices[i * 3]];
+		glm::dvec3 v1 = vVertices[vIndices[i * 3 + 1]];
+		glm::dvec3 v2 = vVertices[vIndices[i * 3 + 2]];
+
+		glm::dvec3 v = v1 - v0;
+		glm::dvec3 w = v2 - v0;
+
+		const glm::dvec3 n = normalize(cross(v, w));
+
+
+		vAuxNormals[vIndices[i * 3]] += n;
+		vAuxNormals[vIndices[i * 3 + 1]] += n;
+		vAuxNormals[vIndices[i * 3 + 2]] += n;
+	}
+
+	for (int i = 0; i < mNumVertices; i++)
+		vNormals[i] = normalize(vAuxNormals[i]);
 }
 
 IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
@@ -150,6 +180,70 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 
 	/// NORMALES
 	mesh->buildNormalVectors();
+
+	return mesh;
+}
+
+IndexMesh* IndexMesh::generateIndexedBoxV2(GLdouble l) /// la version de la profe
+{
+	const auto mesh = new IndexMesh();
+
+	/// VERTICES
+	mesh->mNumVertices = 8;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	const GLdouble m = l / 2;
+
+	mesh->vVertices.emplace_back(-m, m, m); // v0
+	mesh->vVertices.emplace_back(-m, -m, m); // v1
+	mesh->vVertices.emplace_back(m, m, m); // v2
+	mesh->vVertices.emplace_back(m, -m, m); // v3
+	mesh->vVertices.emplace_back(m, m, -m); // v4
+	mesh->vVertices.emplace_back(m, -m, -m); // v5
+	mesh->vVertices.emplace_back(-m, m, -m); // v6
+	mesh->vVertices.emplace_back(-m, -m, -m); // v7
+
+	/// INDICES
+	mesh->nNumIndices = 36;
+	mesh->vIndices = new GLuint[mesh->nNumIndices];
+	const GLuint arr[36] =
+	{
+		0, 1, 2, 1, 3, 2, 2, 3, 4,
+		3, 5, 4, 4, 5, 6, 5, 7, 6,
+		//diagonal como el resto en la cara lateral izquierda
+		//6, 7, 0, 7, 1, 0,
+		//diagonal al contrario del resto en la cara lateral izquierda
+		0, 6, 1, 6, 7, 1,
+		0, 2, 4, 4, 6, 0, 1, 5, 3, 1, 7, 5
+	};
+
+	for (int i = 0; i < mesh->nNumIndices; i++)
+		mesh->vIndices[i] = arr[i];
+
+	/// CARAS
+	int nV = 3;
+	mesh->vCaras.resize(mesh->nNumIndices / nV);
+	for (int i = 0; i < mesh->nNumIndices / nV; i++)
+	{
+		//std::cout << mesh->vIndices[i * nV] << std::endl;
+		//std::cout << mesh->vIndices[i * nV + 1] << std::endl;
+		//std::cout << mesh->vIndices[i * nV + 2] << std::endl;
+
+		mesh->vCaras[i] = Cara(
+			mesh->vIndices[i * nV],
+			mesh->vIndices[i * nV + 1],
+			mesh->vIndices[i * nV + 2]
+		);
+	}
+
+	/// COLORES
+	mesh->vColors.reserve(mesh->mNumVertices);
+	for (int i = 0; i < mesh->mNumVertices; i++)
+		mesh->vColors.emplace_back(0, 1, 0, 1);
+
+
+	/// NORMALES
+	mesh->buildNormalVectorsV2();
 
 	return mesh;
 }

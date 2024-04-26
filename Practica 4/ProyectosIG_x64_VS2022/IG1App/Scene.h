@@ -35,14 +35,31 @@ public:
 	void setScene(int);
 	void sceneDirLight(Camera const&cam) const;
 
+	// PRACTICA 4 ej 68
+	void rotateEntity();
+	void orbitEntity();
+
 protected:
 	void free();
 	void setGL();
 	void resetGL();
-	
+
+	int sceneID;
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
+
+	CompoundEntity* fatherInventedNode;
+	CompoundEntity* inventedNode;
+	CompoundEntity* inventedNodeRotate;
+	CompoundEntity* tieF;
+	QuadricEntity* tatooie;
+
+	CompoundEntity* node66;
+	CompoundEntity* node66_2;
+	GLdouble ang;
+
+
 };
 
 #endif //_H_Scene_H_

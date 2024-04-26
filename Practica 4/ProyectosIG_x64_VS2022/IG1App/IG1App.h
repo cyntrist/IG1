@@ -97,6 +97,8 @@ protected:
 	int mWinW = 800;    // window's width
 	int mWinH = 600;    // window's height
 	bool m2Vistas = false;
+
+
 };
 
 #endif //_H_IG1App_H_

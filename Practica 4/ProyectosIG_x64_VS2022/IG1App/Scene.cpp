@@ -92,12 +92,40 @@ void Scene::addCompoundObject(CompoundEntity* ent)
 void Scene::setScene(int index)
 {
 	reset();
+
+	sceneID = index;
 	switch (index)
 	{
 	case 0:
-		addObject(new RegularPolygon(32, 250));
-		addObject(new RGBRectangle(500, 250));
-		addObject(new RGBTriangle(50, 250));
+		{
+			auto p = new RegularPolygon(32, 250);
+			auto r = new RGBRectangle(500, 250);
+			auto t = new RGBTriangle(50, 0);
+
+
+			inventedNodeRotate = new CompoundEntity();
+			fatherInventedNode = new CompoundEntity();
+			inventedNode = new CompoundEntity();
+
+			t->setModelMat(
+				translate(dmat4(1.0), dvec3(0, 0, 0))
+			);
+
+			fatherInventedNode->addEntity(inventedNode);
+			fatherInventedNode->addEntity(p);
+			fatherInventedNode->addEntity(r);
+
+			inventedNode->addEntity(inventedNodeRotate);
+
+			// se settea el radio de la esfera para el tie
+			inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(100, 0, 0)));
+
+			// añade el tie al nodo pequeño
+			inventedNodeRotate->addEntity(t);
+
+			addObject(fatherInventedNode);
+		}
+
 		break;
 	case 1:
 		addObject(new IndexedBox(200));
@@ -178,8 +206,39 @@ void Scene::setScene(int index)
 		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 		break;
 	case 7:
-		addCompoundObject(new AdvancedTIE());
+		{
+			tieF = new AdvancedTIE();
 
+			const GLdouble tatDiam = 200;
+			tatooie = new Sphere(tatDiam);
+			tatooie->setRGB(1, 0.9, 0.0);
+
+			//tieF->setModelMat(
+			//	translate(dmat4(1.0), dvec3(0, 0, 0))
+			//);
+
+			//tatooie->setModelMat(
+			//	translate(dmat4(1.0), dvec3(0, 0, 0))
+			//);
+
+			fatherInventedNode = new CompoundEntity();
+			inventedNode = new CompoundEntity();
+			inventedNodeRotate = new CompoundEntity();
+
+			fatherInventedNode->addEntity(tatooie);
+			fatherInventedNode->addEntity(inventedNode);
+
+			inventedNode->addEntity(inventedNodeRotate); // se mete el el nodo grande el planeta y el nodo pequeño
+			inventedNodeRotate->setModelMat( // se settea el radio de la esfera para el tie
+				translate(
+					inventedNode->modelMat(),
+					dvec3(0, tatDiam/2, 0)
+				)
+			);
+			inventedNodeRotate->addEntity(tieF); // añade el tie al nodo pequeño
+
+			addObject(fatherInventedNode);
+		}
 		break;
 	default:
 		break;
@@ -201,6 +260,90 @@ void Scene::sceneDirLight(const Camera& cam) const
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
 	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
 }
+
+void Scene::rotateEntity()
+{
+	switch (sceneID)
+	{
+	case 0:
+		{
+			inventedNodeRotate->setModelMat(
+				rotate(
+					inventedNodeRotate->modelMat(),
+					radians(3.0), 
+					dvec3(0, 0, 1)
+				)
+			);
+			//inventedNode1->setModelMat(glm::rotate(inventedNode1->modelMat(),
+			//	radians(3.0), dvec3(0, 0, 1)));
+		}
+		break;
+	case 7:
+		{
+			// gira el nodo
+			inventedNodeRotate->setModelMat(
+				rotate(
+					inventedNodeRotate->modelMat(), 
+					radians(3.0), 
+					dvec3(0, 1, 0)
+				)
+			);
+
+			// para hacerlo circular y que no salgan numeros muy grandes
+			ang = static_cast<int>(ang + 3.0) % 360;
+		}
+
+		break;
+	}
+	//inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+	// coloca la entidad justo encima del nodo
+	//tieF->setModelMat(translate(inventedNodeRotate->modelMat(), dvec3(0, 0, 0)));
+}
+
+void Scene::orbitEntity()
+{
+	switch (sceneID)
+	{
+	case 0:
+		{
+			// 
+			inventedNode->setModelMat(
+				rotate(inventedNode->modelMat(), radians(3.0), dvec3(0, 0, 1)));
+		}
+		break;
+	case 7:
+		/*inventedNodeRotate->setModelMat(
+			rotate(inventedNodeRotate->modelMat(), radians(3.0), dvec3(0, 0, 1)));*/
+
+
+		// calculo con el sen y cos TO DO
+		GLdouble x = sin(radians(ang));
+		GLdouble z = cos(radians(ang));
+
+
+		inventedNode->setModelMat(
+			rotate(
+				inventedNode->modelMat(), 
+				radians(1.0), 
+				dvec3(x, 0, z))
+		);
+
+		break;
+	}
+
+	//// orbit idem al anterior
+	//// coloca la entidad justo encima del nodo
+	////tieF->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+	////inventedNodeRotate->setModelMat(translate(inventedNode->modelMat(), dvec3(1100, 0, 0)));
+
+	//// calculo con el sen y cos TO DO
+	//GLdouble x = sin(radians(ang));
+	//GLdouble z = cos(radians(ang));
+
+	//// gira el nodo
+	//inventedNode->setModelMat( rotate(inventedNode->modelMat(), radians(3.0), dvec3(x,0,z)));
+}
+
 
 void
 Scene::render(const Camera& cam) const

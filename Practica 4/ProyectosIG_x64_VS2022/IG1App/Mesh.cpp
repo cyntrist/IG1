@@ -507,10 +507,10 @@ Mesh* Mesh::generateTIEWing(GLdouble h, GLdouble w, GLdouble d)
 	// 
 	mesh->vVertices.emplace_back(x, y, d); // v0
 	mesh->vVertices.emplace_back(x, -y, d); // v1
-	mesh->vVertices.emplace_back(x, y, 0); // v2
-	mesh->vVertices.emplace_back(x, -y, 0); // v3
-	mesh->vVertices.emplace_back(-x, y, 0); // v4
-	mesh->vVertices.emplace_back(-x, -y, 0); // v5
+	mesh->vVertices.emplace_back(d, y, 0); // v2
+	mesh->vVertices.emplace_back(d, -y, 0); // v3
+	mesh->vVertices.emplace_back(-d, y, 0); // v4
+	mesh->vVertices.emplace_back(-d, -y, 0); // v5
 	mesh->vVertices.emplace_back(-x, y, d); // v0
 	mesh->vVertices.emplace_back(-x, -y, d); // v0
 

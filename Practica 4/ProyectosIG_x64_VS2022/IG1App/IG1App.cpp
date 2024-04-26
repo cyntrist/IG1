@@ -58,7 +58,7 @@ IG1App::init()
 	mScene->init();
 	mScene2->init();
 
-	mScene->setScene(2);
+	mScene->setScene(7);
 	//mScene2->setScene(0);
 	mCamera2->setEjer47(true, 500.0);
 
@@ -223,6 +223,14 @@ IG1App::key(unsigned char key, int x, int y)
 
 	case 'u':
 		currentScene->update();
+		currentCam->update();
+		break;
+	case 'f':
+		currentScene->rotateEntity();
+		currentCam->update();
+		break;
+	case 'g':
+		currentScene->orbitEntity();
 		currentCam->update();
 		break;
 	case 'U':
