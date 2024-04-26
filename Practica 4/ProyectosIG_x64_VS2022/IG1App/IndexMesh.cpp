@@ -164,7 +164,7 @@ void IndexMesh::render() const
 		glEnableClientState(GL_INDEX_ARRAY);
 		glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 	}
-
+	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_FILL);
 	draw();
 	glDisableClientState(GL_INDEX_ARRAY);
