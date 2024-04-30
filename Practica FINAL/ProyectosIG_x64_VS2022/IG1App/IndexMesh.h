@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Mesh.h"
 #include "Cara.h"
+
 class IndexMesh : public Mesh
 {
 protected :
@@ -20,4 +21,14 @@ public:
 	void buildNormalVectorsV2();
 	static IndexMesh* generateIndexedBox(GLdouble l); //obsoleto
 	static IndexMesh* generateIndexedBoxV2(GLdouble l);
+};
+
+class MbR : public IndexMesh
+{
+	GLint mProfilePoints; // de abajo a arriba, sentido antihorario
+	GLint mRotationNumber;
+	glm::dvec3* mProfile;
+public:
+	MbR(GLint, GLint, glm::dvec3*);
+	static MbR* generateIndexMbR(GLint, GLint, glm::dvec3*);
 };

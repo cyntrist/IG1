@@ -334,4 +334,12 @@ protected:
 };
 
 
+/// ENTIDADES CON MALLAS POR REVOLUCION
+class RevSphere : public Abs_Entity
+{
+public:
+	RevSphere(int r, int p, int m);
+};
+
+
 #endif //_H_Entities_H_

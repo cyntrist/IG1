@@ -989,3 +989,8 @@ void BaseAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 }
+
+RevSphere::RevSphere(int r, int p, int m)
+{
+
+}

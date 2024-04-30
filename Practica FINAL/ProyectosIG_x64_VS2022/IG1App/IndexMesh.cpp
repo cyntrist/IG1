@@ -248,6 +248,7 @@ IndexMesh* IndexMesh::generateIndexedBoxV2(GLdouble l) /// la version de la prof
 	return mesh;
 }
 
+
 void IndexMesh::render() const
 {
 	if (vVertices.empty()) return;
@@ -269,4 +270,89 @@ void IndexMesh::draw() const
 {
 	glDrawElements(mPrimitive, nNumIndices,
 	               GL_UNSIGNED_INT, vIndices);
+}
+
+
+/// MBR
+MbR::MbR(int profPts, int rotNum, glm::dvec3* prof)
+	: mProfilePoints(profPts), mRotationNumber(rotNum), mProfile(prof)
+{
+}
+
+MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
+{
+	/// PASO 3 
+	auto mesh = new MbR(mm, nn, perfil);
+	// Definir la primitiva como GL_TRIANGLES
+	mesh->mPrimitive = GL_TRIANGLES;
+	// Definir el número de vértices como nn*mm
+	mesh->mNumVertices = nn * mm;
+	// Usar un vector auxiliar de vértices
+	//std::vector<glm::vec<3, double>> vs;
+	//vs.reserve(mesh->mNumVertices);
+	auto vs = new glm::dvec3 [mesh->mNumVertices];
+
+	for (int i = 0; i < nn; i++)
+	{
+		// Generar la muestra i- ésima de vértices
+		GLdouble theta = i * 360 / nn;
+		GLdouble c = cos(glm::radians(theta));
+		GLdouble s = sin(glm::radians(theta));
+		for (int j = 0; j < mm; j++)
+		{
+			GLdouble z = -s * perfil[j].x + c * perfil[j].z;
+			GLdouble x = c * perfil[j].x + s * perfil[j].z; // anyadido
+			int indice = i * mm + j;
+			vs[indice] = glm::dvec3(x, perfil[j].y, z);
+		}
+	}
+	/// PASO 4
+	//mesh->vVertices.reserve(mesh->mNumVertices);
+	for (int i = 0; i < mesh->mNumVertices; i++)
+		mesh->vVertices.push_back(vs[i]);
+
+	/// PASO 5
+	int indiceMayor = 0;
+	mesh->nNumIndices = mesh->mNumVertices * 6;
+	mesh->vIndices = new GLuint[mesh->nNumIndices];
+	for (int i = 0; i < mesh->mNumVertices * 6; i++)
+		mesh->vIndices[i] = 0;
+
+	/// PASO 6
+	// El contador i recorre las muestras alrededor del eje Y
+	for (int i = 0; i < nn; i++)
+	{
+		// El contador j recorre los vértices del perfil ,
+		// de abajo arriba . Las caras cuadrangulares resultan
+		// al unir la muestra i- ésima con la (i +1)% nn - ésima
+		for (int j = 0; j < mm - 1; j++)
+		{
+			// El contador indice sirve para llevar cuenta
+			// de los índices generados hasta ahora . Se recorre
+			// la cara desde la esquina inferior izquierda
+			const int indice = i * mm + j;
+			/// PASO 7
+			mesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+			mesh->vIndices[indiceMayor] = (indice + mm) % (nn * mm);
+			indiceMayor++;
+			mesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+
+			// Y análogamente se añaden los otros tres índices
+			mesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+			mesh->vIndices[indiceMayor] = (indice + mm) % (nn * mm);
+			indiceMayor++;
+			mesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+		}
+	}
+	// Los cuatro índices son entonces :
+	// indice, (indice + mm) % (nn * mm), (indice + mm + 1) % (nn * mm), indice + 1
+
+	/// PASO 8
+	mesh->vNormals.reserve(mesh->mNumVertices);
+	mesh->buildNormalVectors();
+	return mesh;
 }

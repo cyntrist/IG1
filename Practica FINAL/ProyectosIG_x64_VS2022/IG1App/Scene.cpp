@@ -187,10 +187,8 @@ void Scene::setScene(int index)
 		}
 		break;
 	case 3:
-		addObject(new Star3D(200, 8, 300, "./bmps/baldosaP.bmp"));
 		break;
 	case 4:
-		addTransparentObject(new GlassParapet(200, 200, "./bmps/windowV.bmp"));
 		break;
 	case 5:
 		addObject(new Photo(200, 100, dvec3(0.0, 10.0, 0.0)));
@@ -212,14 +210,6 @@ void Scene::setScene(int index)
 			const GLdouble tatDiam = 200;
 			tatooie = new Sphere(tatDiam);
 			tatooie->setRGB(1, 0.9, 0.0);
-
-			//tieF->setModelMat(
-			//	translate(dmat4(1.0), dvec3(0, 0, 0))
-			//);
-
-			//tatooie->setModelMat(
-			//	translate(dmat4(1.0), dvec3(0, 0, 0))
-			//);
 
 			fatherInventedNode = new CompoundEntity();
 			inventedNode = new CompoundEntity();
