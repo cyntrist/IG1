@@ -31,4 +31,6 @@ class MbR : public IndexMesh
 public:
 	MbR(GLint, GLint, glm::dvec3*);
 	static MbR* generateIndexMbR(GLint, GLint, glm::dvec3*);
+	void render() const override;
+	void draw() const override;
 };

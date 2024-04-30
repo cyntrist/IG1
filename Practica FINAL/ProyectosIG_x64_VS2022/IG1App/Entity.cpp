@@ -81,7 +81,6 @@ void RegularPolygon::render(const dmat4& modelViewMat) const
 RGBTriangle::RGBTriangle(GLdouble l) : radio(0), trans(dvec2(0, 0))
 {
 	mMesh = Mesh::generateRGBTriangle(l, 0, 0);
-
 }
 
 RGBTriangle::RGBTriangle(GLdouble l, GLdouble x) : radio(x), trans(dvec2(x, 0))
@@ -113,7 +112,7 @@ void RGBTriangle::render(const dmat4& modelViewMat) const
 			//* rotate(dmat4(1.0), radians(-angle), dvec3(0, 0.0, 1.0)) // rotacion alrededor de la circunferencia en sentido antihorario
 			//* translate(mModelMat, dvec3(trans.x, trans.y, 0)) // traslacion al radio de la circunferencia
 			//* rotate(dmat4(1.0), radians(angle * 3), dvec3(0, 0, 1)) // rotaci�n sobre si mismo en sentido horario
-			; 
+			;
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -131,7 +130,6 @@ void RGBTriangle::update()
 
 void RGBTriangle::rotateObj()
 {
-
 }
 
 
@@ -474,7 +472,7 @@ void Box::renderBot(const dmat4& modelViewMat) const
 	mBottomMesh->render();
 }
 
-void Box::renderBox(glm::dmat4 const& modelViewMat) const
+void Box::renderBox(const dmat4& modelViewMat) const
 {
 	renderMain(modelViewMat); // Cuerpo principal
 	renderTop(modelViewMat); // Tapa (primero rotate luego translate)
@@ -681,24 +679,22 @@ void QuadricEntity::setRGB(GLdouble rv = 1.0, GLdouble gv = 1.0, GLdouble bv = 1
 Sphere::Sphere(GLdouble rr)
 {
 	r = rr;
-
-
 }
 
-void Sphere::render(glm::dmat4 const& modelViewMat) const
+void Sphere::render(const dmat4& modelViewMat) const
 {
-	dmat4 aMat = modelViewMat * mModelMat; 
-	upload(aMat); 
+	dmat4 aMat = modelViewMat * mModelMat;
+	upload(aMat);
 	// Aqu� se puede fijar el color de la esfera as�: 
-	glEnable(GL_COLOR_MATERIAL); 
-	glColor3f(red, green, blue); 
+	glEnable(GL_COLOR_MATERIAL);
+	glColor3f(red, green, blue);
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
-	gluQuadricDrawStyle(q, GLU_FILL); 
+	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
 	// GLU_SILHOUETTE
 	// GLU_POINT
 
-	gluSphere(q, r, 50, 50); 
+	gluSphere(q, r, 50, 50);
 	// Aqu� se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
@@ -708,25 +704,22 @@ Cylinder::Cylinder(GLdouble brr, GLdouble trr, GLdouble hh)
 	br = brr;
 	tr = trr;
 	h = hh;
-
-	
 }
 
-void Cylinder::render(glm::dmat4 const& modelViewMat) const
+void Cylinder::render(const dmat4& modelViewMat) const
 {
-
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	// Aqu� se puede fijar el color de la esfera as�: 
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(red, green, blue); 
+	glColor3f(red, green, blue);
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
 	// GLU_SILHOUETTE
 	// GLU_POINT
 
-	
+
 	gluCylinder(q, br, tr, h, 50, 50);
 	// Aqu� se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
@@ -738,14 +731,13 @@ Disk::Disk(GLdouble irr, GLdouble orr)
 	oR = orr;
 }
 
-void Disk::render(glm::dmat4 const& modelViewMat) const
+void Disk::render(const dmat4& modelViewMat) const
 {
-
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	// Aqu� se puede fijar el color de la esfera as�: 
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(red, green, blue); 
+	glColor3f(red, green, blue);
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
@@ -763,16 +755,15 @@ PartialDisk::PartialDisk(GLdouble irr, GLdouble orr, GLdouble sAng, GLdouble swA
 	oR = orr;
 	sa = sAng;
 	swa = swAng;
-
 }
 
-void PartialDisk::render(glm::dmat4 const& modelViewMat) const
+void PartialDisk::render(const dmat4& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	// Aqu� se puede fijar el color de la esfera as�: 
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(red, green, blue); 
+	glColor3f(red, green, blue);
 	// Aqu� se puede fijar el modo de dibujar la esfera: 
 	gluQuadricDrawStyle(q, GLU_FILL);
 	// GLU_LINE
@@ -787,14 +778,12 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 
 CompoundEntity::CompoundEntity()
 {
-
-
 }
 
 CompoundEntity::~CompoundEntity()
 {
-	for (auto& ae : gObjects) {
-
+	for (auto& ae : gObjects)
+	{
 		ae->~Abs_Entity(); // ????
 	}
 }
@@ -804,12 +793,12 @@ void CompoundEntity::addEntity(Abs_Entity* ae)
 	gObjects.push_back(ae);
 }
 
-void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
+void CompoundEntity::render(const dmat4& modelViewMat) const
 {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	for (auto& ae : gObjects) 
-		ae->render(aMat*ae->modelMat());
+	for (auto& ae : gObjects)
+		ae->render(aMat * ae->modelMat());
 }
 
 
@@ -824,7 +813,7 @@ IndexedBox::~IndexedBox()
 	mMesh = nullptr;
 }
 
-void IndexedBox::render(glm::dmat4 const& modelViewMat) const
+void IndexedBox::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
@@ -851,7 +840,7 @@ AdvancedTIE::AdvancedTIE()
 	// genera las partes por separado
 	leftWing = new WingAdvancedTIE(40, 10, 0, "./bmps/noche.bmp");
 	rightWing = new WingAdvancedTIE(40, -10, 180, "./bmps/noche.bmp"); // FALTA
-	
+
 	// base
 	base = new Sphere(20);
 	base->setModelMat(
@@ -881,7 +870,7 @@ AdvancedTIE::AdvancedTIE()
 	// colores de las entidades cuadricas
 	base->setRGB(0.0, 0.2, 0.3);
 	cyl->setRGB(0.0, 0.2, 0.3);
-	
+
 
 	// a�ade las entidades al vector de entidades del compound entity
 	addEntity(leftWing);
@@ -896,15 +885,13 @@ AdvancedTIE::~AdvancedTIE()
 	CompoundEntity::~CompoundEntity();
 }
 
-void AdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void AdvancedTIE::render(const dmat4& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 }
 
 void AdvancedTIE::update()
 {
-
-	
 }
 
 // -------------- ALA DEL TIE
@@ -912,14 +899,12 @@ void AdvancedTIE::update()
 WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std::string& t)
 {
 	mMesh = Mesh::generateTIEWing(60, 20, 20);
-	
+
 	// hay que rotar el ala porque se genera apoyada en el plano xy 
 	mModelMat = rotate(mModelMat, radians(-90.0), dvec3(0.0, 0.0, 1.0)) *
-				translate(mModelMat, dvec3(-x, y, 20)) *
-				rotate(mModelMat, radians(rot), dvec3(1.0, 0.0, 0.0)) *
-				rotate(mModelMat, radians(90.0), dvec3(0.0, 1.0, 0.0))
-		
-		;
+		translate(mModelMat, dvec3(-x, y, 20)) *
+		rotate(mModelMat, radians(rot), dvec3(1.0, 0.0, 0.0)) *
+		rotate(mModelMat, radians(90.0), dvec3(0.0, 1.0, 0.0));
 
 	mTexture = new Texture();
 	setTexture(t, mTexture, 255);
@@ -930,15 +915,15 @@ WingAdvancedTIE::~WingAdvancedTIE()
 	//
 }
 
-void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void WingAdvancedTIE::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->bind(GL_MODULATE);
-		
-		
+
+
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
@@ -947,9 +932,7 @@ void WingAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
 		glLineWidth(1);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mTexture->unbind();
-
 	}
-
 }
 
 // ----------------- MORRO DEL TIE
@@ -976,8 +959,8 @@ BaseAdvancedTIE::BaseAdvancedTIE()
 	cyl->setRGB(0.0, 0.2, 0.3);
 	disk->setRGB(0.0, 0.2, 0.3);
 
-	CompoundEntity::addEntity(cyl);
-	CompoundEntity::addEntity(disk);
+	addEntity(cyl);
+	addEntity(disk);
 }
 
 BaseAdvancedTIE::~BaseAdvancedTIE()
@@ -985,12 +968,35 @@ BaseAdvancedTIE::~BaseAdvancedTIE()
 	CompoundEntity::~CompoundEntity();
 }
 
-void BaseAdvancedTIE::render(glm::dmat4 const& modelViewMat) const
+void BaseAdvancedTIE::render(const dmat4& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 }
 
-RevSphere::RevSphere(int r, int p, int m)
+RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 {
+	auto profile = new dvec3[p];
+	float alpha = 180 / p; // angulo entre puntos
+	float offset = -90; // angulo inicial
+	for (int i = 0; i < p; i++)
+		profile[i] = dvec3( // los puntos de abajo a arriba antihorario
+			cos(radians(alpha * i + offset)) * r,
+			sin(radians(alpha * i + offset)) * r,
+			0
+		);
 
+	mMesh = MbR::generateIndexMbR(p, m, profile);
+}
+
+void RevSphere::render(const dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+
+		mMesh->render();
+	}
 }

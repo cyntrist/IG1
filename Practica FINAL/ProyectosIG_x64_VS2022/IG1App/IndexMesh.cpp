@@ -356,3 +356,25 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 	mesh->buildNormalVectors();
 	return mesh;
 }
+
+void MbR::render() const
+{
+	if (vVertices.empty()) return;
+
+	setGL();
+	if (vIndices != nullptr)
+	{
+		glEnableClientState(GL_INDEX_ARRAY);
+		glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
+	}
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_FILL);
+	draw();
+	glDisableClientState(GL_INDEX_ARRAY);
+	resetGL();
+}
+
+void MbR::draw() const
+{
+	IndexMesh::draw();
+}

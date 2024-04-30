@@ -338,7 +338,8 @@ protected:
 class RevSphere : public Abs_Entity
 {
 public:
-	RevSphere(int r, int p, int m);
+	RevSphere(GLint r, GLint p, GLint m);
+	void render(const glm::dmat4& modelViewMat) const override;
 };
 
 
