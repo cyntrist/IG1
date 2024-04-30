@@ -992,7 +992,7 @@ void RevSphere::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);

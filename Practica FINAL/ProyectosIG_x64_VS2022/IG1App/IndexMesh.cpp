@@ -368,7 +368,7 @@ void MbR::render() const
 		glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 	}
 	glEnable(GL_COLOR_MATERIAL);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_FILL);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_LINE);
 	draw();
 	glDisableClientState(GL_INDEX_ARRAY);
 	resetGL();
