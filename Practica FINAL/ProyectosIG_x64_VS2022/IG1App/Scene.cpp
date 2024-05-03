@@ -187,7 +187,7 @@ void Scene::setScene(int index)
 		}
 		break;
 	case 3:
-		addObject(new RevSphere(100,30,30));
+		addObject(new RevSphere(100,10,10));
 		break;
 	case 4:
 		break;

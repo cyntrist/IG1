@@ -883,6 +883,11 @@ AdvancedTIE::AdvancedTIE()
 AdvancedTIE::~AdvancedTIE()
 {
 	CompoundEntity::~CompoundEntity();
+	delete leftWing;
+	delete rightWing;
+	delete morro;
+	delete base;
+	delete cyl;
 }
 
 void AdvancedTIE::render(const dmat4& modelViewMat) const
@@ -986,6 +991,11 @@ RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 		);
 
 	mMesh = MbR::generateIndexMbR(p, m, profile);
+}
+
+RevSphere::~RevSphere()
+{
+	delete mMesh;
 }
 
 void RevSphere::render(const dmat4& modelViewMat) const

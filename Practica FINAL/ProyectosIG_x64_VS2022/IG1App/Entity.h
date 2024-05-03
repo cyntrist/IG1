@@ -339,6 +339,7 @@ class RevSphere : public Abs_Entity
 {
 public:
 	RevSphere(GLint r, GLint p, GLint m);
+	~RevSphere() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 };
 
