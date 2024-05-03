@@ -33,6 +33,5 @@ public:
 	MbR(GLint, GLint, glm::dvec3*);
 	~MbR() override = default;
 	static MbR* generateIndexMbR(GLint, GLint, glm::dvec3*);
-	void render() const override;
 	void draw() const override;
 };
