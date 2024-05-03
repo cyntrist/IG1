@@ -355,11 +355,8 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 
 	/// PASO 8
 	mesh->vNormals.reserve(mesh->mNumVertices);
-	mesh->buildNormalVectors();
+	mesh->buildNormalVectorsV2();
 	return mesh;
 }
 
-void MbR::draw() const
-{
-	IndexMesh::draw();
-}
+

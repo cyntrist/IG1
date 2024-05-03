@@ -991,7 +991,7 @@ RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 			sin(radians(alpha * i + offset)) * r,
 			0
 		);
-	mColor = { 0, 0, 255, 255 };
+	mColor = { 0, 0, 1, 1 };
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
@@ -1015,6 +1015,7 @@ void RevSphere::render(const dmat4& modelViewMat) const
 		mMesh->render();
 		glColor4f(0, 0, 0, 0);
 		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 
@@ -1033,7 +1034,7 @@ Toroid::Toroid(GLint r, GLint R, GLint m, GLint p)
 			sin(radians(alpha * i + offset)) * R,
 			0
 		);
-	mColor = { 0, 255, 0, 255 };
+	mColor = { 0, 1, 0, 1 };
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
@@ -1046,10 +1047,8 @@ void Toroid::render(const glm::dmat4& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 
-		glLineWidth(2);
 		glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
 		mMesh->render();
 		glColor4f(0, 0, 0, 0);
-		glLineWidth(1);
 	}
 }
