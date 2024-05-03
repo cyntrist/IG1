@@ -344,7 +344,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 			// Y análogamente se añaden los otros tres índices
 			mesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
 			indiceMayor++;
-			mesh->vIndices[indiceMayor] = (indice + mm) % (nn * mm);
+			mesh->vIndices[indiceMayor] = (indice + 1);
 			indiceMayor++;
 			mesh->vIndices[indiceMayor] = indice;
 			indiceMayor++;
