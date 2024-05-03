@@ -18,4 +18,5 @@ public:
 	virtual ~ Material() = default;
 	virtual void upload();
 	void setCopper();
+	void setGolden();
 };
