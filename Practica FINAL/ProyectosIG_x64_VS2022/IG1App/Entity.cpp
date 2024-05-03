@@ -4,7 +4,7 @@
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+#include "Material.h"
 using namespace glm;
 
 void
@@ -979,6 +979,12 @@ void BaseAdvancedTIE::render(const dmat4& modelViewMat) const
 	CompoundEntity::render(modelViewMat);
 }
 
+EntityWithMaterial::~EntityWithMaterial()
+{
+	delete mMesh;
+	delete material; 
+}
+
 RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 {
 	profile = new dvec3[p];
@@ -991,13 +997,14 @@ RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 			sin(radians(alpha * i + offset)) * r,
 			0
 		);
-	mColor = { 0, 0, 1, 1 };
+	mColor = { 1, 1, 1, 1 };
+	material = new Material();
+	material->setCopper();
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
 RevSphere::~RevSphere()
 {
-	delete mMesh;
 	delete[] profile;
 }
 
@@ -1005,17 +1012,26 @@ void RevSphere::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 
+		//set
 		glLineWidth(2);
-		glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
+		if (material != nullptr)
+			material->upload();
+		if (mColor.a > 0)
+			glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
+
 		mMesh->render();
+
+		//reset
 		glColor4f(0, 0, 0, 0);
 		glLineWidth(1);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glLightModeli( GL_LIGHT_MODEL_TWO_SIDE , GL_FALSE ); // Defecto
+		glDisable(GL_COLOR_MATERIAL);
 	}
 }
 

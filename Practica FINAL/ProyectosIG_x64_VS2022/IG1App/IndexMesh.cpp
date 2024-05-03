@@ -262,7 +262,9 @@ void IndexMesh::render() const
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_FILL);
 	draw();
+	glDisable(GL_COLOR_MATERIAL);
 	glDisableClientState(GL_INDEX_ARRAY);
+	glLightModeli ( GL_LIGHT_MODEL_TWO_SIDE , GL_FALSE );
 	resetGL();
 }
 
