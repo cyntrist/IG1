@@ -1,5 +1,5 @@
 ﻿#include "IndexMesh.h"
-
+#include "CheckML.h"
 #include <iostream>
 #include <string>
 
@@ -311,6 +311,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 	//mesh->vVertices.reserve(mesh->mNumVertices);
 	for (int i = 0; i < mesh->mNumVertices; i++)
 		mesh->vVertices.push_back(vs[i]);
+	delete[] vs;
 
 	/// PASO 5
 	int indiceMayor = 0;

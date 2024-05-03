@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "CheckML.h"
 #include "IndexMesh.h"
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -980,7 +981,7 @@ void BaseAdvancedTIE::render(const dmat4& modelViewMat) const
 
 RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 {
-	auto profile = new dvec3[p];
+	profile = new dvec3[p];
 	float alpha = 180 / (p - 1); // angulo entre puntos
 	float offset = -90; // angulo inicial
 
@@ -997,6 +998,7 @@ RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 RevSphere::~RevSphere()
 {
 	delete mMesh;
+	delete[] profile;
 }
 
 void RevSphere::render(const dmat4& modelViewMat) const

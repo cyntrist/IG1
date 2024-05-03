@@ -1,6 +1,6 @@
 #include "Mesh.h"
-#include <array>
 #include "CheckML.h"
+#include <array>
 #include <fstream>
 #include <iostream>
 using namespace std;

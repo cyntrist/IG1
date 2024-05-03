@@ -338,6 +338,7 @@ protected:
 /// ENTIDADES CON MALLAS POR REVOLUCION
 class RevSphere : public Abs_Entity
 {
+	glm::dvec3* profile;
 public:
 	RevSphere(GLint r, GLint p, GLint m);
 	~RevSphere() override;
