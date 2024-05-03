@@ -306,6 +306,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 			vs[indice] = glm::dvec3(x, perfil[j].y, z);
 		}
 	}
+
 	/// PASO 4
 	//mesh->vVertices.reserve(mesh->mNumVertices);
 	for (int i = 0; i < mesh->mNumVertices; i++)
