@@ -24,13 +24,13 @@ public:
 	// static single instance (singleton pattern)
 	static IG1App s_ig1app;
 
-	IG1App(IG1App const& J) = delete;         // no copy constructor
-	void operator=(IG1App const& J) = delete; // no copy assignment
+	IG1App(const IG1App& J) = delete; // no copy constructor
+	void operator=(const IG1App& J) = delete; // no copy assignment
 
 	// Viewport position and size
-	Viewport const& viewPort() { return *mViewPort; };
+	const Viewport& viewPort() { return *mViewPort; };
 	// Camera position, view volume and projection
-	Camera const& camera() { return *mCamera; };
+	const Camera& camera() { return *mCamera; };
 	// Graphics objects of the scene
 	//Scene const& scene() { return *mScene; };
 
@@ -43,11 +43,13 @@ public:
 	static void s_motion(int x, int y);
 	static void s_mouseWheel(int n, int d, int x, int y);
 
-	void run();   // the main event processing loop
+	void run(); // the main event processing loop
 	void close(); // the application
 
 protected:
-	IG1App(){};
+	IG1App()
+	{
+	};
 	~IG1App() { close(); };
 
 	void init();
@@ -57,10 +59,10 @@ protected:
 	void screenshot();
 	void render2Vistas() const;
 
-	void display() const;                      // the scene
-	void resize(int newWidth, int newHeight);  // the viewport (without changing the scale)
+	void display() const; // the scene
+	void resize(int newWidth, int newHeight); // the viewport (without changing the scale)
 	void key(unsigned char key, int x, int y); // keypress event
-	void specialKey(int key, int x, int y);    // keypress event for special characters
+	void specialKey(int key, int x, int y); // keypress event for special characters
 
 	void toggle2Vistas();
 	void toggleUpdate();
@@ -86,19 +88,15 @@ protected:
 	// raton
 	glm::dvec2 mMouseCoord;
 	int mMouseButt;
-	bool mMouseState;		// true -> pulsado 
-
-
+	bool mMouseState; // true -> pulsado 
 
 
 	bool mStop = false; // main event processing loop
 	bool mUpdate = false; // scene updates flag
-	int mWinId = 0;     // window's identifier
-	int mWinW = 800;    // window's width
-	int mWinH = 600;    // window's height
+	int mWinId = 0; // window's identifier
+	int mWinW = 800; // window's width
+	int mWinH = 600; // window's height
 	bool m2Vistas = false;
-
-
 };
 
 #endif //_H_IG1App_H_

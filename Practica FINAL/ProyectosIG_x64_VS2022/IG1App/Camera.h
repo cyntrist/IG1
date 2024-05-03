@@ -53,10 +53,15 @@ public:
 	void moveLR(GLdouble cs); // A izquierda/A derecha
 	void moveFB(GLdouble cs); // Adelante/Atras
 	void moveUD(GLdouble cs); // Arriba/Abajo
-	void orbit(GLdouble incAng, GLdouble incY); 
+	void orbit(GLdouble incAng, GLdouble incY);
 	void setCenital();
 	void update();
-	void setEjer47(bool value, int radio) { ejercicio47 = value; mRadio = radio; }
+
+	void setEjer47(bool value, int radio)
+	{
+		ejercicio47 = value;
+		mRadio = radio;
+	}
 
 protected:
 	glm::dvec3 mEye = {0.0, 0.0, 500.0}; // camera's position
@@ -69,8 +74,8 @@ protected:
 	glm::dvec3 mFront; // front = -n
 
 	GLdouble mRadio = 0,
-		mAng = 0,
-		mSpeed = 0;
+	         mAng = 0,
+	         mSpeed = 0;
 
 	glm::dmat4 mViewMat; // view matrix = inverse of modeling matrix
 	void uploadVM() const; // transfers viewMat to the GPU

@@ -13,13 +13,14 @@ class Scene
 {
 public:
 	Scene() = default;
+
 	~Scene()
 	{
 		free();
 		resetGL();
 	};
 
-	Scene(const Scene& s) = delete;            // no copy constructor
+	Scene(const Scene& s) = delete; // no copy constructor
 	Scene& operator=(const Scene& s) = delete; // no copy assignment
 
 	void init();
@@ -27,13 +28,13 @@ public:
 	void addObject(Abs_Entity* ent);
 	void addTransparentObject(Abs_Entity* ent);
 	void addCompoundObject(CompoundEntity* ent);
-	void render(Camera const& cam) const;
+	void render(const Camera& cam) const;
 	void update();
 	void setCulling();
 	void unsetCulling();
 	void reset();
 	void setScene(int);
-	void sceneDirLight(Camera const&cam) const;
+	void sceneDirLight(const Camera& cam) const;
 
 	// PRACTICA 4 ej 68
 	void rotateEntity();
@@ -58,8 +59,6 @@ protected:
 	CompoundEntity* node66;
 	CompoundEntity* node66_2;
 	GLdouble ang;
-
-
 };
 
 #endif //_H_Scene_H_

@@ -9,16 +9,16 @@ using namespace glm;
 constexpr int ORBIT_FACTOR = 3;
 
 Camera::Camera(Viewport* vp)
-	: mViewMat(1.0)
+	: mRadio(0.0)
+	  , mAng(90.0)
+	  , mSpeed(2.0)
+	  , mViewMat(1.0)
 	  , mProjMat(1.0)
 	  , xRight(vp->width() / 2.0)
 	  , xLeft(-xRight)
 	  , yTop(vp->height() / 2.0)
 	  , yBot(-yTop)
 	  , mViewPort(vp)
-	  , mRadio(0.0)
-	  , mAng(90.0)
-	  , mSpeed(2.0)
 {
 	setPM();
 }
@@ -141,12 +141,12 @@ Camera::setPM()
 	}
 	else
 	{
-		mProjMat = frustum (xLeft * mScaleFact, 
-			xRight * mScaleFact, 
-			yBot * mScaleFact, 
-			yTop * mScaleFact , 
-			mNearVal * 400.0 , 
-			mFarVal);
+		mProjMat = frustum(xLeft * mScaleFact,
+		                   xRight * mScaleFact,
+		                   yBot * mScaleFact,
+		                   yTop * mScaleFact,
+		                   mNearVal * 400.0,
+		                   mFarVal);
 	}
 }
 
@@ -187,7 +187,6 @@ void Camera::orbit(GLdouble incAng, GLdouble incY)
 	mEye.z = mLook.z - sin(radians(mAng)) * mRadio;
 	mEye.y += incY * ORBIT_FACTOR;
 	setVM();
-
 }
 
 void Camera::changePrj()
@@ -204,7 +203,8 @@ Camera::uploadPM() const
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void Camera::setCenital() {
+void Camera::setCenital()
+{
 	mEye = dvec3(0.1, 500, 0);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(0, 1, 0);

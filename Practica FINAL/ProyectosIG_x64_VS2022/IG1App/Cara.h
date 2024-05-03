@@ -18,8 +18,8 @@ public:
 	int getIndiceVertice(glm::dvec3 vec) const
 	{
 		const auto it
-			= std::ranges::find(vertices.begin(), 
-			                    vertices.end(), 
+			= std::ranges::find(vertices.begin(),
+			                    vertices.end(),
 			                    vec);
 
 		int index = -1;
@@ -32,8 +32,8 @@ public:
 	int getIndiceVertice(glm::dvec3 vertex, std::vector<glm::dvec3> vector) const
 	{
 		const auto it
-			= std::ranges::find(vector.begin(), 
-			                    vector.end(), 
+			= std::ranges::find(vector.begin(),
+			                    vector.end(),
 			                    vertex);
 
 		int index = -1;
