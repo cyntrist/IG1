@@ -190,6 +190,7 @@ void Scene::setScene(int index)
 		addObject(new RevSphere(100, 10, 10));
 		break;
 	case 4:
+		addObject(new Toroid(100, 100, 30, 20));
 		break;
 	case 5:
 		addObject(new Photo(200, 100, dvec3(0.0, 10.0, 0.0)));

@@ -345,5 +345,12 @@ public:
 	void render(const glm::dmat4& modelViewMat) const override;
 };
 
-
+class Toroid : public Abs_Entity
+{
+	glm::dvec3* profile;
+public:
+	Toroid(GLint r, GLint R, GLint m, GLint p);
+	~Toroid() override { delete mMesh; delete[] profile; }
+	void render(const glm::dmat4& modelViewMat) const override;
+};
 #endif //_H_Entities_H_
