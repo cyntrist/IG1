@@ -187,7 +187,7 @@ void Scene::setScene(int index)
 		}
 		break;
 	case 3:
-		addObject(new RevSphere(100,10,10));
+		addObject(new RevSphere(100, 10, 10));
 		break;
 	case 4:
 		break;
@@ -208,7 +208,7 @@ void Scene::setScene(int index)
 		{
 			tieF = new AdvancedTIE();
 
-			const GLdouble tatDiam = 200;
+			constexpr GLdouble tatDiam = 200;
 			tatooie = new Sphere(tatDiam);
 			tatooie->setRGB(1, 0.9, 0.0);
 
@@ -223,7 +223,7 @@ void Scene::setScene(int index)
 			inventedNodeRotate->setModelMat( // se settea el radio de la esfera para el tie
 				translate(
 					inventedNode->modelMat(),
-					dvec3(0, tatDiam/2, 0)
+					dvec3(0, tatDiam / 2, 0)
 				)
 			);
 			inventedNodeRotate->addEntity(tieF); // añade el tie al nodo pequeño
@@ -261,7 +261,7 @@ void Scene::rotateEntity()
 			inventedNodeRotate->setModelMat(
 				rotate(
 					inventedNodeRotate->modelMat(),
-					radians(3.0), 
+					radians(3.0),
 					dvec3(0, 0, 1)
 				)
 			);
@@ -274,8 +274,8 @@ void Scene::rotateEntity()
 			// gira el nodo
 			inventedNodeRotate->setModelMat(
 				rotate(
-					inventedNodeRotate->modelMat(), 
-					radians(3.0), 
+					inventedNodeRotate->modelMat(),
+					radians(3.0),
 					dvec3(0, 1, 0)
 				)
 			);
@@ -314,8 +314,8 @@ void Scene::orbitEntity()
 
 		inventedNode->setModelMat(
 			rotate(
-				inventedNode->modelMat(), 
-				radians(1.0), 
+				inventedNode->modelMat(),
+				radians(1.0),
 				dvec3(x, 0, z))
 		);
 

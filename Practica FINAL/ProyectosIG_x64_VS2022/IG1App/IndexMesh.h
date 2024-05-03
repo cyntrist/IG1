@@ -28,6 +28,7 @@ class MbR : public IndexMesh
 	GLint mProfilePoints; // de abajo a arriba, sentido antihorario
 	GLint mRotationNumber;
 	glm::dvec3* mProfile;
+
 public:
 	MbR(GLint, GLint, glm::dvec3*);
 	~MbR() override = default;

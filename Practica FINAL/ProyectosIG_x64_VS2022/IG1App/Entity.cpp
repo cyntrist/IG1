@@ -981,7 +981,7 @@ void BaseAdvancedTIE::render(const dmat4& modelViewMat) const
 RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 {
 	auto profile = new dvec3[p];
-	float alpha = 180 / (p-1); // angulo entre puntos
+	float alpha = 180 / (p - 1); // angulo entre puntos
 	float offset = -90; // angulo inicial
 
 	for (int i = 0; i < p; i++)
@@ -990,17 +990,6 @@ RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 			sin(radians(alpha * i + offset)) * r,
 			0
 		);
-
-	/*
-	 *
-		glm::dvec3* aux = new glm::dvec3[pPunto];
-
-	double angle = 180.0 / (pPunto-1);
-
-	for (int i = 0; i < pPunto; i++) {
-		aux[i] = glm::dvec3(cos(radians(angle*i - 90)) * radius , sin(radians(angle * i -90)) * radius,0);
-	}
-	*/
 
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }

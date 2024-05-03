@@ -56,7 +56,7 @@ void Mesh::setGL() const
 	{
 		//glEnable(GL_NORMALIZE);
 		glEnableClientState(GL_NORMAL_ARRAY);
-		glNormalPointer(GL_DOUBLE, 0, vNormals.data()); 
+		glNormalPointer(GL_DOUBLE, 0, vNormals.data());
 	}
 }
 
@@ -66,7 +66,7 @@ void Mesh::resetGL() const
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY );
+	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 Mesh*
@@ -496,7 +496,7 @@ Mesh* Mesh::generateGlassParapet(GLdouble w, GLdouble h)
 Mesh* Mesh::generateTIEWing(GLdouble h, GLdouble w, GLdouble d)
 {
 	auto* mesh = new Mesh();
-	auto x = h/2;
+	auto x = h / 2;
 	auto y = w / 2;
 
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
@@ -523,7 +523,6 @@ Mesh* Mesh::generateTIEWing(GLdouble h, GLdouble w, GLdouble d)
 		mesh->vTexCoords.emplace_back(1, 1);
 	}*/
 
-	
 
 	return mesh;
 }

@@ -214,6 +214,7 @@ public:
 	QuadricEntity() : red(), green(), blue() { q = gluNewQuadric(); };
 	~QuadricEntity() override { gluDeleteQuadric(q); };
 	void setRGB(GLdouble, GLdouble, GLdouble);
+
 protected:
 	GLdouble red, green, blue;
 	GLUquadricObj* q;
@@ -235,6 +236,7 @@ class Cylinder : public QuadricEntity
 public:
 	Cylinder(GLdouble brr, GLdouble trr, GLdouble hh); // brr = radio base; tr = radio top; h = altura
 	void render(const glm::dmat4& modelViewMat) const override;
+
 protected:
 	GLdouble br, tr, h;
 };
@@ -267,7 +269,6 @@ public:
 	~CompoundEntity() override;
 	void addEntity(Abs_Entity* ae);
 	void render(const glm::dmat4& modelViewMat) const override;
-
 
 
 	//GLdouble getAngle() { return ang; };
