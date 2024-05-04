@@ -353,7 +353,7 @@ class RevSphere : public EntityWithMaterial
 {
 	glm::dvec3* profile;
 public:
-	RevSphere(GLint r, GLint p, GLint m);
+	RevSphere(GLdouble r, GLint p, GLint m, bool mat = false);
 	~RevSphere() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 };

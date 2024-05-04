@@ -986,21 +986,24 @@ EntityWithMaterial::~EntityWithMaterial()
 	delete material;
 }
 
-RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
+RevSphere::RevSphere(GLdouble r, GLint p, GLint m, bool isMaterial) // radio puntos meridiano
 {
 	profile = new dvec3[p];
-	float alpha = 180 / (p - 1); // angulo entre puntos
-	float offset = -90; // angulo inicial
+	const double alpha = 180.0 / (p - 1); // angulo entre puntos
+	constexpr double offset = -90; // angulo inicial
 
-	for (int i = 0; i < p; i++)
-		profile[i] = dvec3( // los puntos de abajo a arriba antihorario
-			cos(radians(alpha * i + offset)) * r,
+	for (int i = 0; i < p; i++) 
+		profile[i] = dvec3(
+			cos(radians(alpha * i + offset)) * r, 
 			sin(radians(alpha * i + offset)) * r,
-			0
-		);
+			0);
+
 	mColor = {0, 0, 1, 1};
-	//material = new Material();
-	//material->setCopper();
+	if (isMaterial)
+	{
+		setMaterial(new Material());
+		material->setGolden();
+	}
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
