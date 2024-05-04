@@ -262,7 +262,9 @@ void IndexMesh::render() const
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_FILL);
 	draw();
+	//glDisable(GL_COLOR_MATERIAL); // NO HAGAS ESTO!!!!!!!!!!!!!!!!!!!! (yo diciendomelo a mi misma)
 	glDisableClientState(GL_INDEX_ARRAY);
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
 	resetGL();
 }
 
@@ -358,5 +360,3 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 	mesh->buildNormalVectorsV2();
 	return mesh;
 }
-
-

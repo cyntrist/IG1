@@ -7,6 +7,8 @@
 #include "Texture.h"
 #include <vector>
 
+class Material;
+
 class Abs_Entity // abstract class
 {
 public:
@@ -336,7 +338,18 @@ protected:
 
 
 /// ENTIDADES CON MALLAS POR REVOLUCION
-class RevSphere : public Abs_Entity
+class EntityWithMaterial : public Abs_Entity
+{
+protected:
+	Material* material = nullptr;
+
+public:
+	EntityWithMaterial() = default;
+	~EntityWithMaterial() override;
+	void setMaterial(Material* m) { material = m; }
+};
+
+class RevSphere : public EntityWithMaterial
 {
 	glm::dvec3* profile;
 public:

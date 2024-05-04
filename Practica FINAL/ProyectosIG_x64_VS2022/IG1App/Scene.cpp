@@ -187,7 +187,27 @@ void Scene::setScene(int index)
 		}
 		break;
 	case 3:
-		addObject(new RevSphere(100, 10, 10));
+		{
+			int p = 20;
+			int r = 100;
+			auto offset = 200.0;
+
+			auto goldTatooie = new RevSphere(r, p, p);
+			goldTatooie->setModelMat(
+				translate(dmat4(1.0), dvec3(0, 0, offset))
+			);
+			goldTatooie->setmColor(dvec4(1, 0.9, 0, 1));
+			//goldTatooie->setGolden();
+			addObject(goldTatooie);
+
+			auto yellowTatooie = new RevSphere(r, p, p);
+			yellowTatooie->setmColor(dvec4(1, 0.9, 0, 1));
+			yellowTatooie->setModelMat(
+				translate(dmat4(1.0), dvec3(offset, 0, 0))
+			);
+			addObject(yellowTatooie);
+			break;
+		}
 		break;
 	case 4:
 		addObject(new Toroid(100, 100, 30, 20));

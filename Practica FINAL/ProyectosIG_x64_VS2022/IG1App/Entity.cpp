@@ -4,6 +4,7 @@
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Material.h"
 
 using namespace glm;
 
@@ -979,6 +980,12 @@ void BaseAdvancedTIE::render(const dmat4& modelViewMat) const
 	CompoundEntity::render(modelViewMat);
 }
 
+
+EntityWithMaterial::~EntityWithMaterial()
+{
+	delete material;
+}
+
 RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 {
 	profile = new dvec3[p];
@@ -991,7 +998,9 @@ RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 			sin(radians(alpha * i + offset)) * r,
 			0
 		);
-	mColor = { 0, 0, 1, 1 };
+	mColor = {0, 0, 1, 1};
+	//material = new Material();
+	//material->setCopper();
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
@@ -1005,21 +1014,30 @@ void RevSphere::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 
-		glLineWidth(2);
-		glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
+		if (mColor.a > 0)
+			glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
+		if (material != nullptr)
+		{
+			glColor3f(mColor.r, mColor.g, mColor.b);
+			material->upload();
+		}
+
+
 		mMesh->render();
+
 		glColor4f(0, 0, 0, 0);
-		glLineWidth(1);
+		glColor3f(1.0, 1.0, 1.0);
+		glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
+		glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
 	}
 }
-
-
 
 
 Toroid::Toroid(GLint r, GLint R, GLint m, GLint p)
@@ -1034,11 +1052,11 @@ Toroid::Toroid(GLint r, GLint R, GLint m, GLint p)
 			sin(radians(alpha * i + offset)) * R,
 			0
 		);
-	mColor = { 0, 1, 0, 1 };
+	mColor = {0, 1, 0, 1};
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
-void Toroid::render(const glm::dmat4& modelViewMat) const
+void Toroid::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
