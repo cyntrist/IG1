@@ -196,7 +196,7 @@ void Scene::setScene(int index)
 			goldTatooie->setModelMat(
 				translate(dmat4(1.0), dvec3(0, 0, offset))
 			);
-			goldTatooie->setmColor(dvec4(1, 0.9, 0, 1));
+			goldTatooie->setmColor(dvec4(1, 0.8, 0, 1));
 			addObject(goldTatooie);
 
 			auto yellowTatooie = new RevSphere(r, p, p);

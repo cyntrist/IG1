@@ -68,7 +68,6 @@ void Mesh::resetGL() const
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_INDEX_ARRAY);
-	glLightModeli( GL_LIGHT_MODEL_TWO_SIDE , GL_FALSE );
 }
 
 Mesh*

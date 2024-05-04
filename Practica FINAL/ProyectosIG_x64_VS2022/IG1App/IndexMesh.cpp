@@ -264,7 +264,6 @@ void IndexMesh::render() const
 	draw();
 	//glDisable(GL_COLOR_MATERIAL); // NO HAGAS ESTO!!!!!!!!!!!!!!!!!!!! (yo diciendomelo a mi misma)
 	glDisableClientState(GL_INDEX_ARRAY);
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
 	resetGL();
 }
 

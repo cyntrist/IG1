@@ -1037,8 +1037,8 @@ void RevSphere::render(const dmat4& modelViewMat) const
 		glColor3f(1.0, 1.0, 1.0);
 		glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
-		glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
+		//glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
+		//glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
 	}
 }
 
