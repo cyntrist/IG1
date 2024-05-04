@@ -6,7 +6,6 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include <vector>
-class Material;
 
 class Abs_Entity // abstract class
 {
@@ -337,19 +336,7 @@ protected:
 
 
 /// ENTIDADES CON MALLAS POR REVOLUCION
-
-class EntityWithMaterial : public Abs_Entity
-{
-protected:
-	Material* material = nullptr;
-
-public:
-	EntityWithMaterial() = default;
-	~EntityWithMaterial() override;
-	void setMaterial(Material* m) { material = m; }
-};
-
-class RevSphere : public EntityWithMaterial
+class RevSphere : public Abs_Entity
 {
 	glm::dvec3* profile;
 public:

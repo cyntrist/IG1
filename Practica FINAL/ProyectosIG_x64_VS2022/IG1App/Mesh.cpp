@@ -67,7 +67,6 @@ void Mesh::resetGL() const
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
-	//glDisable(GL_COLOR_MATERIAL);
 }
 
 Mesh*
