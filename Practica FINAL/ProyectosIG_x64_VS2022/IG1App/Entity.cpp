@@ -988,7 +988,7 @@ EntityWithMaterial::~EntityWithMaterial()
 RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 {
 	profile = new dvec3[p];
-	float alpha = 180 / p - 1; // angulo entre puntos
+	float alpha = 180 / (p - 1); // angulo entre puntos
 	float offset = -90; // angulo inicial
 
 	for (int i = 0; i < p; i++)
@@ -998,6 +998,8 @@ RevSphere::RevSphere(GLint r, GLint p, GLint m) // radio puntos meridiano
 			0
 		);
 	mColor = { 1, 1, 1, 1 };
+	material = new Material();
+	material->setCopper();
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
@@ -1017,33 +1019,23 @@ void RevSphere::render(const dmat4& modelViewMat) const
 
 		//set
 		glLineWidth(2);
+		if (material != nullptr)
+			material->upload();
 		if (mColor.a > 0)
 			glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
-		if (material != nullptr)
-		{
-			glColor3f(mColor.r, mColor.g, mColor.b);
-			material->upload();
-		}
-
 
 		mMesh->render();
 
 		//reset
-		glColor3f(1.0, 1.0, 1.0);
 		glColor4f(0, 0, 0, 0);
+		glLineWidth(1);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glLightModeli( GL_LIGHT_MODEL_TWO_SIDE , GL_FALSE ); // Defecto
-		glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
-		glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
 		glDisable(GL_COLOR_MATERIAL);
 	}
 }
 
-void RevSphere::setGolden()
-{
-	if (material == nullptr) material = new Material();
-	material->setGolden();
-}
+
 
 
 Toroid::Toroid(GLint r, GLint R, GLint m, GLint p)

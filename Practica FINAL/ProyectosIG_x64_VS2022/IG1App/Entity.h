@@ -356,7 +356,6 @@ public:
 	RevSphere(GLint r, GLint p, GLint m);
 	~RevSphere() override;
 	void render(const glm::dmat4& modelViewMat) const override;
-	void setGolden();
 };
 
 class Toroid : public Abs_Entity
