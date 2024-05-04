@@ -787,7 +787,7 @@ CompoundEntity::~CompoundEntity()
 {
 	for (auto& ae : gObjects)
 	{
-		ae->~Abs_Entity(); // ????
+		ae->~Abs_Entity(); // ???? // esto peta
 	}
 }
 
@@ -993,9 +993,9 @@ RevSphere::RevSphere(GLdouble r, GLint p, GLint m, bool isMaterial) // radio pun
 	const double alpha = 180.0 / (p - 1); // angulo entre puntos
 	constexpr double offset = -90; // angulo inicial
 
-	for (int i = 0; i < p; i++) 
+	for (int i = 0; i < p; i++)
 		profile[i] = dvec3(
-			cos(radians(alpha * i + offset)) * r, 
+			cos(radians(alpha * i + offset)) * r,
 			sin(radians(alpha * i + offset)) * r,
 			0);
 
@@ -1037,11 +1037,14 @@ void RevSphere::render(const dmat4& modelViewMat) const
 
 		glColor4f(0, 0, 0, 0);
 		glColor3f(1.0, 1.0, 1.0);
-		glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glDisable(GL_COLOR_MATERIAL);
-		glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
-		glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
+		//if (material != nullptr)
+		{
+			glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glDisable(GL_COLOR_MATERIAL);
+			glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
+			glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
+		}
 	}
 }
 

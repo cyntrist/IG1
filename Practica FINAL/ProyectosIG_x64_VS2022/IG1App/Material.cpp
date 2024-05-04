@@ -3,14 +3,12 @@
 
 void Material::upload()
 {
-	//glColorMaterial(face, GL_SPECULAR);
-	//glColorMaterial(face, GL_SHININESS);
 	glMaterialfv(face, GL_AMBIENT, value_ptr(ambient));
 	glMaterialfv(face, GL_DIFFUSE, value_ptr(diffuse));
 	glMaterialfv(face, GL_SPECULAR, value_ptr(specular));
 	glMaterialf(face, GL_SHININESS, expF);
 	glShadeModel(sh);
-	// glLightModeli ( GL_LIGHT_MODEL_TWO_SIDE , GL_FALSE ); // Defecto
+	//glLightModeli ( GL_LIGHT_MODEL_TWO_SIDE , GL_FALSE ); // Defecto
 }
 
 void Material::setCopper()
@@ -23,8 +21,8 @@ void Material::setCopper()
 
 void Material::setGolden()
 {
-	ambient = { 0.24725 , 0.1995 , 0.0745 , 1.0 };
-	diffuse = { 0.75164 , 0.60648 , 0.22648 , 1.0 };
-	specular = { 0.628281 , 0.555802 , 0.366065 , 1.0 };
-	expF = 51.4;
+	ambient = {0.24725, 0.1995, 0.113725, 1};
+	diffuse = {0.75164, 0.60648, 0.22648, 1};
+	specular = {0.628281, 0.137622, 0.086014, 1};
+	expF = 51.2f;
 }
