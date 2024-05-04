@@ -352,6 +352,7 @@ public:
 class RevSphere : public EntityWithMaterial
 {
 	glm::dvec3* profile;
+
 public:
 	RevSphere(GLdouble r, GLint p, GLint m, bool mat = false);
 	~RevSphere() override;
@@ -361,9 +362,16 @@ public:
 class Toroid : public Abs_Entity
 {
 	glm::dvec3* profile;
+
 public:
 	Toroid(GLint r, GLint R, GLint m, GLint p);
-	~Toroid() override { delete mMesh; delete[] profile; }
+
+	~Toroid() override
+	{
+		delete mMesh;
+		delete[] profile;
+	}
+
 	void render(const glm::dmat4& modelViewMat) const override;
 };
 #endif //_H_Entities_H_
