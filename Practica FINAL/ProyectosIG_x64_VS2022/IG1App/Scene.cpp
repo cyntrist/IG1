@@ -1,10 +1,10 @@
 ﻿#include "Scene.h"
-
 #include <iostream>
-
 #include "CheckML.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Material.h"
+
 using namespace glm;
 
 void
@@ -204,6 +204,9 @@ void Scene::setScene(int index)
 				translate(dmat4(1.0), dvec3(0, 0, offset))
 			);
 			goldTatooie->setmColor(dvec4(1, 0.9, 0, 1));
+			const auto mat = new Material;
+			mat->setGolden();
+			goldTatooie->setMaterial(mat);
 			addObject(goldTatooie);
 			break;
 		}

@@ -1000,11 +1000,6 @@ RevSphere::RevSphere(GLdouble r, GLint p, GLint m, bool isMaterial) // radio pun
 			0);
 
 	mColor = {0, 0, 1, 1};
-	if (isMaterial)
-	{
-		setMaterial(new Material());
-		material->setGolden();
-	}
 	mMesh = MbR::generateIndexMbR(p, m, profile);
 }
 
@@ -1018,33 +1013,27 @@ void RevSphere::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glEnable(GL_COLOR_MATERIAL);
-
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 
-		if (mColor.a > 0)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glLineWidth(2);
+
+		if (mColor.a > 0.0)
 			glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
+
 		if (material != nullptr)
 		{
 			glColor3f(mColor.r, mColor.g, mColor.b);
 			material->upload();
 		}
 
-
 		mMesh->render();
 
-		glColor4f(0, 0, 0, 0);
 		glColor3f(1.0, 1.0, 1.0);
-		//if (material != nullptr)
-		{
-			glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glDisable(GL_COLOR_MATERIAL);
-			glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
-			glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
-		}
+		glColor4f(0, 0, 0, 0);
+		glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
+		glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
 	}
 }
 
