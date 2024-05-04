@@ -192,12 +192,6 @@ void Scene::setScene(int index)
 			int r = 100;
 			auto offset = 200.0;
 
-			auto yellowTatooie = new RevSphere(r, p, p);
-			yellowTatooie->setmColor(dvec4(1, 0.9, 0, 1));
-			yellowTatooie->setModelMat(
-				translate(dmat4(1.0), dvec3(offset, 0, 0))
-			);
-			addObject(yellowTatooie);
 
 			auto goldTatooie = new RevSphere(r, p, p, true);
 			goldTatooie->setModelMat(
@@ -208,6 +202,15 @@ void Scene::setScene(int index)
 			mat->setGolden();
 			goldTatooie->setMaterial(mat);
 			addObject(goldTatooie);
+
+			auto yellowTatooie = new RevSphere(r, p, p);
+			yellowTatooie->setmColor(dvec4(1, 0.9, 0, 1));
+			yellowTatooie->setModelMat(
+				translate(dmat4(1.0), dvec3(offset, 0, 0))
+			);
+			addObject(yellowTatooie);
+
+
 			break;
 		}
 	case 4:
