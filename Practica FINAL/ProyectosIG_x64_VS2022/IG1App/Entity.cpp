@@ -36,6 +36,7 @@ EjesRGB::render(const dmat4& modelViewMat) const
 	{
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
+		glEnable(GL_COLOR_MATERIAL);
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
@@ -1026,6 +1027,7 @@ void RevSphere::render(const dmat4& modelViewMat) const
 			glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
 		if (material != nullptr)
 		{
+			glEnable(GL_COLOR_MATERIAL);
 			glColor3f(mColor.r, mColor.g, mColor.b);
 			material->upload();
 		}
@@ -1037,8 +1039,9 @@ void RevSphere::render(const dmat4& modelViewMat) const
 		glColor3f(1.0, 1.0, 1.0);
 		glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		//glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
-		//glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
+		glDisable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
+		glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
 	}
 }
 
