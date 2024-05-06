@@ -273,7 +273,7 @@ void Scene::setLights()
 	// TO DO
 
 	// DIR LIGHT
-	DirLight dirLight = new DirLight();
+	dirLight = new DirLight();
 
 	// settea el dirLight
 	fvec4 v = { 1, 1, 1, 0 };							// posicion MUNDIAL de la luz
@@ -299,8 +299,22 @@ void Scene::setLights()
 	// diff -> (1.0,1.0,0.0) 
 	// settea el posLight
 
+	// settea el dirLight
+	v = { 100, 10, 0, 0 };							// posicion MUNDIAL de la luz
+	ambient = { 0, 0, 0, 1 };						//
+	diffuse = { 1, 1, 0, 0 };						//
+	specular = { 0.5, 0.5, 0.5, 1 };				//
+
+	posLight->setPosDir(v);
+	posLight->setAmbient(ambient);
+	posLight->setDiffuse(diffuse);
+	posLight->setSpecular(specular);
+	posLight->setID(GL_LIGHT1);							// settea el id del objeto????
+
+	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
 
 	lights.push_back(posLight);
+
 
 
 	spotLight = new SpotLight();;
@@ -336,6 +350,18 @@ void Scene::activateDirLight(bool a)
 	}
 	else {
 		glDisable(GL_LIGHT0);
+	}
+}
+
+void Scene::activatePosLight(bool a)
+{
+	if (a) {
+		glEnable(GL_LIGHT1);
+		glMatrixMode(GL_MODELVIEW);
+
+	}
+	else {
+		glDisable(GL_LIGHT1);
 	}
 }
 
