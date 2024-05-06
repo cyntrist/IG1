@@ -239,7 +239,7 @@ void Scene::setScene(int index)
 		break;
 	case 7:
 		{
-			glClearColor(0.0, 0.0, 0.0, 0.0);
+			//glClearColor(0.0, 0.0, 0.0, 0.0);
 
 			tieF = new AdvancedTIE();
 
@@ -288,9 +288,9 @@ void Scene::setLights()
 	dirLight->setAmbient(ambient);
 	dirLight->setDiffuse(diffuse);
 	dirLight->setSpecular(specular);
-	dirLight->setID(GL_LIGHT1);							// settea el id del objeto????
+	dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
 
-	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
+	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
 
 	lights.push_back(dirLight);
 
@@ -302,8 +302,8 @@ void Scene::setLights()
 	// diff -> (1.0,1.0,0.0) 
 	// settea el posLight
 
-	// settea el dirLight
-	v = { 1, 1, 0, 0 };							// posicion MUNDIAL de la luz
+	// settea el poslight
+	v = { 200, 200, 0, 1};							// posicion LOCAL de la luz
 	ambient = { 0, 0, 0, 1 };						//
 	diffuse = { 1, 1, 0, 0 };						//
 	specular = { 0.5, 0.5, 0.5, 1 };				//
@@ -312,9 +312,9 @@ void Scene::setLights()
 	posLight->setAmbient(ambient);
 	posLight->setDiffuse(diffuse);
 	posLight->setSpecular(specular);
-	posLight->setID(GL_LIGHT0);							// settea el id del objeto????
+	posLight->setID(GL_LIGHT1);							// settea el id del objeto????
 
-	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
+	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
 
 	lights.push_back(posLight);
 
@@ -323,6 +323,21 @@ void Scene::setLights()
 	spotLight = new SpotLight();;
 	// IDENTIFICADOR GL_LIGHT2 ????
 	// settea el spotLight
+
+	// settea el spotLight
+	fvec3 v2 = { 0, 1, 1 };
+	v = { 0, 200, 200, 1 };	// 
+	ambient = { 0, 0, 0, 1 };						//
+	diffuse = { 1, 1, 1, 1 };						//
+	specular = { 0.5, 0.5, 0.5, 1 };				//
+
+	spotLight->setPosDir(v);
+	spotLight->setSpot(v2, 100.0, 100.0);
+	spotLight->setAmbient(ambient);
+	spotLight->setDiffuse(diffuse);
+	spotLight->setSpecular(specular);
+	spotLight->setID(GL_LIGHT2);
+	spotLight->setAtte(1,0,1);
 
 
 	lights.push_back(spotLight);
@@ -363,6 +378,17 @@ void Scene::activatePosLight(bool a)
 	}
 	else {
 		lights[1]->disable();
+	}
+}
+
+void Scene::activateSpotLight(bool a)
+{
+	if (a) {
+		lights[2]->enable();
+
+	}
+	else {
+		lights[2]->disable();
 	}
 }
 

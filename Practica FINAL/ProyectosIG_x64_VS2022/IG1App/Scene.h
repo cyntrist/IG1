@@ -40,6 +40,7 @@ public:
 	// true para activar false para apagar
 	void activateDirLight(bool a);
 	void activatePosLight(bool a);
+	void activateSpotLight(bool a);
 
 	// PRACTICA 4 ej 68
 	void rotateEntity();

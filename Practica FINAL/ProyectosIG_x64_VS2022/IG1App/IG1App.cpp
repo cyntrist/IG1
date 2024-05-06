@@ -259,11 +259,11 @@ IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'z':
 		// ACTIVAR LUZ AQUI INES EJ 78
-		// currentScene->
+		currentScene->activateSpotLight(true);
 		break;
 	case 'x':
 		// ACTIVAR LUZ AQUI INES EJ 78
-		// currentScene->
+		currentScene->activateSpotLight(false);
 		break;
 	case 'v':
 		// ACTIVAR LUZ AQUI INES EJ 79
