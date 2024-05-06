@@ -59,6 +59,13 @@ protected:
 	CompoundEntity* node66;
 	CompoundEntity* node66_2;
 	GLdouble ang;
+
+
+	// light
+	DirLight* dirLight;
+	PosLight* posLight;	// IDENTIFICADOR GL_LIGHT1 ????'
+		// diff -> (1.0,1.0,0.0) 
+		// 
 };
 
 #endif //_H_Scene_H_

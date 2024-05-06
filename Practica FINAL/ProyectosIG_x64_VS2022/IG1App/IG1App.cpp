@@ -241,6 +241,14 @@ IG1App::key(unsigned char key, int x, int y)
 	case 'F':
 		screenshot();
 		break;
+	case 'q':
+		// ACTIVAR LUZ AQUI INES
+		// currentScene->
+		break;
+	case 'w':
+		// DESACTIVAR LUZ AQUI INES
+		// currentScene->
+		break;
 	case 'k':
 		toggle2Vistas();
 		break;
