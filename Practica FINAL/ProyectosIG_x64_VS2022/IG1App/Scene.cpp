@@ -12,6 +12,7 @@ Scene::init()
 {
 	setGL(); // OpenGL settings
 	gObjects.push_back(new EjesRGB(400.0));
+	setLights();
 }
 
 void
@@ -238,6 +239,8 @@ void Scene::setScene(int index)
 		break;
 	case 7:
 		{
+			glClearColor(0.0, 0.0, 0.0, 0.0);
+
 			tieF = new AdvancedTIE();
 
 			constexpr GLdouble tatDiam = 200;
@@ -285,9 +288,9 @@ void Scene::setLights()
 	dirLight->setAmbient(ambient);
 	dirLight->setDiffuse(diffuse);
 	dirLight->setSpecular(specular);
-	dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
+	dirLight->setID(GL_LIGHT1);							// settea el id del objeto????
 
-	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
+	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
 
 	lights.push_back(dirLight);
 
@@ -300,7 +303,7 @@ void Scene::setLights()
 	// settea el posLight
 
 	// settea el dirLight
-	v = { 100, 10, 0, 0 };							// posicion MUNDIAL de la luz
+	v = { 1, 1, 0, 0 };							// posicion MUNDIAL de la luz
 	ambient = { 0, 0, 0, 1 };						//
 	diffuse = { 1, 1, 0, 0 };						//
 	specular = { 0.5, 0.5, 0.5, 1 };				//
@@ -309,9 +312,9 @@ void Scene::setLights()
 	posLight->setAmbient(ambient);
 	posLight->setDiffuse(diffuse);
 	posLight->setSpecular(specular);
-	posLight->setID(GL_LIGHT1);							// settea el id del objeto????
+	posLight->setID(GL_LIGHT0);							// settea el id del objeto????
 
-	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
+	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
 
 	lights.push_back(posLight);
 
@@ -344,24 +347,22 @@ void Scene::sceneDirLight(const Camera& cam) const
 void Scene::activateDirLight(bool a)
 {
 	if (a) {
-		glEnable(GL_LIGHT0);
-		glMatrixMode(GL_MODELVIEW);
+		lights[0]->enable();
 
 	}
 	else {
-		glDisable(GL_LIGHT0);
+		lights[0]->disable();
 	}
 }
 
 void Scene::activatePosLight(bool a)
 {
 	if (a) {
-		glEnable(GL_LIGHT1);
-		glMatrixMode(GL_MODELVIEW);
+		lights[1]->enable();
 
 	}
 	else {
-		glDisable(GL_LIGHT1);
+		lights[1]->disable();
 	}
 }
 

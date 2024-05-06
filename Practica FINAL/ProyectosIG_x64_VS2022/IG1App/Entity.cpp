@@ -1081,7 +1081,7 @@ Light::Light()
 	}
 }
 
-void Light::uploadL()
+void Light::uploadL() const
 {
 	// Transfiere las características de la luz a la GPU 
 	glLightfv(id, GL_AMBIENT, value_ptr(ambient)); 
@@ -1095,9 +1095,7 @@ void DirLight::upload(glm::dmat4 const& modelViewMat) const
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadMatrixd(value_ptr(modelViewMat));
 	glLightfv(id, GL_POSITION, value_ptr(posDir)); 
-	//uploadL();
-
-	// PROBLEMA CON EL CONST
+	uploadL();
 }
 
 void DirLight::setPosDir(glm::fvec3 dir)
@@ -1114,7 +1112,7 @@ void PosLight::upload(glm::dmat4 const& modelViewMat) const
 	glLightf(id, GL_CONSTANT_ATTENUATION, kc); 
 	glLightf(id, GL_LINEAR_ATTENUATION, kl); 
 	glLightf(id, GL_QUADRATIC_ATTENUATION, kq); 
-	//uploadL();
+	uploadL();
 }
 
 void PosLight::setPosDir(glm::fvec3 dir)
