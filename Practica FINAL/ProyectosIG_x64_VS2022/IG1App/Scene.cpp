@@ -261,6 +261,11 @@ void Scene::setScene(int index)
 	}
 }
 
+void Scene::setLights()
+{
+	// TO DO
+}
+
 void Scene::sceneDirLight(const Camera& cam) const
 {
 	glEnable(GL_LIGHTING);
@@ -364,7 +369,13 @@ void Scene::orbitEntity()
 void
 Scene::render(const Camera& cam) const
 {
-	sceneDirLight(cam);
+	// practica ultima
+	//sceneDirLight(cam);
+	// se deberia hacer en un array como las entidades pero me da perza
+	dirLight->upload(cam.viewMat());
+	posLight->upload(cam.viewMat());
+	spotLight->upload(cam.viewMat());
+
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)

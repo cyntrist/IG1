@@ -34,6 +34,7 @@ public:
 	void unsetCulling();
 	void reset();
 	void setScene(int);
+	void setLights();
 	void sceneDirLight(const Camera& cam) const;
 
 	// PRACTICA 4 ej 68
