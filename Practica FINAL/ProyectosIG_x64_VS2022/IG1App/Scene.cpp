@@ -341,6 +341,33 @@ void Scene::setLights()
 
 
 	lights.push_back(spotLight);
+
+
+
+	spotLight2 = new SpotLight();;
+	// IDENTIFICADOR GL_LIGHT2 ????
+	// settea el spotLight
+
+	// settea el spotLight
+	fvec3 v2 = { 0, 1, 1 };
+	v = { 0, 200, 200, 1 };	// 
+	ambient = { 0, 0, 0, 1 };						//
+	diffuse = { 1, 1, 1, 1 };						//
+	specular = { 0.5, 0.5, 0.5, 1 };				//
+
+	spotLight2->setPosDir(v);
+	spotLight2->setSpot(v2, 100.0, 100.0);
+	spotLight2->setAmbient(ambient);
+	spotLight2->setDiffuse(diffuse);
+	spotLight2->setSpecular(specular);
+	spotLight2->setID(GL_LIGHT2);
+	spotLight2->setAtte(1, 0, 1);
+
+
+
+
+
+	lights.push_back(spotLight2);
 }
 
 void Scene::sceneDirLight(const Camera& cam) const

@@ -42,6 +42,8 @@ public:
 	void activatePosLight(bool a);
 	void activateSpotLight(bool a);
 
+	void moveLight();
+
 	// PRACTICA 4 ej 68
 	void rotateEntity();
 	void orbitEntity();
@@ -74,6 +76,7 @@ protected:
 		// diff -> (1.0,1.0,0.0) 
 		// 
 	SpotLight* spotLight; // IDENTIFICADOR GL_LIGHT2 ????
+	SpotLight* spotLight2; // IDENTIFICADOR GL_LIGHT2 ????
 };
 
 #endif //_H_Scene_H_
