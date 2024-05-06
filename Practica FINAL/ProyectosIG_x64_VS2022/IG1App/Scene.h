@@ -63,9 +63,10 @@ protected:
 
 	// light
 	DirLight* dirLight;
-	PosLight* posLight;	// IDENTIFICADOR GL_LIGHT1 ????'
+	PosLight* posLight;	// IDENTIFICADOR GL_LIGHT1 ????
 		// diff -> (1.0,1.0,0.0) 
 		// 
+	SpotLight* spotLight; // IDENTIFICADOR GL_LIGHT2 ????
 };
 
 #endif //_H_Scene_H_

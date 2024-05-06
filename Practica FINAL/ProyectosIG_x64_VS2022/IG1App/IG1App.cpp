@@ -242,11 +242,35 @@ IG1App::key(unsigned char key, int x, int y)
 		screenshot();
 		break;
 	case 'q':
-		// ACTIVAR LUZ AQUI INES
+		// ACTIVAR LUZ AQUI INES EJ 76
 		// currentScene->
 		break;
 	case 'w':
-		// DESACTIVAR LUZ AQUI INES
+		// DESACTIVAR LUZ AQUI INES EJ 76
+		// currentScene->
+		break;
+	case 'a':
+		// ACTIVAR LUZ AQUI INES EJ 77
+		// currentScene->
+		break;
+	case 's':
+		// ACTIVAR LUZ AQUI INES EJ 77
+		// currentScene->
+		break;
+	case 'z':
+		// ACTIVAR LUZ AQUI INES EJ 78
+		// currentScene->
+		break;
+	case 'x':
+		// ACTIVAR LUZ AQUI INES EJ 78
+		// currentScene->
+		break;
+	case 'v':
+		// ACTIVAR LUZ AQUI INES EJ 79
+		// currentScene->
+		break;
+	case 'b':
+		// ACTIVAR LUZ AQUI INES EJ 79
 		// currentScene->
 		break;
 	case 'k':
