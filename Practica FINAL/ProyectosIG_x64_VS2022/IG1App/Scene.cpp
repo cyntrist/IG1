@@ -30,6 +30,13 @@ Scene::free()
 		el = nullptr;
 	}
 	gTransparentObjects.resize(0);
+
+	for (Light* l : lights)
+	{
+		delete l;
+		l = nullptr;
+	}
+	lights.resize(0);
 }
 
 void
@@ -264,6 +271,44 @@ void Scene::setScene(int index)
 void Scene::setLights()
 {
 	// TO DO
+
+	// DIR LIGHT
+	DirLight dirLight = new DirLight();
+
+	// settea el dirLight
+	fvec4 v = { 1, 1, 1, 0 };							// posicion MUNDIAL de la luz
+	fvec4 ambient = { 0, 0, 0, 1 };						//
+	fvec4 diffuse = { 1, 1, 1, 1 };						//
+	fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
+
+	dirLight->setPosDir(v);
+	dirLight->setAmbient(ambient);
+	dirLight->setDiffuse(diffuse);
+	dirLight->setSpecular(specular);
+	dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
+
+	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
+
+	lights.push_back(dirLight);
+
+
+
+
+	posLight = new PosLight();	
+	// IDENTIFICADOR GL_LIGHT1 ????
+	// diff -> (1.0,1.0,0.0) 
+	// settea el posLight
+
+
+	lights.push_back(posLight);
+
+
+	spotLight = new SpotLight();;
+	// IDENTIFICADOR GL_LIGHT2 ????
+	// settea el spotLight
+
+
+	lights.push_back(spotLight);
 }
 
 void Scene::sceneDirLight(const Camera& cam) const
@@ -280,6 +325,18 @@ void Scene::sceneDirLight(const Camera& cam) const
 	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
 	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+}
+
+void Scene::activateDirLight(bool a)
+{
+	if (a) {
+		glEnable(GL_LIGHT0);
+		glMatrixMode(GL_MODELVIEW);
+
+	}
+	else {
+		glDisable(GL_LIGHT0);
+	}
 }
 
 void Scene::rotateEntity()
@@ -372,10 +429,13 @@ Scene::render(const Camera& cam) const
 	// practica ultima
 	//sceneDirLight(cam);
 	// se deberia hacer en un array como las entidades pero me da perza
-	dirLight->upload(cam.viewMat());
-	posLight->upload(cam.viewMat());
-	spotLight->upload(cam.viewMat());
 
+	glEnable(GL_LIGHTING);
+
+	for (Light* l : lights)
+		if (l != nullptr)
+			l->upload(cam.viewMat());
+	
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)

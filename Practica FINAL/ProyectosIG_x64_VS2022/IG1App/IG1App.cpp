@@ -243,11 +243,11 @@ IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'q':
 		// ACTIVAR LUZ AQUI INES EJ 76
-		// currentScene->
+		currentScene->activateDirLight(true);
 		break;
 	case 'w':
 		// DESACTIVAR LUZ AQUI INES EJ 76
-		// currentScene->
+		currentScene->activateDirLight(false);
 		break;
 	case 'a':
 		// ACTIVAR LUZ AQUI INES EJ 77

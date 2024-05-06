@@ -379,7 +379,7 @@ public:
 
 class Light {
 
-protected: 
+public: 
 	static GLuint cont; // Atributo para poder generar un nuevo id cada vez 
 	GLuint id = GL_LIGHT0 + GL_MAX_LIGHTS; // Primer id no válido 
 
@@ -397,12 +397,27 @@ protected:
 	glm::fvec4 getPosDir() { return posDir; }
 
 	// SETTERS
-	void setAmbient(glm::fvec4 a) { ambient = a; }
-	void setDiffuse(glm::fvec4 d) { diffuse = d; }
-	void setSpecular(glm::fvec4 s) { specular = s; }
-	void setPosDir(glm::fvec4 p) { posDir = p; }
- 
+	void setAmbient(glm::fvec4 a) { 
+		ambient = a; 
+		uploadL();
+	};
+	void setDiffuse(glm::fvec4 d) { 
+		diffuse = d; 
+		uploadL();
+	};
+	void setSpecular(glm::fvec4 s) { 
+		specular = s; 
+		uploadL();
+	};
+	void setPosDir(glm::fvec4 p) { 
+		posDir = p; 
+		uploadL();
+	};
+	void setID(GLuint id_) {
+		id = id_;
+	}
 
+ 
 	Light(); 
 	virtual ~Light() { 
 		disable();       // disable???
@@ -414,10 +429,7 @@ protected:
 
 	void disable() { if (id < GL_LIGHT0 + GL_MAX_LIGHTS) glDisable(id); }; 
 	void enable() { if (id < GL_LIGHT0 + GL_MAX_LIGHTS) glEnable(id); }; 
-	void setAmb(glm::fvec4 amb) { 
-		ambient = amb; 
-		uploadL();
-	}; //setDiff(), setSpec(
+
 };
 
 class DirLight : public Light { 
@@ -425,7 +437,6 @@ public:
 
 	virtual void upload(glm::dmat4 const& modelViewMat) const; 
 	void setPosDir(glm::fvec3 dir); 
-
 };
 
 

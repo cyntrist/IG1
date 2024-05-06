@@ -37,6 +37,9 @@ public:
 	void setLights();
 	void sceneDirLight(const Camera& cam) const;
 
+	// true para activar false para apagar
+	void activateDirLight(bool a);
+
 	// PRACTICA 4 ej 68
 	void rotateEntity();
 	void orbitEntity();
@@ -50,6 +53,7 @@ protected:
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
+	std::vector<Light*> lights;	// lights
 
 	CompoundEntity* fatherInventedNode;
 	CompoundEntity* inventedNode;
