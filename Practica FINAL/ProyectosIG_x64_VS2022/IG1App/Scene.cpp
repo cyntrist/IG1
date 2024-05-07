@@ -244,14 +244,21 @@ void Scene::setScene(int index)
 			tieF = new AdvancedTIE();
 
 			constexpr GLdouble tatDiam = 200;
-			tatooie = new Sphere(tatDiam);
-			tatooie->setRGB(1, 0.9, 0.0);
+
+			tatooie2 = new RevSphere(tatDiam, 50, 100);
+
+			const auto mat = new Material;
+			mat->setGolden();
+			tatooie2->setMaterial(mat);
+			tatooie2->setmColor({ 1,0.9,0, 1 });
+			//tatooie = new Sphere(tatDiam);
+			//tatooie->setRGB(1, 0.9, 0.0);
 
 			fatherInventedNode = new CompoundEntity();
 			inventedNode = new CompoundEntity();
 			inventedNodeRotate = new CompoundEntity();
 
-			fatherInventedNode->addEntity(tatooie);
+			fatherInventedNode->addEntity(tatooie2);
 			fatherInventedNode->addEntity(inventedNode);
 
 			inventedNode->addEntity(inventedNodeRotate); // se mete el el nodo grande el planeta y el nodo pequeño
@@ -349,7 +356,7 @@ void Scene::setLights()
 	// settea el spotLight
 
 	// settea el spotLight
-	fvec3 v2 = { 0, 1, 1 };
+	v2 = { 0, 1, 1 };
 	v = { 0, 200, 200, 1 };	// 
 	ambient = { 0, 0, 0, 1 };						//
 	diffuse = { 1, 1, 1, 1 };						//

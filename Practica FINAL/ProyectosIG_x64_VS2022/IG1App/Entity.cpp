@@ -1013,6 +1013,8 @@ void RevSphere::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
+		glEnable(GL_COLOR_MATERIAL);
+
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 

@@ -64,6 +64,7 @@ protected:
 	CompoundEntity* inventedNodeRotate;
 	CompoundEntity* tieF;
 	QuadricEntity* tatooie;
+	RevSphere* tatooie2;
 
 	CompoundEntity* node66;
 	CompoundEntity* node66_2;
