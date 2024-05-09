@@ -20,10 +20,10 @@ public:
 
 	// Añade setters para cambiar el valor de los atributos lumínicos public: 
 	// GETTERS
-	glm::fvec4 getAmbient() { return ambient; }
-	glm::fvec4 getDiffuse() { return diffuse; }
-	glm::fvec4 getSpecular() { return specular; }
-	glm::fvec4 getPosDir() { return posDir; }
+	glm::fvec4 getAmbient() const { return ambient; }
+	glm::fvec4 getDiffuse() const { return diffuse; }
+	glm::fvec4 getSpecular() const { return specular; }
+	glm::fvec4 getPosDir() const { return posDir; }
 
 	// SETTERS
 	void setAmbient(glm::fvec4 a)
