@@ -9,6 +9,11 @@
 
 #include <vector>
 
+class Light;
+class DirLight;
+class SpotLight;
+class PosLight;
+
 class Scene
 {
 public:
