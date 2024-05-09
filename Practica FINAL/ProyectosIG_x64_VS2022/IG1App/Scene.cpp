@@ -345,7 +345,7 @@ void Scene::setLights()
 
 
 
-	spotLight2 = new SpotLight();;
+	spotLight2 = new SpotLight();
 	// IDENTIFICADOR GL_LIGHT2 ????
 	// settea el spotLight
 
