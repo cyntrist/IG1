@@ -349,7 +349,7 @@ void Scene::setLights()
 	// settea el spotLight
 
 	// settea el spotLight
-	fvec3 v2 = { 0, 1, 1 };
+	v2 = { 0, 1, 1 };
 	v = { 0, 200, 200, 1 };	// 
 	ambient = { 0, 0, 0, 1 };						//
 	diffuse = { 1, 1, 1, 1 };						//
@@ -525,6 +525,8 @@ Scene::render(const Camera& cam) const
 	for (Abs_Entity* el : gTransparentObjects)
 		if (el != nullptr)
 			el->render(cam.viewMat());
+
+	glDisable(GL_LIGHTING);
 }
 
 void Scene::update()
