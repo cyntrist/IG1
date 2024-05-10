@@ -41,6 +41,7 @@ EjesRGB::render(const dmat4& modelViewMat) const
 		glEnable(GL_COLOR_MATERIAL);
 		glLineWidth(2);
 		mMesh->render();
+		glDisable(GL_COLOR_MATERIAL);
 		glLineWidth(1);
 	}
 }
@@ -700,6 +701,7 @@ void Sphere::render(const dmat4& modelViewMat) const
 	// GLU_POINT
 
 	gluSphere(q, r, 50, 50);
+	glDisable(GL_COLOR_MATERIAL);
 	// Aqu� se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
@@ -724,8 +726,8 @@ void Cylinder::render(const dmat4& modelViewMat) const
 	// GLU_SILHOUETTE
 	// GLU_POINT
 
-
 	gluCylinder(q, br, tr, h, 50, 50);
+	glDisable(GL_COLOR_MATERIAL);
 	// Aqu� se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
@@ -750,6 +752,7 @@ void Disk::render(const dmat4& modelViewMat) const
 	// GLU_POINT
 
 	gluDisk(q, iR, oR, 50, 50);
+	glDisable(GL_COLOR_MATERIAL);
 	// Aqu� se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
 }
@@ -776,6 +779,7 @@ void PartialDisk::render(const dmat4& modelViewMat) const
 	// GLU_POINT
 
 	gluPartialDisk(q, iR, oR, 50, 50, sa, swa);
+	glDisable(GL_COLOR_MATERIAL);
 
 	// Aqu� se debe recuperar el color: 
 	glColor3f(1.0, 1.0, 1.0);
@@ -787,7 +791,8 @@ CompoundEntity::CompoundEntity()
 
 CompoundEntity::~CompoundEntity()
 {
-	for (Abs_Entity* e : gObjects) {
+	for (Abs_Entity* e : gObjects)
+	{
 		delete(e);
 		e = nullptr;
 	}
@@ -1056,7 +1061,7 @@ void RevSphere::render(const dmat4& modelViewMat) const
 	{
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_CULL_FACE);
-		glEnable(GL_COLOR_MATERIAL);
+		glDisable(GL_COLOR_MATERIAL);
 
 		if (mColor.a > 0.0)
 			glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
@@ -1074,12 +1079,13 @@ void RevSphere::render(const dmat4& modelViewMat) const
 		mMesh->render();
 
 		glColor4f(0, 0, 0, 0);
-		
-		if (material != nullptr) {
+
+		if (material != nullptr)
+		{
 			material->reset();
 		}
 
-		glDisable(GL_COLOR_MATERIAL);
+		glEnable(GL_COLOR_MATERIAL);
 	}
 }
 
