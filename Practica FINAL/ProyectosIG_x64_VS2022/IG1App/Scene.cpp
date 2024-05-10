@@ -39,6 +39,9 @@ Scene::free()
 		l = nullptr;
 	}
 	lights.resize(0);
+
+
+	
 }
 
 void
