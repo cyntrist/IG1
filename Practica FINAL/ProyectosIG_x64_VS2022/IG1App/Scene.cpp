@@ -54,7 +54,6 @@ Scene::setGL()
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND); // enable Blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // enable Alpha channel
-	glEnable(GL_COLOR_MATERIAL);
 
 }
 
@@ -66,7 +65,6 @@ Scene::resetGL()
 	glDisable(GL_DEPTH_TEST); // disable Depth test
 	glDisable(GL_TEXTURE_2D); // disable Texture mode
 	glDisable(GLUT_MULTISAMPLE);
-	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_NORMALIZE);
 }
