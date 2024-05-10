@@ -1056,7 +1056,7 @@ void RevSphere::render(const dmat4& modelViewMat) const
 	{
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_CULL_FACE);
-		glEnable(GL_COLOR_MATERIAL);
+		glDisable(GL_COLOR_MATERIAL);
 
 		if (mColor.a > 0.0)
 			glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
@@ -1079,7 +1079,8 @@ void RevSphere::render(const dmat4& modelViewMat) const
 			material->reset();
 		}
 
-		glDisable(GL_COLOR_MATERIAL);
+		glEnable(GL_COLOR_MATERIAL);
+
 	}
 }
 
