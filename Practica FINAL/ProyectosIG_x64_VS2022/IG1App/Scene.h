@@ -53,12 +53,16 @@ public:
 	void rotateEntity();
 	void orbitEntity();
 
+	void setCamera(Camera* cam_);
+
 protected:
 	void free();
 	void setGL();
 	void resetGL();
 
 	int sceneID;
+
+	Camera* cam;
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 	std::vector<Abs_Entity*> gTransparentObjects; // Entities (graphic objects) of the scene
