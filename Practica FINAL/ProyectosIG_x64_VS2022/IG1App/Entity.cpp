@@ -891,10 +891,18 @@ AdvancedTIE::~AdvancedTIE()
 {
 	CompoundEntity::~CompoundEntity();
 	delete leftWing;
+	leftWing = nullptr;
 	delete rightWing;
+	rightWing = nullptr;
 	delete morro;
+	morro = nullptr;
 	delete base;
+	base = nullptr;
 	delete cyl;
+	cyl = nullptr;
+
+	delete baseLight;
+	baseLight = nullptr;
 }
 
 void AdvancedTIE::render(const dmat4& modelViewMat) const
