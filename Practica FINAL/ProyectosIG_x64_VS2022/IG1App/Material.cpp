@@ -5,6 +5,8 @@ void Material::upload()
 {
 	glColorMaterial(face, GL_SPECULAR);
 	glColorMaterial(face, GL_SHININESS);
+	glColorMaterial(face, GL_AMBIENT);
+	glColorMaterial(face, GL_DIFFUSE);
 	// !!!!!!!!!
 	glMaterialfv(face, GL_AMBIENT, value_ptr(ambient));
 	glMaterialfv(face, GL_DIFFUSE, value_ptr(diffuse));
@@ -28,4 +30,22 @@ void Material::setGolden()
 	diffuse = {0.75164, 0.60648, 0.22648, 1};
 	specular = {0.628281, 0.137622, 0.086014, 1};
 	expF = 51.2f;
+}
+
+void Material::reset()
+{
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+
+	glMaterialfv(face, GL_AMBIENT, value_ptr(glm::fvec4(0.2, 0.2, 0.2, 1)));
+	glMaterialfv(face, GL_DIFFUSE, value_ptr(glm::fvec4(0.8, 0.8, 0.8, 1)));
+	glMaterialfv(face, GL_SPECULAR, value_ptr(glm::fvec4(0.0, 0.0, 0.0, 1)));
+	//glMaterialfv(face, GL_SHININESS, 0);
+
+
+
+	
+	// limpia cosas
+
+
 }

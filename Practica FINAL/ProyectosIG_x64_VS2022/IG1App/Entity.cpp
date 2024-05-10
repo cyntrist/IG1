@@ -1013,10 +1013,9 @@ void RevSphere::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
-		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		upload(aMat);
-
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_BACK, GL_CULL_FACE);
+		glEnable(GL_COLOR_MATERIAL);
 		glLineWidth(2);
 
 		if (mColor.a > 0.0)
@@ -1028,12 +1027,19 @@ void RevSphere::render(const dmat4& modelViewMat) const
 			material->upload();
 		}
 
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+
 		mMesh->render();
 
 		glColor3f(1.0, 1.0, 1.0);
 		glColor4f(0, 0, 0, 0);
-		glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT);
-		glColorMaterial(GL_FRONT_AND_BACK,GL_DIFFUSE);
+		
+		if (material != nullptr) {
+			//material->reset();
+		}
+
+		glDisable(GL_COLOR_MATERIAL);
 	}
 }
 

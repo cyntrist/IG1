@@ -508,15 +508,15 @@ void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	//sceneDirLight(cam);
+	sceneDirLight(cam);
 	// se deberia hacer en un array como las entidades pero me da perza
 
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 
-	for (Light* l : lights)
+	/*for (Light* l : lights)
 		if (l != nullptr)
 			l->upload(cam.viewMat());
-	
+	*/
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)

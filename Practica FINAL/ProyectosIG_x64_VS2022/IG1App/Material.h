@@ -18,4 +18,5 @@ public:
 	virtual void upload();
 	void setCopper();
 	void setGolden();
+	void reset();
 };
