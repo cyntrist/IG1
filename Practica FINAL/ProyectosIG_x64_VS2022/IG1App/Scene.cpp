@@ -48,11 +48,14 @@ Scene::setGL()
 	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST); // enable Depth test
 	glEnable(GL_TEXTURE_2D); // enable Texture mode
+	glEnable(GL_LIGHTING);
+	glEnable(GL_NORMALIZE);
 	glEnable(GLUT_MULTISAMPLE);
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND); // enable Blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // enable Alpha channel
 	glEnable(GL_COLOR_MATERIAL);
+
 }
 
 void
@@ -64,6 +67,8 @@ Scene::resetGL()
 	glDisable(GL_TEXTURE_2D); // disable Texture mode
 	glDisable(GLUT_MULTISAMPLE);
 	glDisable(GL_COLOR_MATERIAL);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_NORMALIZE);
 }
 
 void Scene::setCulling()
@@ -274,118 +279,94 @@ void Scene::setScene(int index)
 
 void Scene::setLights()
 {
-	// TO DO
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glMatrixMode(GL_MODELVIEW);
-	//glLoadMatrixd(value_ptr(cam->viewMat()));
-
-	// DIR LIGHT
-	dirLight = new DirLight();
-
-	// settea el dirLight
-	fvec4 v = { 1, 1, 1, 0 };							// posicion MUNDIAL de la luz
+	// settea el variables iniciales
+	fvec4 v = { 0, 0, 0, 0 };							// posicion MUNDIAL de la luz
 	fvec4 ambient = { 0, 0, 0, 1 };						//
 	fvec4 diffuse = { 1, 1, 1, 1 };						//
 	fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
+
+
+	// TO DO
+
+	//// DIR LIGHT
+	dirLight = new DirLight();
 
 	dirLight->setPosDir(v);
 	dirLight->setAmbient(ambient);
 	dirLight->setDiffuse(diffuse);
 	dirLight->setSpecular(specular);
-	dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
-
-	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+	//dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
 
 	lights.push_back(dirLight);
 
 
 
 
-	posLight = new PosLight();	
-	// IDENTIFICADOR GL_LIGHT1 ????
-	// diff -> (1.0,1.0,0.0) 
-	// settea el posLight
+	//posLight = new PosLight();	
+	//// diff -> (1.0,1.0,0.0) 
+	//// settea el posLight
 
-	// settea el poslight
-	v = { 200, 200, 0, 1};							// posicion LOCAL de la luz
-	ambient = { 0, 0, 0, 1 };						//
-	diffuse = { 1, 1, 0, 0 };						//
-	specular = { 0.5, 0.5, 0.5, 1 };				//
+	//// settea el poslight
+	//v = { 200, 200, 0, 1};							// posicion LOCAL de la luz
+	//ambient = { 0, 0, 0, 1 };						//
+	//diffuse = { 1, 1, 0, 0 };						//
+	//specular = { 0.5, 0.5, 0.5, 1 };				//
 
-	posLight->setPosDir(v);
-	posLight->setAmbient(ambient);
-	posLight->setDiffuse(diffuse);
-	posLight->setSpecular(specular);
-	posLight->setID(GL_LIGHT1);							// settea el id del objeto????
+	//posLight->setPosDir(v);
+	//posLight->setAmbient(ambient);
+	//posLight->setDiffuse(diffuse);
+	//posLight->setSpecular(specular);
+	//posLight->setID(GL_LIGHT1);							// settea el id del objeto????
 
-	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
-
-	glLightfv(GL_LIGHT1, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT1, GL_SPECULAR, value_ptr(specular));
-
-	lights.push_back(posLight);
+	//lights.push_back(posLight);
 
 
 
-	spotLight = new SpotLight();;
-	// IDENTIFICADOR GL_LIGHT2 ????
-	// settea el spotLight
+	//spotLight = new SpotLight();;
+	//// IDENTIFICADOR GL_LIGHT2 ????
+	//// settea el spotLight
 
-	// settea el spotLight
-	fvec3 v2 = { 0, 1, 1 };
-	v = { 0, 200, 200, 1 };	// 
-	ambient = { 0, 0, 0, 1 };						//
-	diffuse = { 1, 1, 1, 1 };						//
-	specular = { 0.5, 0.5, 0.5, 1 };				//
+	//// settea el spotLight
+	//fvec3 v2 = { 0, 1, 1 };
+	//v = { 0, 200, 200, 1 };	// 
+	//ambient = { 0, 0, 0, 1 };						//
+	//diffuse = { 1, 1, 1, 1 };						//
+	//specular = { 0.5, 0.5, 0.5, 1 };				//
 
-	spotLight->setPosDir(v);
-	spotLight->setSpot(v2, 100.0, 100.0);
-	spotLight->setAmbient(ambient);
-	spotLight->setDiffuse(diffuse);
-	spotLight->setSpecular(specular);
-	spotLight->setID(GL_LIGHT2);
-	spotLight->setAtte(1,0,1);
-
-	glLightfv(GL_LIGHT2, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT2, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT2, GL_SPECULAR, value_ptr(specular));
+	//spotLight->setPosDir(v);
+	//spotLight->setSpot(v2, 100.0, 100.0);
+	//spotLight->setAmbient(ambient);
+	//spotLight->setDiffuse(diffuse);
+	//spotLight->setSpecular(specular);
+	//spotLight->setID(GL_LIGHT2);
+	//spotLight->setAtte(1,0,1);
 
 
-	lights.push_back(spotLight);
+	//lights.push_back(spotLight);
 
 
 
-	spotLight2 = new SpotLight();
-	// IDENTIFICADOR GL_LIGHT3 ????
-	// settea el spotLight
+	//spotLight2 = new SpotLight();
+	//// IDENTIFICADOR GL_LIGHT3 ????
+	//// settea el spotLight
 
-	// settea el spotLight
-	v2 = { 0, 1, 1 };
-	v = { 0, 200, 200, 1 };	// 
-	ambient = { 0, 0, 0, 1 };						//
-	diffuse = { 1, 1, 1, 1 };						//
-	specular = { 0.5, 0.5, 0.5, 1 };				//
+	//// settea el spotLight
+	//v2 = { 0, 1, 1 };
+	//v = { 0, 200, 200, 1 };	// 
+	//ambient = { 0, 0, 0, 1 };						//
+	//diffuse = { 1, 1, 1, 1 };						//
+	//specular = { 0.5, 0.5, 0.5, 1 };				//
 
-	spotLight2->setPosDir(v);
-	spotLight2->setSpot(v2, 100.0, 100.0);
-	spotLight2->setAmbient(ambient);
-	spotLight2->setDiffuse(diffuse);
-	spotLight2->setSpecular(specular);
-	spotLight2->setID(GL_LIGHT3);
-	spotLight2->setAtte(1, 0, 1);
+	//spotLight2->setPosDir(v);
+	//spotLight2->setSpot(v2, 100.0, 100.0);
+	//spotLight2->setAmbient(ambient);
+	//spotLight2->setDiffuse(diffuse);
+	//spotLight2->setSpecular(specular);
+	//spotLight2->setID(GL_LIGHT3);
+	//spotLight2->setAtte(1, 0, 1);
 
 
-	glLightfv(GL_LIGHT3, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT3, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT3, GL_SPECULAR, value_ptr(specular));
-
-	lights.push_back(spotLight2);
+	//lights.push_back(spotLight2);
 }
 
 void Scene::sceneDirLight(const Camera& cam) const
