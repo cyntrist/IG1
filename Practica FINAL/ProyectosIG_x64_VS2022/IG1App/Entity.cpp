@@ -787,9 +787,9 @@ CompoundEntity::CompoundEntity()
 
 CompoundEntity::~CompoundEntity()
 {
-	for (auto& ae : gObjects)
-	{
-		ae->~Abs_Entity(); // ???? // esto peta
+	for (Abs_Entity* e : gObjects) {
+		delete(e);
+		e = nullptr;
 	}
 }
 
@@ -890,11 +890,19 @@ AdvancedTIE::AdvancedTIE()
 AdvancedTIE::~AdvancedTIE()
 {
 	CompoundEntity::~CompoundEntity();
-	delete leftWing;
-	delete rightWing;
-	delete morro;
-	delete base;
-	delete cyl;
+	//delete leftWing;
+	//leftWing = nullptr;
+	//delete rightWing;
+	//rightWing = nullptr;
+	//delete morro;
+	//morro = nullptr;
+	//delete base;
+	//base = nullptr;
+	//delete cyl;
+	//cyl = nullptr;
+
+	delete baseLight;
+	baseLight = nullptr;
 }
 
 void AdvancedTIE::render(const dmat4& modelViewMat) const
@@ -952,7 +960,8 @@ WingAdvancedTIE::WingAdvancedTIE(GLdouble x, GLdouble y, GLdouble rot, const std
 
 WingAdvancedTIE::~WingAdvancedTIE()
 {
-	//
+	delete mMesh;
+	delete mTexture;
 }
 
 void WingAdvancedTIE::render(const dmat4& modelViewMat) const
