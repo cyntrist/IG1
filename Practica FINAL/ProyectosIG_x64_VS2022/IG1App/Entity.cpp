@@ -4,6 +4,8 @@
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "Light.h"
 #include "Material.h"
 
 using namespace glm;
@@ -896,10 +898,37 @@ AdvancedTIE::~AdvancedTIE()
 void AdvancedTIE::render(const dmat4& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
+	renderLight(modelViewMat);
 }
 
 void AdvancedTIE::update()
 {
+}
+
+void AdvancedTIE::initLight()
+{
+	fvec4 posDir = {1, 1, 1, 0};
+	fvec4 ambient = {0, 0, 0, 1};
+	fvec4 diffuse = {1, 1, 1, 1};
+	fvec4 specular = {0.5, 0.5, 0.5, 1};
+
+	baseLight = new SpotLight();
+
+	baseLight->setAmbient(ambient);
+	baseLight->setDiffuse(diffuse);
+	baseLight->setSpecular(specular);
+	baseLight->setPosDir(fvec3{0, 100, 0});
+	baseLight->setAtte(1, 0, 0);
+
+	baseLight->disable();
+}
+
+void AdvancedTIE::renderLight(const dmat4& modelViewMat) const
+{
+	baseLight->upload(
+		modelViewMat
+		* mModelMat
+	);
 }
 
 // -------------- ALA DEL TIE
@@ -1034,8 +1063,9 @@ void RevSphere::render(const dmat4& modelViewMat) const
 
 		glColor3f(1.0, 1.0, 1.0);
 		glColor4f(0, 0, 0, 0);
-		
-		if (material != nullptr) {
+
+		if (material != nullptr)
+		{
 			//material->reset();
 		}
 
@@ -1074,5 +1104,3 @@ void Toroid::render(const dmat4& modelViewMat) const
 		glColor4f(0, 0, 0, 0);
 	}
 }
-
-

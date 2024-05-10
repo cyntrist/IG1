@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include <vector>
 
+class SpotLight;
 class Material;
 
 class Abs_Entity // abstract class
@@ -301,10 +302,12 @@ public:
 	AdvancedTIE();
 	~AdvancedTIE() override;
 	void render(const glm::dmat4& modelViewMat) const override;
-
 	void update() override;
-
+	void initLight();
+	void renderLight(const glm::dmat4& modelViewMat) const;
 protected:
+	SpotLight* baseLight;
+
 	Abs_Entity* leftWing;
 	Abs_Entity* rightWing;
 	Abs_Entity* morro;
