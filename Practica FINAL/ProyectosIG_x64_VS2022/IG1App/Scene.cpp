@@ -54,7 +54,7 @@ Scene::setGL()
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND); // enable Blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // enable Alpha channel
-	glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_COLOR_MATERIAL);
 
 }
 
@@ -245,7 +245,7 @@ void Scene::setScene(int index)
 		break;
 	case 7:
 		{
-			//glClearColor(0.0, 0.0, 0.0, 0.0);
+			glClearColor(0.0, 0.0, 0.0, 0.0);
 
 			tieF = new AdvancedTIE();
 
@@ -280,15 +280,15 @@ void Scene::setScene(int index)
 void Scene::setLights()
 {
 	// settea el variables iniciales
-	fvec4 v = { 0, 0, 0, 0 };							// posicion MUNDIAL de la luz
+	fvec4 v = { 0, 0, 15, 0 };							// posicion MUNDIAL de la luz
 	fvec4 ambient = { 0, 0, 0, 1 };						//
-	fvec4 diffuse = { 1, 1, 1, 1 };						//
+	fvec4 diffuse = { 1, 1, 0, 1 };						//
 	fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
 
 
 	// TO DO
 
-	//// DIR LIGHT
+	////// DIR LIGHT
 	dirLight = new DirLight();
 
 	dirLight->setPosDir(v);
@@ -316,57 +316,33 @@ void Scene::setLights()
 	//posLight->setAmbient(ambient);
 	//posLight->setDiffuse(diffuse);
 	//posLight->setSpecular(specular);
-	//posLight->setID(GL_LIGHT1);							// settea el id del objeto????
+	////posLight->setID(GL_LIGHT1);
 
 	//lights.push_back(posLight);
 
 
 
-	//spotLight = new SpotLight();;
-	//// IDENTIFICADOR GL_LIGHT2 ????
-	//// settea el spotLight
+	spotLight = new SpotLight();;
+	// IDENTIFICADOR GL_LIGHT2 ????
+	// settea el spotLight
 
-	//// settea el spotLight
-	//fvec3 v2 = { 0, 1, 1 };
-	//v = { 0, 200, 200, 1 };	// 
-	//ambient = { 0, 0, 0, 1 };						//
-	//diffuse = { 1, 1, 1, 1 };						//
-	//specular = { 0.5, 0.5, 0.5, 1 };				//
+	// settea el spotLight
+	fvec3 v2 = { 0, 1, 1 };
+	v = { 0, 200, 200, 1 };	// 
+	ambient = { 0, 0, 0, 1 };						//
+	diffuse = { 1, 1, 1, 1 };						//
+	specular = { 0.5, 0.5, 0.5, 1 };				//
 
-	//spotLight->setPosDir(v);
-	//spotLight->setSpot(v2, 100.0, 100.0);
-	//spotLight->setAmbient(ambient);
-	//spotLight->setDiffuse(diffuse);
-	//spotLight->setSpecular(specular);
-	//spotLight->setID(GL_LIGHT2);
-	//spotLight->setAtte(1,0,1);
-
-
-	//lights.push_back(spotLight);
+	spotLight->setPosDir(v);
+	spotLight->setSpot(v2, 100.0, 100.0);
+	spotLight->setAmbient(ambient);
+	spotLight->setDiffuse(diffuse);
+	spotLight->setSpecular(specular);
+	spotLight->setAtte(1,0,1);
 
 
+	lights.push_back(spotLight);
 
-	//spotLight2 = new SpotLight();
-	//// IDENTIFICADOR GL_LIGHT3 ????
-	//// settea el spotLight
-
-	//// settea el spotLight
-	//v2 = { 0, 1, 1 };
-	//v = { 0, 200, 200, 1 };	// 
-	//ambient = { 0, 0, 0, 1 };						//
-	//diffuse = { 1, 1, 1, 1 };						//
-	//specular = { 0.5, 0.5, 0.5, 1 };				//
-
-	//spotLight2->setPosDir(v);
-	//spotLight2->setSpot(v2, 100.0, 100.0);
-	//spotLight2->setAmbient(ambient);
-	//spotLight2->setDiffuse(diffuse);
-	//spotLight2->setSpecular(specular);
-	//spotLight2->setID(GL_LIGHT3);
-	//spotLight2->setAtte(1, 0, 1);
-
-
-	//lights.push_back(spotLight2);
 }
 
 void Scene::sceneDirLight(const Camera& cam) const
@@ -388,33 +364,38 @@ void Scene::sceneDirLight(const Camera& cam) const
 void Scene::activateDirLight(bool a)
 {
 	if (a) {
-		lights[0]->enable();
+		//lights[0]->enable();
+		dirLight->enable();
 
 	}
 	else {
-		lights[0]->disable();
+		//lights[0]->disable();
+		dirLight->disable();
+
 	}
+
+
 }
 
 void Scene::activatePosLight(bool a)
 {
 	if (a) {
-		lights[1]->enable();
+		posLight->enable();
 
 	}
 	else {
-		lights[1]->disable();
+		posLight->disable();
 	}
 }
 
 void Scene::activateSpotLight(bool a)
 {
 	if (a) {
-		lights[2]->enable();
+		spotLight->enable();
 
 	}
 	else {
-		lights[2]->disable();
+		spotLight->disable();
 	}
 }
 
