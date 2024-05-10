@@ -275,6 +275,10 @@ void Scene::setScene(int index)
 void Scene::setLights()
 {
 	// TO DO
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glMatrixMode(GL_MODELVIEW);
+	//glLoadMatrixd(value_ptr(cam->viewMat()));
 
 	// DIR LIGHT
 	dirLight = new DirLight();
@@ -292,6 +296,10 @@ void Scene::setLights()
 	dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
 
 	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
 
 	lights.push_back(dirLight);
 
@@ -317,6 +325,10 @@ void Scene::setLights()
 
 	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(v));	// relaciona el id y la posicion
 
+	glLightfv(GL_LIGHT1, GL_AMBIENT, value_ptr(ambient));
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, value_ptr(diffuse));
+	glLightfv(GL_LIGHT1, GL_SPECULAR, value_ptr(specular));
+
 	lights.push_back(posLight);
 
 
@@ -340,13 +352,17 @@ void Scene::setLights()
 	spotLight->setID(GL_LIGHT2);
 	spotLight->setAtte(1,0,1);
 
+	glLightfv(GL_LIGHT2, GL_AMBIENT, value_ptr(ambient));
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, value_ptr(diffuse));
+	glLightfv(GL_LIGHT2, GL_SPECULAR, value_ptr(specular));
+
 
 	lights.push_back(spotLight);
 
 
 
 	spotLight2 = new SpotLight();
-	// IDENTIFICADOR GL_LIGHT2 ????
+	// IDENTIFICADOR GL_LIGHT3 ????
 	// settea el spotLight
 
 	// settea el spotLight
@@ -361,12 +377,13 @@ void Scene::setLights()
 	spotLight2->setAmbient(ambient);
 	spotLight2->setDiffuse(diffuse);
 	spotLight2->setSpecular(specular);
-	spotLight2->setID(GL_LIGHT2);
+	spotLight2->setID(GL_LIGHT3);
 	spotLight2->setAtte(1, 0, 1);
 
 
-
-
+	glLightfv(GL_LIGHT3, GL_AMBIENT, value_ptr(ambient));
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, value_ptr(diffuse));
+	glLightfv(GL_LIGHT3, GL_SPECULAR, value_ptr(specular));
 
 	lights.push_back(spotLight2);
 }
@@ -503,20 +520,25 @@ void Scene::orbitEntity()
 	//inventedNode->setModelMat( rotate(inventedNode->modelMat(), radians(3.0), dvec3(x,0,z)));
 }
 
+void Scene::setCamera(Camera* cam_)
+{
+	cam = cam_;
+}
+
 
 void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	sceneDirLight(cam);
+	//sceneDirLight(cam);
 	// se deberia hacer en un array como las entidades pero me da perza
 
-	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
 
-	/*for (Light* l : lights)
+	for (Light* l : lights)
 		if (l != nullptr)
 			l->upload(cam.viewMat());
-	*/
+
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)
