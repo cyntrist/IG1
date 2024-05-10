@@ -46,6 +46,8 @@ public:
 	void activateDirLight(bool a);
 	void activatePosLight(bool a);
 	void activateSpotLight(bool a);
+	void activateTIELight(bool a);
+
 
 	void moveLight();
 
@@ -80,11 +82,11 @@ protected:
 
 
 	// light
-	DirLight* dirLight;
-	PosLight* posLight;	// IDENTIFICADOR GL_LIGHT1 ????
+	DirLight* dirLight = nullptr;
+	PosLight* posLight = nullptr;	// IDENTIFICADOR GL_LIGHT1 ????
 		// diff -> (1.0,1.0,0.0) 
 		// 
-	SpotLight* spotLight; // IDENTIFICADOR GL_LIGHT2 ????
+	SpotLight* spotLight = nullptr; // IDENTIFICADOR GL_LIGHT2 ????
 };
 
 #endif //_H_Scene_H_

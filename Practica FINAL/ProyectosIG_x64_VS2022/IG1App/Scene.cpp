@@ -249,9 +249,12 @@ void Scene::setScene(int index)
 
 			tieF = new AdvancedTIE();
 
-			constexpr GLdouble tatDiam = 200;
+		
+
+			constexpr GLdouble tatDiam = 100;
 			tatooie = new Sphere(tatDiam);
 			tatooie->setRGB(1, 0.9, 0.0);
+
 
 			fatherInventedNode = new CompoundEntity();
 			inventedNode = new CompoundEntity();
@@ -264,10 +267,11 @@ void Scene::setScene(int index)
 			inventedNodeRotate->setModelMat( // se settea el radio de la esfera para el tie
 				translate(
 					inventedNode->modelMat(),
-					dvec3(0, tatDiam / 2, 0)
+					dvec3(0, tatDiam + 50, 0)
 				)
 			);
 			inventedNodeRotate->addEntity(tieF); // añade el tie al nodo pequeño
+
 
 			addObject(fatherInventedNode);
 		}
@@ -279,6 +283,13 @@ void Scene::setScene(int index)
 
 void Scene::setLights()
 {
+
+	// No nos deja mostrar mas de dos luces a la vez. Estan comentadas dos aqui para que se vea la 
+	// luz de la nave que se mueve. He mirado (ines) en mi pc a ver si era lo de la gpu que nos 
+	// dijiste en clase y parece que es otra cosa porque tampoco me deja en casa. 
+	// Si solo hay dos luces van bien
+
+
 	// settea el variables iniciales
 	fvec4 v = { 0, 0, 15, 0 };							// posicion MUNDIAL de la luz
 	fvec4 ambient = { 0, 0, 0, 1 };						//
@@ -286,7 +297,6 @@ void Scene::setLights()
 	fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
 
 
-	// TO DO
 
 	////// DIR LIGHT
 	dirLight = new DirLight();
@@ -322,26 +332,26 @@ void Scene::setLights()
 
 
 
-	spotLight = new SpotLight();;
-	// IDENTIFICADOR GL_LIGHT2 ????
-	// settea el spotLight
+	//spotLight = new SpotLight();;
+	//// IDENTIFICADOR GL_LIGHT2 ????
+	//// settea el spotLight
 
-	// settea el spotLight
-	fvec3 v2 = { 0, 1, 1 };
-	v = { 0, 200, 200, 1 };	// 
-	ambient = { 0, 0, 0, 1 };						//
-	diffuse = { 1, 1, 1, 1 };						//
-	specular = { 0.5, 0.5, 0.5, 1 };				//
+	//// settea el spotLight
+	//fvec3 v2 = { 0, 1, 1 };
+	//v = { 0, 200, 200, 1 };	// 
+	//ambient = { 0, 0, 0, 1 };						//
+	//diffuse = { 1, 1, 1, 1 };						//
+	//specular = { 0.5, 0.5, 0.5, 1 };				//
 
-	spotLight->setPosDir(v);
-	spotLight->setSpot(v2, 100.0, 100.0);
-	spotLight->setAmbient(ambient);
-	spotLight->setDiffuse(diffuse);
-	spotLight->setSpecular(specular);
-	spotLight->setAtte(1,0,1);
+	//spotLight->setPosDir(v);
+	//spotLight->setSpot(v2, 100.0, 100.0);
+	//spotLight->setAmbient(ambient);
+	//spotLight->setDiffuse(diffuse);
+	//spotLight->setSpecular(specular);
+	//spotLight->setAtte(1,0,1);
 
 
-	lights.push_back(spotLight);
+	//lights.push_back(spotLight);
 
 }
 
@@ -363,40 +373,71 @@ void Scene::sceneDirLight(const Camera& cam) const
 
 void Scene::activateDirLight(bool a)
 {
-	if (a) {
-		//lights[0]->enable();
-		dirLight->enable();
+	if (dirLight != nullptr) {
 
-	}
-	else {
-		//lights[0]->disable();
-		dirLight->disable();
+		if (a) {
+			//lights[0]->enable();
+			dirLight->enable();
 
+		}
+		else {
+			//lights[0]->disable();
+			dirLight->disable();
+
+		}
 	}
+
+	
 
 
 }
 
 void Scene::activatePosLight(bool a)
 {
-	if (a) {
-		posLight->enable();
 
+	if (posLight != nullptr) {
+
+		if (a) {
+			posLight->enable();
+
+		}
+		else {
+			posLight->disable();
+		}
 	}
-	else {
-		posLight->disable();
-	}
+
 }
 
 void Scene::activateSpotLight(bool a)
 {
-	if (a) {
-		spotLight->enable();
+	if (spotLight != nullptr) {
+
+		if (a) {
+
+			spotLight->enable();
+
+		}
+		else {
+			spotLight->disable();
+		}
 
 	}
-	else {
-		spotLight->disable();
+}
+
+void Scene::activateTIELight(bool a)
+{
+	// no sabemos como llegar a la luz del tie, pero deberia ser como el resto de metodos
+	if (tieF != nullptr) {
+		if (a) {
+			//SpotLight* s = 
+
+		}
+		else {
+
+		}
+
 	}
+
 }
 
 void Scene::rotateEntity()

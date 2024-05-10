@@ -812,6 +812,9 @@ void CompoundEntity::render(const dmat4& modelViewMat) const
 }
 
 
+
+
+
 IndexedBox::IndexedBox(GLdouble l)
 {
 	mMesh = IndexMesh::generateIndexedBoxV2(l);
@@ -933,18 +936,22 @@ void AdvancedTIE::initLight()
 	baseLight->setDiffuse(diffuse);
 	baseLight->setSpecular(specular);
 	baseLight->setPosDir(posDir);
-	baseLight->setAtte(1, 0, 0);
+	baseLight->setAtte(1, 0, 1);
 
-	baseLight->disable();
+	baseLight->enable();
 }
 
 void AdvancedTIE::renderLight(const dmat4& modelViewMat) const
 {
 	if (baseLight == nullptr) return;
+	glm::dvec3 tiePos = glm::dvec3(mModelMat * glm::dvec4(0.0, -10.0, 0.0, 1.0));
+	baseLight->setPosDir(glm::fvec3(tiePos));
 	baseLight->upload(
 		modelViewMat
 		* mModelMat
 	);
+
+	
 }
 
 // -------------- ALA DEL TIE

@@ -271,11 +271,11 @@ IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'v':
 		// ACTIVAR LUZ AQUI INES EJ 79
-		// currentScene->
+		currentScene->activateTIELight(true);
 		break;
 	case 'b':
 		// ACTIVAR LUZ AQUI INES EJ 79
-		// currentScene->
+		currentScene->activateTIELight(false);
 		break;
 	case 'k':
 		toggle2Vistas();

@@ -274,6 +274,7 @@ public:
 	void render(const glm::dmat4& modelViewMat) const override;
 
 
+
 	//GLdouble getAngle() { return ang; };
 	//void setAng(GLdouble a) { ang = a; };
 protected:
@@ -305,6 +306,7 @@ public:
 	void update() override;
 	void initLight();
 	void renderLight(const glm::dmat4& modelViewMat) const;
+
 protected:
 	SpotLight* baseLight = nullptr;
 
