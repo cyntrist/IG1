@@ -883,6 +883,8 @@ AdvancedTIE::AdvancedTIE()
 	addEntity(base);
 	addEntity(morro);
 	addEntity(cyl);
+
+	initLight();
 }
 
 AdvancedTIE::~AdvancedTIE()
@@ -907,7 +909,7 @@ void AdvancedTIE::update()
 
 void AdvancedTIE::initLight()
 {
-	fvec4 posDir = {1, 1, 1, 0};
+	fvec3 posDir = {0, 0, 0};
 	fvec4 ambient = {0, 0, 0, 1};
 	fvec4 diffuse = {1, 1, 1, 1};
 	fvec4 specular = {0.5, 0.5, 0.5, 1};
@@ -917,7 +919,7 @@ void AdvancedTIE::initLight()
 	baseLight->setAmbient(ambient);
 	baseLight->setDiffuse(diffuse);
 	baseLight->setSpecular(specular);
-	baseLight->setPosDir(fvec3{0, 100, 0});
+	baseLight->setPosDir(posDir);
 	baseLight->setAtte(1, 0, 0);
 
 	baseLight->disable();
@@ -925,6 +927,7 @@ void AdvancedTIE::initLight()
 
 void AdvancedTIE::renderLight(const dmat4& modelViewMat) const
 {
+	if (baseLight == nullptr) return;
 	baseLight->upload(
 		modelViewMat
 		* mModelMat

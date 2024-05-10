@@ -215,7 +215,7 @@ class QuadricEntity : public Abs_Entity
 {
 public:
 	QuadricEntity() : red(), green(), blue() { q = gluNewQuadric(); };
-	~QuadricEntity() override { gluDeleteQuadric(q); };
+	~QuadricEntity() override { /*gluDeleteQuadric(q); */};
 	void setRGB(GLdouble, GLdouble, GLdouble);
 
 protected:
@@ -306,7 +306,7 @@ public:
 	void initLight();
 	void renderLight(const glm::dmat4& modelViewMat) const;
 protected:
-	SpotLight* baseLight;
+	SpotLight* baseLight = nullptr;
 
 	Abs_Entity* leftWing;
 	Abs_Entity* rightWing;
