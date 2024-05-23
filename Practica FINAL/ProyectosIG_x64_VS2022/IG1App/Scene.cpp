@@ -291,7 +291,7 @@ void Scene::setLights()
 
 
 	// settea el variables iniciales
-	fvec4 v = { 0, 0, 15, 0 };							// posicion MUNDIAL de la luz
+	fvec4 v = { 1, 1, 1, 0 };							// posicion MUNDIAL de la luz
 	fvec4 ambient = { 0, 0, 0, 1 };						//
 	fvec4 diffuse = { 1, 1, 0, 1 };						//
 	fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
@@ -363,6 +363,8 @@ void Scene::sceneDirLight(const Camera& cam) const
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(cam.viewMat()));
 	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
+
+
 	fvec4 ambient = {0, 0, 0, 1};
 	fvec4 diffuse = {1, 1, 1, 1};
 	fvec4 specular = {0.5, 0.5, 0.5, 1};
@@ -533,10 +535,8 @@ void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	//sceneDirLight(cam);
+	// sceneDirLight(cam);
 	// se deberia hacer en un array como las entidades pero me da perza
-
-	glEnable(GL_LIGHTING);
 
 	for (Light* l : lights)
 		if (l != nullptr)
@@ -551,8 +551,6 @@ Scene::render(const Camera& cam) const
 	for (Abs_Entity* el : gTransparentObjects)
 		if (el != nullptr)
 			el->render(cam.viewMat());
-
-	glDisable(GL_LIGHTING);
 }
 
 void Scene::update()
