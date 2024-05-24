@@ -289,25 +289,24 @@ void Scene::setLights()
 	// dijiste en clase y parece que es otra cosa porque tampoco me deja en casa. 
 	// Si solo hay dos luces van bien
 
-
 	// settea el variables iniciales
-	fvec4 v = { 1, 1, 1, 0 };							// posicion MUNDIAL de la luz
-	fvec4 ambient = { 0, 0, 0, 1 };						//
-	fvec4 diffuse = { 1, 1, 0, 1 };						//
-	fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
+	//fvec4 v = { 1, 1, 1, 0 };							// posicion MUNDIAL de la luz
+	//fvec4 ambient = { 0, 0, 0, 1 };						//
+	//fvec4 diffuse = { 1, 1, 0, 1 };						//
+	//fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
 
 
 
-	////// DIR LIGHT
-	dirLight = new DirLight();
+	//////// DIR LIGHT
+	//dirLight = new DirLight();
 
-	dirLight->setPosDir(v);
-	dirLight->setAmbient(ambient);
-	dirLight->setDiffuse(diffuse);
-	dirLight->setSpecular(specular);
-	//dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
+	//dirLight->setPosDir(v);
+	//dirLight->setAmbient(ambient);
+	//dirLight->setDiffuse(diffuse);
+	//dirLight->setSpecular(specular);
+	////dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
 
-	lights.push_back(dirLight);
+	//lights.push_back(dirLight);
 
 
 
@@ -535,7 +534,7 @@ void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	// sceneDirLight(cam);
+	 sceneDirLight(cam);
 	// se deberia hacer en un array como las entidades pero me da perza
 
 	for (Light* l : lights)
