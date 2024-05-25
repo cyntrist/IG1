@@ -21,6 +21,7 @@ public:
 	void buildNormalVectorsV2();
 	static IndexMesh* generateIndexedBox(GLdouble l); //obsoleto
 	static IndexMesh* generateIndexedBoxV2(GLdouble l);
+	static IndexMesh* generateIndexedDiamond(GLdouble l);
 };
 
 class MbR : public IndexMesh

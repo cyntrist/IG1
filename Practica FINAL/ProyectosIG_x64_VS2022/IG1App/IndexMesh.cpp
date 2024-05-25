@@ -248,6 +248,71 @@ IndexMesh* IndexMesh::generateIndexedBoxV2(GLdouble l) /// la version de la prof
 	return mesh;
 }
 
+IndexMesh* IndexMesh::generateIndexedDiamond(GLdouble l)
+{
+	const auto mesh = new IndexMesh();
+
+	/// VERTICES
+	mesh->mNumVertices = 6;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	const GLdouble m = l / 2;
+
+	mesh->vVertices.emplace_back(m, m, 0); // v0
+	mesh->vVertices.emplace_back(-m, m, 0); // v1
+	mesh->vVertices.emplace_back(-m, -m, 0); // v2
+	mesh->vVertices.emplace_back(m, -m, 0); // v3
+	mesh->vVertices.emplace_back(0, 0, l); // v4
+	mesh->vVertices.emplace_back(0, 0, -l); // v5
+
+	/// INDICES
+	mesh->nNumIndices = 24;
+	mesh->vIndices = new GLuint[mesh->nNumIndices];
+	const GLuint arr[24] =
+	{
+		0, 1, 4, 
+		0, 5, 1, 
+		1, 2, 4,
+		1, 5, 2, 
+		2, 3, 4, 
+		2, 5, 3,
+		3, 0, 4,
+		3, 5, 0
+	};
+
+	for (int i = 0; i < mesh->nNumIndices; i++)
+		mesh->vIndices[i] = arr[i];
+
+	/// CARAS
+	int nV = 3;
+	mesh->vCaras.resize(mesh->nNumIndices / nV);
+	for (int i = 0; i < mesh->nNumIndices / nV; i++)
+	{
+		mesh->vCaras[i] = Cara(
+			mesh->vIndices[i * nV],
+			mesh->vIndices[i * nV + 1],
+			mesh->vIndices[i * nV + 2]
+		);
+	}
+
+	/// COLORES
+	mesh->vColors.reserve(mesh->mNumVertices);
+	for (int i = 0; i < mesh->mNumVertices; i++)
+		mesh->vColors.emplace_back(0, 1, 0, 1);
+
+	// TEXTURAS
+	for (int i = 0; i < mesh->vCaras.size(); i++) {
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(1, 0);
+		mesh->vTexCoords.emplace_back(0, 1);
+	}
+
+	/// NORMALES
+	mesh->buildNormalVectorsV2();
+
+	return mesh;
+}
+
 
 void IndexMesh::render() const
 {
@@ -296,7 +361,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 	for (int i = 0; i < nn; i++)
 	{
 		// Generar la muestra i- ésima de vértices
-		GLdouble theta = i * 360 / nn;
+		GLdouble theta = i * 180 / nn;
 		GLdouble c = cos(glm::radians(theta));
 		GLdouble s = sin(glm::radians(theta));
 		for (int j = 0; j < mm; j++)

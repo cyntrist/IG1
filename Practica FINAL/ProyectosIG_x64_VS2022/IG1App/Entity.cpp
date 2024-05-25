@@ -1104,7 +1104,7 @@ Toroid::Toroid(GLint r, GLint R, GLint m, GLint p)
 	constexpr float offset = -90.0f; // angulo inicial
 
 	for (int i = 0; i < p; i++)
-		profile[i] = dvec3( // los puntos de abajo a arriba antihorario
+		profile[i] = dvec3(  // los puntos de abajo a arriba antihorario
 			cos(radians(alpha * i + offset)) * R + r + R,
 			sin(radians(alpha * i + offset)) * R,
 			0
@@ -1126,4 +1126,59 @@ void Toroid::render(const dmat4& modelViewMat) const
 		mMesh->render();
 		glColor4f(0, 0, 0, 0);
 	}
+}
+
+CubeEX::CubeEX(GLdouble longitud)
+{
+	mMesh = Mesh::generateCube(longitud);   //generateDiamond(longitud);
+}
+
+CubeEX::~CubeEX()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void CubeEX::render(const glm::dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_POINT);
+		upload(aMat);
+		glLineWidth(2);
+		mMesh->render();
+		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+}
+
+IndexedDiamond::IndexedDiamond(GLdouble l)
+{
+	mMesh = IndexMesh::generateIndexedDiamond(l);
+}
+
+IndexedDiamond::~IndexedDiamond()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void IndexedDiamond::render(const glm::dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+
+		mMesh->render();
+	}
+}
+
+void IndexedDiamond::update()
+{
+	Abs_Entity::update();
 }

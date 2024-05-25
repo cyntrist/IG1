@@ -31,6 +31,9 @@ public:
 	static Mesh* generateCube(GLdouble longitud);
 	static Mesh* generateRGBCube(GLdouble longitud);
 
+	// ---- EXAMEN ------------
+	static Mesh* generateDiamond(GLdouble longitud);
+
 	/// PRACTICA 2
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h);
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);

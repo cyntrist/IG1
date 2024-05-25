@@ -51,7 +51,7 @@ Scene::setGL()
 	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST); // enable Depth test
 	glEnable(GL_TEXTURE_2D); // enable Texture mode
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
 	glEnable(GLUT_MULTISAMPLE);
 	//glEnable(GL_CULL_FACE);
@@ -67,7 +67,7 @@ Scene::resetGL()
 	glDisable(GL_DEPTH_TEST); // disable Depth test
 	glDisable(GL_TEXTURE_2D); // disable Texture mode
 	glDisable(GLUT_MULTISAMPLE);
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 	glDisable(GL_NORMALIZE);
 }
 
@@ -141,9 +141,15 @@ void Scene::setScene(int index)
 		}
 
 		break;
-	case 1:
-		addObject(new IndexedBox(200));
+	case 1: {
+		addObject(new IndexedDiamond(200));
+		//addObject(new CubeEX(200));
+
+
+	}
 		break;
+
+		// CARITA
 	case 2:
 		{
 			auto head = new Sphere(100);
@@ -200,6 +206,7 @@ void Scene::setScene(int index)
 			addObject(eye2);
 		}
 		break;
+		// ESCROTO
 	case 3:
 		{
 			int p = 50;
@@ -224,12 +231,16 @@ void Scene::setScene(int index)
 			);
 			addObject(yellowTatooie);
 
+	}
 
 			break;
-		}
+		//
 	case 4:
+		// TOROIDE
 		addObject(new Toroid(100, 100, 30, 20));
 		break;
+
+		// MIRROR
 	case 5:
 		addObject(new Photo(200, 100, dvec3(0.0, 10.0, 0.0)));
 		addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", dvec3(0.0, 0.0, 0.0)));
@@ -241,6 +252,7 @@ void Scene::setScene(int index)
 
 		break;
 	case 6:
+		// CAJAAAAA
 		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 		break;
 	case 7:
@@ -534,7 +546,7 @@ void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	 sceneDirLight(cam);
+	//sceneDirLight(cam);
 	// se deberia hacer en un array como las entidades pero me da perza
 
 	for (Light* l : lights)

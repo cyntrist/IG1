@@ -323,6 +323,66 @@ Mesh* Mesh::generateRGBCube(GLdouble l)
 	return mesh;
 }
 
+Mesh* Mesh::generateDiamond(GLdouble longitud)
+{
+	auto* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 100;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	GLdouble m = longitud / 2;
+
+	// ------------ VERTICES
+	// caras 1 y 2 (en vertical)
+	mesh->vVertices.emplace_back(m, m, 0); // v0
+	mesh->vVertices.emplace_back(-m, m, 0); // v1
+	mesh->vVertices.emplace_back(0, 0, longitud); // v2
+
+	mesh->vVertices.emplace_back(mesh->vVertices[0]); // v3 = v0
+	mesh->vVertices.emplace_back(0, 0, -longitud); // v4
+	mesh->vVertices.emplace_back(mesh->vVertices[1]); // v5 = v1
+
+	// caras 3 y 4 (en vertical)
+	mesh->vVertices.emplace_back(-m, m, 0); // v6
+	mesh->vVertices.emplace_back(-m, -m, 0); // v7
+	mesh->vVertices.emplace_back(0, 0, longitud); // v8
+
+	mesh->vVertices.emplace_back(mesh->vVertices[6]); // v9 = v6
+	mesh->vVertices.emplace_back(0, 0, -longitud); // v10
+	mesh->vVertices.emplace_back(mesh->vVertices[7]); // v11 = v7
+
+	// caras 3 y 4 (en vertical)
+	mesh->vVertices.emplace_back(-m, -m, 0); // v12
+	mesh->vVertices.emplace_back(m, -m, 0); // v13
+	mesh->vVertices.emplace_back(0, 0, longitud); // v14
+
+	mesh->vVertices.emplace_back(mesh->vVertices[13]); // v15 = v6
+	mesh->vVertices.emplace_back(0, 0, -longitud); // v16
+	mesh->vVertices.emplace_back(mesh->vVertices[14]); // v17 = v7
+
+	// caras 3 y 4 (en vertical)
+	mesh->vVertices.emplace_back(m, -m, 0); // v18
+	mesh->vVertices.emplace_back(m, m, 0); // v19
+	mesh->vVertices.emplace_back(0, 0, longitud); // v20
+
+	mesh->vVertices.emplace_back(mesh->vVertices[18]); // v21 = v6
+	mesh->vVertices.emplace_back(0, 0, -longitud); // v22
+	mesh->vVertices.emplace_back(mesh->vVertices[19]); // v23 = v7
+
+
+	//// ----------- TEXTURAS	
+	//mesh->vTexCoords.emplace_back(0, 0);
+	//mesh->vTexCoords.emplace_back(1, 0);
+	//mesh->vTexCoords.emplace_back(0, 1);
+
+	// cara 6
+	for (int i = 0; i < 24; i++)
+		mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	return mesh;
+}
+
 
 /// Rectangle
 Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
