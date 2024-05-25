@@ -143,7 +143,7 @@ void Scene::setScene(int index)
 		break;
 	case 1: {
 		addObject(new IndexedDiamond(200));
-		//addObject(new CubeEX(200));
+		//addObject(new IndexedBox(200));
 
 
 	}
