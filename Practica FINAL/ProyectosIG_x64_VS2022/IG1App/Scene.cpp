@@ -152,13 +152,13 @@ void Scene::setScene(int index)
 		//addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
 		//ACTIVATE_LIGHT = false;
 
-		// las piramides raras esas....
-		//
-		//ACTIVATE_LIGHT = false;
+		// toroide cortao
+		addObject(new ToroidCortado(100, 100, 30, 20));
+		ACTIVATE_LIGHT = true;
 
-		// toroide cortao o algo
-		addObject(new Tetrahedro(200, "./bmps/baldosaP.bmp"));
-		ACTIVATE_LIGHT = false;
+		// tetrahedro ig
+		//addObject(new Tetrahedro(200, "./bmps/baldosaP.bmp"));
+		//ACTIVATE_LIGHT = false;
 
 	}
 		break;

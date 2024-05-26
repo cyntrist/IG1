@@ -1191,7 +1191,7 @@ ToroidCortado::ToroidCortado(GLint r, GLint R, GLint m, GLint p)
 
 	mColor = { 0, 1, 0, 1 };
 	
-	mMesh = MbR::generateIndexMbR(p, m, profile);
+	//mMesh = MbR::generateIndexMbR(p, m, profile);
 	mMesh = MbR::generatePartialIndexMbR(p, m, 180, profile);
 }
 
