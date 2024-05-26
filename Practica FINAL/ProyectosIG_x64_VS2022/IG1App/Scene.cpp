@@ -142,7 +142,7 @@ void Scene::setScene(int index)
 
 		break;
 	case 1: {
-		addObject(new IndexedDiamond(200));
+		addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
 		//addObject(new IndexedBox(200));
 
 

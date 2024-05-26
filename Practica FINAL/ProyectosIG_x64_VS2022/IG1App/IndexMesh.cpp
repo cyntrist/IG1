@@ -298,14 +298,23 @@ IndexMesh* IndexMesh::generateIndexedDiamond(GLdouble l)
 	/// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);
 	for (int i = 0; i < mesh->mNumVertices; i++)
-		mesh->vColors.emplace_back(0, 1, 0, 1);
+		mesh->vColors.emplace_back(1, 1, 1, 1);
+
+
+	// creo que con indexed mesh es un lio por como van los indices y tal
+	// esta hecho en el normal igual que aqui
 
 	// TEXTURAS
-	for (int i = 0; i < mesh->vCaras.size(); i++) {
+	//mesh->vTexCoords.reserve(mesh->mNumVertices);
+	/*for (int i = 0; i < 5; i++) {
 		mesh->vTexCoords.emplace_back(0, 0);
-		mesh->vTexCoords.emplace_back(1, 0);
-		mesh->vTexCoords.emplace_back(0, 1);
-	}
+		mesh->vTexCoords.emplace_back(0, 0.5);
+		mesh->vTexCoords.emplace_back(0.5, 0.5);
+
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(0.5, 0.5);
+		mesh->vTexCoords.emplace_back(0.5, 0);
+	}*/
 
 	/// NORMALES
 	mesh->buildNormalVectorsV2();

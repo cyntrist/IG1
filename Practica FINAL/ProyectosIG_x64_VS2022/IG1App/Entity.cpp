@@ -1154,27 +1154,37 @@ void CubeEX::render(const glm::dmat4& modelViewMat) const
 	}
 }
 
-IndexedDiamond::IndexedDiamond(GLdouble l)
+IndexedDiamond::IndexedDiamond(GLdouble l, std::string t)
 {
-	mMesh = IndexMesh::generateIndexedDiamond(l);
+	//mMesh = IndexMesh::generateIndexedDiamond(l);
+	mMesh = IndexMesh::generateDiamond(l);
+
+	mTexture = new Texture();
+	setTexture(t, mTexture, 255);
 }
 
 IndexedDiamond::~IndexedDiamond()
 {
 	delete mMesh;
 	mMesh = nullptr;
+
+	delete mTexture;
+	mTexture = nullptr;
 }
 
 void IndexedDiamond::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		upload(aMat);
 
 		mMesh->render();
+		mTexture->unbind();
 	}
 }
 

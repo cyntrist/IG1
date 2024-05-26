@@ -403,10 +403,12 @@ public:
 class IndexedDiamond : public Abs_Entity
 {
 public:
-	IndexedDiamond(GLdouble);
+	IndexedDiamond(GLdouble, std::string t);
 	~IndexedDiamond() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 	void update() override;
 
 protected:
+	Texture* mTexture; // texture
+
 };

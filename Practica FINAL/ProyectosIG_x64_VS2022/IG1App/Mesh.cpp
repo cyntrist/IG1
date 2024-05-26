@@ -357,9 +357,9 @@ Mesh* Mesh::generateDiamond(GLdouble longitud)
 	mesh->vVertices.emplace_back(m, -m, 0); // v13
 	mesh->vVertices.emplace_back(0, 0, longitud); // v14
 
-	mesh->vVertices.emplace_back(mesh->vVertices[13]); // v15 = v6
+	mesh->vVertices.emplace_back(mesh->vVertices[12]); // v15 = v6
 	mesh->vVertices.emplace_back(0, 0, -longitud); // v16
-	mesh->vVertices.emplace_back(mesh->vVertices[14]); // v17 = v7
+	mesh->vVertices.emplace_back(mesh->vVertices[13]); // v17 = v7
 
 	// caras 3 y 4 (en vertical)
 	mesh->vVertices.emplace_back(m, -m, 0); // v18
@@ -370,15 +370,28 @@ Mesh* Mesh::generateDiamond(GLdouble longitud)
 	mesh->vVertices.emplace_back(0, 0, -longitud); // v22
 	mesh->vVertices.emplace_back(mesh->vVertices[19]); // v23 = v7
 
+	// colores
+	for (int i = 0; i < 24; i++)
+		mesh->vColors.emplace_back(1.0, 1.0, 1.0, 1.0);
 
 	//// ----------- TEXTURAS	
 	//mesh->vTexCoords.emplace_back(0, 0);
 	//mesh->vTexCoords.emplace_back(1, 0);
 	//mesh->vTexCoords.emplace_back(0, 1);
 
-	// cara 6
-	for (int i = 0; i < 24; i++)
-		mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	// TEXTURAS
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+	for (int i = 0; i < 5; i++) {
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(0, 0.5);
+		mesh->vTexCoords.emplace_back(0.5, 0.5);
+
+		mesh->vTexCoords.emplace_back(0, 0);
+		mesh->vTexCoords.emplace_back(0.5, 0.5);
+		mesh->vTexCoords.emplace_back(0.5, 0);
+	}
+
+	
 
 	return mesh;
 }
@@ -509,6 +522,7 @@ Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
 	{
 		mesh->vTexCoords.emplace_back(0, 1);
 		mesh->vTexCoords.emplace_back(0.5, 1);
+
 		mesh->vTexCoords.emplace_back(0, 1);
 		mesh->vTexCoords.emplace_back(0, 0.5);
 	}
