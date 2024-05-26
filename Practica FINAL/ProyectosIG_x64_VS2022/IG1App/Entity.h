@@ -392,13 +392,6 @@ public:
 
 
 // ------------ ESTUDIANDO --------------
-class CubeEX : public Abs_Entity
-{
-public:
-	explicit CubeEX(GLdouble longitud);
-	~CubeEX() override;
-	void render(const glm::dmat4& modelViewMat) const override;
-};
 
 class IndexedDiamond : public Abs_Entity
 {
@@ -432,3 +425,12 @@ public:
 
 	void render(const glm::dmat4& modelViewMat) const override;
 };
+
+class Tetrahedro : public Abs_Entity
+{
+public:
+	explicit Tetrahedro(GLdouble l, std::string t);
+	~Tetrahedro() override;
+	void render(const glm::dmat4& modelViewMat) const override;
+};
+

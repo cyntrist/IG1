@@ -1128,31 +1128,6 @@ void Toroid::render(const dmat4& modelViewMat) const
 	}
 }
 
-CubeEX::CubeEX(GLdouble longitud)
-{
-	mMesh = Mesh::generateCube(longitud);   //generateDiamond(longitud);
-}
-
-CubeEX::~CubeEX()
-{
-	delete mMesh;
-	mMesh = nullptr;
-}
-
-void CubeEX::render(const glm::dmat4& modelViewMat) const
-{
-	if (mMesh != nullptr)
-	{
-		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		glPolygonMode(GL_FRONT, GL_LINE);
-		glPolygonMode(GL_BACK, GL_POINT);
-		upload(aMat);
-		glLineWidth(2);
-		mMesh->render();
-		glLineWidth(1);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
-}
 
 IndexedDiamond::IndexedDiamond(GLdouble l, std::string t)
 {
@@ -1232,5 +1207,60 @@ void ToroidCortado::render(const glm::dmat4& modelViewMat) const
 		glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
 		mMesh->render();
 		glColor4f(0, 0, 0, 0);
+	}
+}
+
+Tetrahedro::Tetrahedro(GLdouble l, std::string t)
+{
+	mMesh = IndexMesh::generateDiamond(l);
+
+	mTexture = new Texture();
+	setTexture(t, mTexture, 255);
+}
+
+Tetrahedro::~Tetrahedro()
+{
+	delete mMesh;
+	mMesh = nullptr;
+
+	delete mTexture;
+	mTexture = nullptr;
+}
+
+void Tetrahedro::render(const glm::dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		glLineWidth(2);
+		mTexture->bind(GL_MODULATE); // GL_REPLACE, GL_MODULATE, GL_ADD
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		// obj 1
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+		mMesh->render();
+
+
+		// obj 2
+		dmat4 bMat = modelViewMat * mModelMat 
+			* translate(dmat4(1), dvec3(200, 0.0, 0.0)) 
+			//* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0))
+			;
+		upload(bMat); 
+		mMesh->render(); 
+
+		// obj 2
+		dmat4 cMat = modelViewMat * mModelMat
+			* translate(dmat4(1), dvec3(100, 0.0, 0.0))
+			* translate(dmat4(1), dvec3(0, 200, 0.0))
+			//* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0))
+			;
+		upload(cMat);
+		mMesh->render();
+
+		mTexture->unbind();
+		glLineWidth(1);
+
 	}
 }

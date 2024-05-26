@@ -149,16 +149,16 @@ void Scene::setScene(int index)
 		//addObject(new IndexedBox(200));
 
 		// DIAMANTE CON TEXTURAS (indexed and non indexed)
-		addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
-		ACTIVATE_LIGHT = false;
+		//addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
+		//ACTIVATE_LIGHT = false;
 
 		// las piramides raras esas....
 		//
 		//ACTIVATE_LIGHT = false;
 
 		// toroide cortao o algo
-		//addObject(new ToroidCortado(100, 100, 30, 20));
-		//ACTIVATE_LIGHT = true;
+		addObject(new Tetrahedro(200, "./bmps/baldosaP.bmp"));
+		ACTIVATE_LIGHT = false;
 
 	}
 		break;
