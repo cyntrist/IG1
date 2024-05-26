@@ -55,4 +55,6 @@ protected:
 	std::vector<glm::dvec2> vTexCoords; // vertices de texturas (analogo a vVertices vColor)
 };
 
+
+
 #endif //_H_Scene_H_

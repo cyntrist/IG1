@@ -370,7 +370,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 	for (int i = 0; i < nn; i++)
 	{
 		// Generar la muestra i- ésima de vértices
-		GLdouble theta = i * 180 / nn;
+		GLdouble theta = i * 360 / nn;
 		GLdouble c = cos(glm::radians(theta));
 		GLdouble s = sin(glm::radians(theta));
 		for (int j = 0; j < mm; j++)
@@ -431,5 +431,110 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 	/// PASO 8
 	mesh->vNormals.reserve(mesh->mNumVertices);
 	mesh->buildNormalVectorsV2();
+	return mesh;
+}
+
+
+MbR* MbR::generatePartialIndexMbR(int mm, int nn, int grados, glm::dvec3* perfil)
+{
+
+	// mm: numero de puntos del perfil
+	// nn: numero de rotaciones
+	// perfil: perfil en el plano XY
+
+	MbR* mesh = new MbR(mm, nn, perfil);	//Creamos la malla
+
+	mesh->mPrimitive = GL_TRIANGLES;		//Primitiva [Exclusiva de Mallas Indexadas]
+	mesh->mNumVertices = nn * mm;			//N�mero de v�rtices
+
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	auto vs = new glm::dvec3[mesh->mNumVertices];	//Vector auxiliar de v�rtices
+
+	for (int i = 0; i < nn; i++)
+	{
+		//Genera la muestra i-�sima de v�rtices
+
+		GLdouble theta = i * grados / (nn - 1);
+
+		GLdouble c = cos(glm::radians(theta));
+		GLdouble s = sin(glm::radians(theta));
+
+		for (int j = 0; j < mm; j++)
+		{
+			GLdouble z = -s * perfil[j].x + c * perfil[j].z;
+			GLdouble x = c * perfil[j].x + s * perfil[j].z;
+
+			int Indice = i * mm + j;
+			vs[Indice] = glm::dvec3(x, perfil[j].y, z);
+		}
+	}
+
+	// 4. Volcar el array auxiliar v�rtices en el array de v�rtices
+	for (int i = 0; i < mesh->mNumVertices; i++)
+	{
+		mesh->vVertices.push_back(vs[i]);
+	}
+	delete[] vs;
+
+	// 5. Construir los �ndices de las caras triangulares
+	int indiceMayor = 0;
+	mesh->nNumIndices = (nn - 1) * (mm - 1) * 6;
+	mesh->vIndices = new GLuint[mesh->nNumIndices];
+
+	// Inicializamos nIndexes a 0
+	/*for (int i = 0; i < mesh->mNumVertices * 6; i++)
+	{
+		mesh->nIndexes[i] = 0;
+	}*/
+
+	// 6. Se rellena nIndexes
+	// i recorre las muestras alrededor del eje Y
+	//De alguna manera dejabamos alg�n indice suelto
+	for (int i = 0; i < nn - 1; i++)
+	{
+		// j recorre los vertices del perfil
+		for (int j = 0; j < mm - 1; j++)
+		{
+			// El contador indice sirve para llevar cuenta
+			// de los índices generados hasta ahora . Se recorre
+			// la cara desde la esquina inferior izquierda
+			//indice cuenta los indices generados hasta ahora
+			const int indice = i * mm + j;
+			// PASO 7
+			mesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+			int n = (indice + mm) % (nn * mm);
+			mesh->vIndices[indiceMayor] = n;
+			indiceMayor++;
+			mesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+
+
+			// Y análogamente se añaden los otros tres índices
+			mesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+			n = (indice + 1) % (nn * mm);
+			mesh->vIndices[indiceMayor] = n;
+			indiceMayor++;
+			mesh->vIndices[indiceMayor] = indice % (nn * mm);
+			indiceMayor++;
+
+			/*
+			indice0 , indice1 , indice2 ,
+			indice2 , indice3 , indice0
+			*/
+		}
+	}
+
+	// 8. Construir los vectores normales y construir la malla.
+	mesh->vNormals.reserve(mesh->mNumVertices);
+	mesh->buildNormalVectorsV2();
+
+	/// DEBUG -> Dibuja las normales
+	//for (int i = 0; i < mesh->mNumVertices; i++) {
+	//	mesh->vColors.emplace_back(mesh->vNormals[i].x, mesh->vNormals[i].y, mesh->vNormals[i].z, 1);
+	//}
+
 	return mesh;
 }

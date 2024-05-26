@@ -9,6 +9,8 @@ protected :
 	GLuint nNumIndices = 0;
 	std::vector<Cara> vCaras;
 
+
+
 public:
 	IndexMesh() : Mesh() { mPrimitive = GL_TRIANGLES; }
 	~IndexMesh() override { delete [] vIndices; }
@@ -34,4 +36,5 @@ public:
 	MbR(GLint, GLint, glm::dvec3*);
 	~MbR() override = default;
 	static MbR* generateIndexMbR(GLint, GLint, glm::dvec3*);
+	static MbR* generatePartialIndexMbR(int mm, int nn, int grados, glm::dvec3* perfil);
 };

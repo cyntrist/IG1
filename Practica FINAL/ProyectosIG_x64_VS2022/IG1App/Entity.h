@@ -412,3 +412,23 @@ protected:
 	Texture* mTexture; // texture
 
 };
+
+class ToroidCortado : public Abs_Entity
+{
+	glm::dvec3* profile;
+
+public:
+	// r -> radio menor
+	// R -> radio mayor
+	// m -> caras en horizontal
+	// p -> caras en vertical
+	ToroidCortado(GLint r, GLint R, GLint m, GLint p);
+
+	~ToroidCortado() override
+	{
+		delete mMesh;
+		delete[] profile;
+	}
+
+	void render(const glm::dmat4& modelViewMat) const override;
+};

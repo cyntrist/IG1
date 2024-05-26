@@ -1192,3 +1192,45 @@ void IndexedDiamond::update()
 {
 	Abs_Entity::update();
 }
+
+ToroidCortado::ToroidCortado(GLint r, GLint R, GLint m, GLint p)
+{
+
+	profile = new dvec3[p];
+	const float alpha = 360.0f / (p - 1); // angulo entre puntos
+	constexpr float offset = -90.0f; // angulo inicial
+
+	for (int i = 0; i < p; i++)
+		profile[i] = dvec3(  // los puntos de abajo a arriba antihorario
+			cos(radians(alpha * i + offset)) * R + r + R,
+			sin(radians(alpha * i + offset)) * R,
+			0
+		);
+
+
+	/*int aaaa = 3;
+	profile = new dvec3[aaaa];
+	profile[0] = dvec3(0.5, 0.0, 0.0);
+	profile[1] = dvec3(r, 0.0, 0.0);
+	profile[2] = dvec3(0.5, 100, 0.0);*/
+
+	mColor = { 0, 1, 0, 1 };
+	
+	mMesh = MbR::generateIndexMbR(p, m, profile);
+	mMesh = MbR::generatePartialIndexMbR(p, m, 180, profile);
+}
+
+void ToroidCortado::render(const glm::dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+
+		glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
+		mMesh->render();
+		glColor4f(0, 0, 0, 0);
+	}
+}

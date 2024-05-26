@@ -142,9 +142,17 @@ void Scene::setScene(int index)
 
 		break;
 	case 1: {
-		addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
+		// og obj
 		//addObject(new IndexedBox(200));
 
+		// DIAMANTE CON TEXTURAS (indexed and non indexed)
+		// addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
+
+		// las piramides raras esas....
+		addObject(new ToroidCortado(100, 100, 30, 20));
+
+		// toroide cortao o algo
+		//
 
 	}
 		break;
@@ -546,7 +554,7 @@ void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	//sceneDirLight(cam);
+	sceneDirLight(cam);
 	// se deberia hacer en un array como las entidades pero me da perza
 
 	for (Light* l : lights)
