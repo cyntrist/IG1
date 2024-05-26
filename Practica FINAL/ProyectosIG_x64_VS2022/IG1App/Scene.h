@@ -87,6 +87,8 @@ protected:
 		// diff -> (1.0,1.0,0.0) 
 		// 
 	SpotLight* spotLight = nullptr; // IDENTIFICADOR GL_LIGHT2 ????
+
+	bool ACTIVATE_LIGHT = false;
 };
 
 #endif //_H_Scene_H_

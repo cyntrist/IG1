@@ -142,17 +142,23 @@ void Scene::setScene(int index)
 
 		break;
 	case 1: {
+		// ACTIVATE_LIGHT esta porque no nos vas las luces del todo bien y usamos el metodo de la penultima practica
+		// que si que va bien. Se activa con el booleano. 
+
 		// og obj
 		//addObject(new IndexedBox(200));
 
 		// DIAMANTE CON TEXTURAS (indexed and non indexed)
-		// addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
+		addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
+		ACTIVATE_LIGHT = false;
 
 		// las piramides raras esas....
-		addObject(new ToroidCortado(100, 100, 30, 20));
+		//
+		//ACTIVATE_LIGHT = false;
 
 		// toroide cortao o algo
-		//
+		//addObject(new ToroidCortado(100, 100, 30, 20));
+		//ACTIVATE_LIGHT = true;
 
 	}
 		break;
@@ -554,7 +560,9 @@ void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	sceneDirLight(cam);
+	if (ACTIVATE_LIGHT) {
+		sceneDirLight(cam);
+	}
 	// se deberia hacer en un array como las entidades pero me da perza
 
 	for (Light* l : lights)
