@@ -1128,6 +1128,37 @@ void Toroid::render(const dmat4& modelViewMat) const
 	}
 }
 
+QuarterToroid::QuarterToroid(GLint r, GLint R, GLint m, GLint p)
+{
+	profile = new dvec3[p];
+	const float alpha = 360.0f / (p - 1); // angulo entre puntos
+	constexpr float offset = -90.0f; // angulo inicial
+
+	for (int i = 0; i < p; i++)
+		profile[i] = dvec3(  // los puntos de abajo a arriba antihorario
+			cos(radians(alpha * i + offset)) * R + r + R,
+			sin(radians(alpha * i + offset)) * R,
+			0
+		);
+	mColor = {0, 1, 0, 1};
+	mMesh = MbR::generateIndexMbR(p, m, profile, 270);
+}
+
+
+void QuarterToroid::render(const glm::dmat4& modelViewMat) const
+{
+		if (mMesh != nullptr)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		upload(aMat);
+
+		glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
+		mMesh->render();
+		glColor4f(0, 0, 0, 0);
+	}
+}
 
 IndexedDiamond::IndexedDiamond(GLdouble l, std::string t)
 {

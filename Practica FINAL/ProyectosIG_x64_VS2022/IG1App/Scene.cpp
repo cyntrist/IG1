@@ -39,9 +39,6 @@ Scene::free()
 		l = nullptr;
 	}
 	lights.resize(0);
-
-
-	
 }
 
 void
@@ -112,6 +109,8 @@ void Scene::setScene(int index)
 	{
 	case 0:
 		{
+			lightActive = true;
+
 			auto p = new RegularPolygon(32, 250);
 			auto r = new RGBRectangle(500, 250);
 			auto t = new RGBTriangle(50, 0);
@@ -141,29 +140,29 @@ void Scene::setScene(int index)
 		}
 
 		break;
-	case 1: {
-		// ACTIVATE_LIGHT esta porque no nos vas las luces del todo bien y usamos el metodo de la penultima practica
-		// que si que va bien. Se activa con el booleano. 
+	case 1:
+		{
+			// lightActive esta porque no nos vas las luces del todo bien y usamos el metodo de la penultima practica
+			// que si que va bien. Se activa con el booleano. 
 
-		// og obj
-		//addObject(new IndexedBox(200));
+			// og obj
+			//addObject(new IndexedBox(200));
 
-		// DIAMANTE CON TEXTURAS (indexed and non indexed)
-		//addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
-		//ACTIVATE_LIGHT = false;
+			// DIAMANTE CON TEXTURAS (indexed and non indexed)
+			//addObject(new IndexedDiamond(200, "./bmps/baldosaP.bmp"));
+			//lightActive = false;
 
-		// toroide cortao
-		addObject(new ToroidCortado(100, 100, 30, 20));
-		ACTIVATE_LIGHT = true;
+			// toroide cortao
+			addObject(new ToroidCortado(100, 100, 30, 20));
+			lightActive = true;
 
-		// tetrahedro ig
-		//addObject(new Tetrahedro(200, "./bmps/baldosaP.bmp"));
-		//ACTIVATE_LIGHT = false;
-
-	}
+			// tetrahedro ig
+			//addObject(new Tetrahedro(200, "./bmps/baldosaP.bmp"));
+			//lightActive = false;
+		}
 		break;
 
-		// CARITA
+	// CARITA
 	case 2:
 		{
 			auto head = new Sphere(100);
@@ -220,42 +219,46 @@ void Scene::setScene(int index)
 			addObject(eye2);
 		}
 		break;
-		// ESCROTO
+	// ESCROTO
 	case 3:
 		{
-			int p = 50;
-			int r = 100;
-			auto offset = 200.0;
+			lightActive = true;
+			addObject(new QuarterToroid(100,100,30,20));
+
+			//int p = 50;
+			//int r = 100;
+			//auto offset = 200.0;
 
 
-			auto goldTatooie = new RevSphere(r, p, p, true);
-			goldTatooie->setModelMat(
-				translate(dmat4(1.0), dvec3(0, 0, offset))
-			);
-			goldTatooie->setmColor(dvec4(1, 0.9, 0, 1));
-			const auto mat = new Material;
-			mat->setGolden();
-			goldTatooie->setMaterial(mat);
-			addObject(goldTatooie);
+			//auto goldTatooie = new RevSphere(r, p, p, true);
+			//goldTatooie->setModelMat(
+			//	translate(dmat4(1.0), dvec3(0, 0, offset))
+			//);
+			//goldTatooie->setmColor(dvec4(1, 0.9, 0, 1));
+			//const auto mat = new Material;
+			//mat->setGolden();
+			//goldTatooie->setMaterial(mat);
+			//addObject(goldTatooie);
 
-			auto yellowTatooie = new RevSphere(r, p, p);
-			yellowTatooie->setmColor(dvec4(1, 0.9, 0, 1));
-			yellowTatooie->setModelMat(
-				translate(dmat4(1.0), dvec3(offset, 0, 0))
-			);
-			addObject(yellowTatooie);
+			//auto yellowTatooie = new RevSphere(r, p, p);
+			//yellowTatooie->setmColor(dvec4(1, 0.9, 0, 1));
+			//yellowTatooie->setModelMat(
+			//	translate(dmat4(1.0), dvec3(offset, 0, 0))
+			//);
+			//addObject(yellowTatooie);
+		}
 
-	}
-
-			break;
-		//
+		break;
+	//
 	case 4:
 		// TOROIDE
+			lightActive = true;
 		addObject(new Toroid(100, 100, 30, 20));
 		break;
 
-		// MIRROR
+	// MIRROR
 	case 5:
+			lightActive = true;
 		addObject(new Photo(200, 100, dvec3(0.0, 10.0, 0.0)));
 		addObject(new Ground(600, 600, 4, 4, "./bmps/baldosaC.bmp", dvec3(0.0, 0.0, 0.0)));
 		addObject(
@@ -267,6 +270,7 @@ void Scene::setScene(int index)
 		break;
 	case 6:
 		// CAJAAAAA
+			lightActive = true;
 		addObject(new Box(200, "./bmps/container.bmp", "./bmps/papelC.bmp"));
 		break;
 	case 7:
@@ -275,7 +279,6 @@ void Scene::setScene(int index)
 
 			tieF = new AdvancedTIE();
 
-		
 
 			constexpr GLdouble tatDiam = 100;
 			tatooie = new Sphere(tatDiam);
@@ -309,7 +312,6 @@ void Scene::setScene(int index)
 
 void Scene::setLights()
 {
-
 	// No nos deja mostrar mas de dos luces a la vez. Estan comentadas dos aqui para que se vea la 
 	// luz de la nave que se mueve. He mirado (ines) en mi pc a ver si era lo de la gpu que nos 
 	// dijiste en clase y parece que es otra cosa porque tampoco me deja en casa. 
@@ -322,7 +324,6 @@ void Scene::setLights()
 	//fvec4 specular = { 0.5, 0.5, 0.5, 1 };				//
 
 
-
 	//////// DIR LIGHT
 	//dirLight = new DirLight();
 
@@ -333,8 +334,6 @@ void Scene::setLights()
 	////dirLight->setID(GL_LIGHT0);							// settea el id del objeto????
 
 	//lights.push_back(dirLight);
-
-
 
 
 	//posLight = new PosLight();	
@@ -354,7 +353,6 @@ void Scene::setLights()
 	////posLight->setID(GL_LIGHT1);
 
 	//lights.push_back(posLight);
-
 
 
 	//spotLight = new SpotLight();;
@@ -377,7 +375,6 @@ void Scene::setLights()
 
 
 	//lights.push_back(spotLight);
-
 }
 
 void Scene::sceneDirLight(const Camera& cam) const
@@ -400,71 +397,64 @@ void Scene::sceneDirLight(const Camera& cam) const
 
 void Scene::activateDirLight(bool a)
 {
-	if (dirLight != nullptr) {
-
-		if (a) {
+	if (dirLight != nullptr)
+	{
+		if (a)
+		{
 			//lights[0]->enable();
 			dirLight->enable();
-
 		}
-		else {
+		else
+		{
 			//lights[0]->disable();
 			dirLight->disable();
-
 		}
 	}
-
-	
-
-
 }
 
 void Scene::activatePosLight(bool a)
 {
-
-	if (posLight != nullptr) {
-
-		if (a) {
+	if (posLight != nullptr)
+	{
+		if (a)
+		{
 			posLight->enable();
-
 		}
-		else {
+		else
+		{
 			posLight->disable();
 		}
 	}
-
 }
 
 void Scene::activateSpotLight(bool a)
 {
-	if (spotLight != nullptr) {
-
-		if (a) {
-
+	if (spotLight != nullptr)
+	{
+		if (a)
+		{
 			spotLight->enable();
-
 		}
-		else {
+		else
+		{
 			spotLight->disable();
 		}
-
 	}
 }
 
 void Scene::activateTIELight(bool a)
 {
 	// no sabemos como llegar a la luz del tie, pero deberia ser como el resto de metodos
-	if (tieF != nullptr) {
-		if (a) {
+	if (tieF != nullptr)
+	{
+		if (a)
+		{
 			//SpotLight* s = 
-
 		}
-		else {
-
+		else
+		{
 		}
-
 	}
-
 }
 
 void Scene::rotateEntity()
@@ -560,14 +550,17 @@ void
 Scene::render(const Camera& cam) const
 {
 	// practica ultima
-	if (ACTIVATE_LIGHT) {
+	if (lightActive)
+	{
 		sceneDirLight(cam);
 	}
 	// se deberia hacer en un array como las entidades pero me da perza
-
-	for (Light* l : lights)
-		if (l != nullptr)
-			l->upload(cam.viewMat());
+	else
+	{
+		for (Light* l : lights)
+			if (l != nullptr)
+				l->upload(cam.viewMat());
+	}
 
 	cam.upload();
 

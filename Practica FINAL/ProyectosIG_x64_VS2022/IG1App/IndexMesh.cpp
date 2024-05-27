@@ -354,7 +354,7 @@ MbR::MbR(int profPts, int rotNum, glm::dvec3* prof)
 {
 }
 
-MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
+MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 {
 	/// PASO 3 
 	auto mesh = new MbR(mm, nn, perfil);
@@ -370,7 +370,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 	for (int i = 0; i < nn; i++)
 	{
 		// Generar la muestra i- ésima de vértices
-		GLdouble theta = i * 360 / nn;
+		GLdouble theta = i * grados / nn;
 		GLdouble c = cos(glm::radians(theta));
 		GLdouble s = sin(glm::radians(theta));
 		for (int j = 0; j < mm; j++)
@@ -397,7 +397,7 @@ MbR* MbR::generateIndexMbR(int mm, int nn, glm::dvec3* perfil)
 
 	/// PASO 6
 	// El contador i recorre las muestras alrededor del eje Y
-	for (int i = 0; i < nn; i++)
+	for (int i = 0; i < nn - 1; i++)
 	{
 		// El contador j recorre los vértices del perfil ,
 		// de abajo arriba . Las caras cuadrangulares resultan
