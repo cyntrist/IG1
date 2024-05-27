@@ -381,7 +381,7 @@ MbR::MbR(int profPts, int rotNum, glm::dvec3* prof)
 {
 }
 
-MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
+MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil)
 {
 	/// PASO 3 
 	auto mesh = new MbR(mm, nn, perfil);
@@ -389,7 +389,6 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 	mesh->mPrimitive = GL_TRIANGLES;
 	// Definir el número de vértices como nn*mm
 	mesh->mNumVertices = nn * mm;
-	mesh->vVertices.reserve(mesh->nNumIndices);
 	// Usar un vector auxiliar de vértices
 	//std::vector<glm::vec<3, double>> vs;
 	//vs.reserve(mesh->mNumVertices);
@@ -398,7 +397,7 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 	for (int i = 0; i < nn; i++)
 	{
 		// Generar la muestra i- ésima de vértices
-		GLdouble theta = i * grados / (nn-1);
+		GLdouble theta = i * 360 / nn;
 		GLdouble c = cos(glm::radians(theta));
 		GLdouble s = sin(glm::radians(theta));
 		for (int j = 0; j < mm; j++)
@@ -420,25 +419,17 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 	int indiceMayor = 0;
 	mesh->nNumIndices = mesh->mNumVertices * 6;
 	mesh->vIndices = new GLuint[mesh->nNumIndices];
-	for (int i = 0; i < mesh->nNumIndices; i++)
+	for (int i = 0; i < mesh->mNumVertices * 6; i++)
 		mesh->vIndices[i] = 0;
 
 	/// PASO 6
 	// El contador i recorre las muestras alrededor del eje Y
-	auto n = nn;
-	auto m = mm;
-	//if (grados != 360)
-	{
-		m -= 1;
-		n -= 1;
-	}
-
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < nn; i++)
 	{
 		// El contador j recorre los vértices del perfil ,
 		// de abajo arriba . Las caras cuadrangulares resultan
 		// al unir la muestra i- ésima con la (i +1)% nn - ésima
-		for (int j = 0; j < m; j++)
+		for (int j = 0; j < mm - 1; j++)
 		{
 			// El contador indice sirve para llevar cuenta
 			// de los índices generados hasta ahora . Se recorre
