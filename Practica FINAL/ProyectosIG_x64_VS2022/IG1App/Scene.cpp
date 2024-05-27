@@ -223,7 +223,7 @@ void Scene::setScene(int index)
 	case 3:
 		{
 			lightActive = true;
-			addObject(new PartialToroid(100,100,30,20, 180));
+			addObject(new PartialToroid(100,100,30,20, 45));
 
 			//int p = 50;
 			//int r = 100;

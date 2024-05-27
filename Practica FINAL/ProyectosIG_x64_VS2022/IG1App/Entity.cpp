@@ -1136,7 +1136,7 @@ PartialToroid::PartialToroid(GLint r, GLint R, GLint m, GLint p, GLint grados) :
 			0
 		);
 	mColor = {0, 1, 0, 1};
-	mMesh = MbR::generateIndexMbR(p, m, profile, grados);
+	mMesh = MbR::generateCutIndexMbR(p, m, profile, grados);
 	tapa = Mesh::generateRegularPolygonFill(m, R);
 	culo = Mesh::generateRegularPolygonFill(m, R);
 	translation = dvec3(R * 2, 0, 0);
