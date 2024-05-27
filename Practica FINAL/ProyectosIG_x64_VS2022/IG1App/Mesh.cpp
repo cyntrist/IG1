@@ -132,6 +132,33 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	return mesh;
 }
 
+Mesh* Mesh::generateRegularPolygonFill(GLuint num, GLdouble r)
+{
+	auto* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+	mesh->mNumVertices = num + 2;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	// numero de vertices
+	const double dividido = 360.0 / num;
+
+	// angulo inicial
+	constexpr double alpha = radians(90.0);
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+	for (int i = 0; i < num; i++)
+	{
+		// x = Cx + R*cos(alpha)
+		// y = Cy + R*sen(alpha) 
+		mesh->vVertices.emplace_back(
+			r * cos(alpha + radians(dividido * i)), 
+			r * sin(alpha + radians(dividido * i)),
+			0);
+	}
+	mesh->vVertices.emplace_back(0.0, r, 0.0);
+
+	return mesh;
+}
+
 Mesh* Mesh::generateRGBTriangle(GLdouble r, GLuint x, GLuint y)
 {
 	auto mesh = generateRegularPolygon(3, r);

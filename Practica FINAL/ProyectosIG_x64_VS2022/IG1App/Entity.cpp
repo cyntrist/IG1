@@ -812,9 +812,6 @@ void CompoundEntity::render(const dmat4& modelViewMat) const
 }
 
 
-
-
-
 IndexedBox::IndexedBox(GLdouble l)
 {
 	mMesh = IndexMesh::generateIndexedBoxV2(l);
@@ -944,14 +941,12 @@ void AdvancedTIE::initLight()
 void AdvancedTIE::renderLight(const dmat4& modelViewMat) const
 {
 	if (baseLight == nullptr) return;
-	glm::dvec3 tiePos = glm::dvec3(mModelMat * glm::dvec4(0.0, -10.0, 0.0, 1.0));
-	baseLight->setPosDir(glm::fvec3(tiePos));
+	auto tiePos = dvec3(mModelMat * dvec4(0.0, -10.0, 0.0, 1.0));
+	baseLight->setPosDir(fvec3(tiePos));
 	baseLight->upload(
 		modelViewMat
 		* mModelMat
 	);
-
-	
 }
 
 // -------------- ALA DEL TIE
@@ -1104,7 +1099,7 @@ Toroid::Toroid(GLint r, GLint R, GLint m, GLint p)
 	constexpr float offset = -90.0f; // angulo inicial
 
 	for (int i = 0; i < p; i++)
-		profile[i] = dvec3(  // los puntos de abajo a arriba antihorario
+		profile[i] = dvec3( // los puntos de abajo a arriba antihorario
 			cos(radians(alpha * i + offset)) * R + r + R,
 			sin(radians(alpha * i + offset)) * R,
 			0
@@ -1128,26 +1123,34 @@ void Toroid::render(const dmat4& modelViewMat) const
 	}
 }
 
-QuarterToroid::QuarterToroid(GLint r, GLint R, GLint m, GLint p)
+PartialToroid::PartialToroid(GLint r, GLint R, GLint m, GLint p, GLint grados) : r(r), culoRotation(grados)
 {
 	profile = new dvec3[p];
 	const float alpha = 360.0f / (p - 1); // angulo entre puntos
 	constexpr float offset = -90.0f; // angulo inicial
 
 	for (int i = 0; i < p; i++)
-		profile[i] = dvec3(  // los puntos de abajo a arriba antihorario
+		profile[i] = dvec3( // los puntos de abajo a arriba antihorario
 			cos(radians(alpha * i + offset)) * R + r + R,
 			sin(radians(alpha * i + offset)) * R,
 			0
 		);
 	mColor = {0, 1, 0, 1};
-	mMesh = MbR::generateIndexMbR(p, m, profile, 270);
+	mMesh = MbR::generateIndexMbR(p, m, profile, grados);
+	tapa = Mesh::generateRegularPolygonFill(m, R);
+	culo = Mesh::generateRegularPolygonFill(m, R);
+	translation = dvec3(R * 2, 0, 0);
+	culoTrans = dvec3(
+		r*2 * cos(radians((float)grados)),
+		0,
+		r*2 * -sin(radians((float)grados))
+	);
 }
 
 
-void QuarterToroid::render(const glm::dmat4& modelViewMat) const
+void PartialToroid::render(const dmat4& modelViewMat) const
 {
-		if (mMesh != nullptr)
+	if (mMesh != nullptr)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -1156,6 +1159,25 @@ void QuarterToroid::render(const glm::dmat4& modelViewMat) const
 
 		glColor4f(mColor.r, mColor.g, mColor.b, mColor.a);
 		mMesh->render();
+
+		if (tapa != nullptr)
+		{
+			// movimiento de la tapa
+			const auto bMat = modelViewMat
+				* translate(dmat4(1.0), translation); // glm matrix multiplication
+			upload(bMat);
+			tapa->render();
+		}
+
+		if (culo != nullptr)
+		{
+			const auto cMat = modelViewMat
+				* translate(dmat4(1.0), culoTrans)
+				* rotate(dmat4(1.0), radians(culoRotation), dvec3(0.0, 1.0, 0.0)); // glm matrix multiplication
+			upload(cMat);
+			culo->render();
+		}
+
 		glColor4f(0, 0, 0, 0);
 	}
 }
@@ -1178,7 +1200,7 @@ IndexedDiamond::~IndexedDiamond()
 	mTexture = nullptr;
 }
 
-void IndexedDiamond::render(const glm::dmat4& modelViewMat) const
+void IndexedDiamond::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
@@ -1201,13 +1223,12 @@ void IndexedDiamond::update()
 
 ToroidCortado::ToroidCortado(GLint r, GLint R, GLint m, GLint p)
 {
-
 	profile = new dvec3[p];
 	const float alpha = 360.0f / (p - 1); // angulo entre puntos
 	constexpr float offset = -90.0f; // angulo inicial
 
 	for (int i = 0; i < p; i++)
-		profile[i] = dvec3(  // los puntos de abajo a arriba antihorario
+		profile[i] = dvec3( // los puntos de abajo a arriba antihorario
 			cos(radians(alpha * i + offset)) * R + r + R,
 			sin(radians(alpha * i + offset)) * R,
 			0
@@ -1220,13 +1241,13 @@ ToroidCortado::ToroidCortado(GLint r, GLint R, GLint m, GLint p)
 	profile[1] = dvec3(r, 0.0, 0.0);
 	profile[2] = dvec3(0.5, 100, 0.0);*/
 
-	mColor = { 0, 1, 0, 1 };
-	
+	mColor = {0, 1, 0, 1};
+
 	//mMesh = MbR::generateIndexMbR(p, m, profile);
 	mMesh = MbR::generatePartialIndexMbR(p, m, 180, profile);
 }
 
-void ToroidCortado::render(const glm::dmat4& modelViewMat) const
+void ToroidCortado::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
@@ -1258,7 +1279,7 @@ Tetrahedro::~Tetrahedro()
 	mTexture = nullptr;
 }
 
-void Tetrahedro::render(const glm::dmat4& modelViewMat) const
+void Tetrahedro::render(const dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr)
 	{
@@ -1274,17 +1295,17 @@ void Tetrahedro::render(const glm::dmat4& modelViewMat) const
 
 
 		// obj 2
-		dmat4 bMat = modelViewMat * mModelMat 
-			* translate(dmat4(1), dvec3(200, 0.0, 0.0)) 
+		dmat4 bMat = modelViewMat * mModelMat
+				* translate(dmat4(1), dvec3(200, 0.0, 0.0))
 			//* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0))
 			;
-		upload(bMat); 
-		mMesh->render(); 
+		upload(bMat);
+		mMesh->render();
 
 		// obj 2
 		dmat4 cMat = modelViewMat * mModelMat
-			* translate(dmat4(1), dvec3(100, 0.0, 0.0))
-			* translate(dmat4(1), dvec3(0, 200, 0.0))
+				* translate(dmat4(1), dvec3(100, 0.0, 0.0))
+				* translate(dmat4(1), dvec3(0, 200, 0.0))
 			//* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0))
 			;
 		upload(cMat);
@@ -1292,6 +1313,5 @@ void Tetrahedro::render(const glm::dmat4& modelViewMat) const
 
 		mTexture->unbind();
 		glLineWidth(1);
-
 	}
 }

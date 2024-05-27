@@ -24,6 +24,7 @@ public:
 	static IndexMesh* generateIndexedBox(GLdouble l); //obsoleto
 	static IndexMesh* generateIndexedBoxV2(GLdouble l);
 	static IndexMesh* generateIndexedDiamond(GLdouble l);
+	static IndexMesh* generateIndexedRegularPolygon(GLdouble radio, GLint vertices);
 };
 
 class MbR : public IndexMesh

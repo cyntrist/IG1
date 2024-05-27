@@ -7,6 +7,8 @@
 #include "Texture.h"
 #include <vector>
 
+#include "IndexMesh.h"
+
 class SpotLight;
 class Material;
 
@@ -384,19 +386,26 @@ public:
 	void render(const glm::dmat4& modelViewMat) const override;
 };
 
-class QuarterToroid : public Abs_Entity
+class PartialToroid : public Abs_Entity
 {
+	GLint r;
 	glm::dvec3* profile;
+	Mesh* tapa = nullptr;
+	Mesh* culo = nullptr;
+	glm::dvec3 culoTrans = { 0, 0, 0};
+	GLdouble culoRotation = 90;
 
 public:
 	// r -> radio menor
 	// R -> radio mayor
 	// m -> caras en horizontal
 	// p -> caras en vertical
-	QuarterToroid(GLint r, GLint R, GLint m, GLint p);
+	PartialToroid(GLint r, GLint R, GLint m, GLint p, GLint grados = 90);
 
-	~QuarterToroid() override
+	~PartialToroid() override
 	{
+		delete tapa;
+		delete culo;
 		delete mMesh;
 		delete[] profile;
 	}

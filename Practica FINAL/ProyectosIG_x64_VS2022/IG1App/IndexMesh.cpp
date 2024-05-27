@@ -322,6 +322,33 @@ IndexMesh* IndexMesh::generateIndexedDiamond(GLdouble l)
 	return mesh;
 }
 
+IndexMesh* IndexMesh::generateIndexedRegularPolygon(GLdouble r, GLint num)
+{
+	auto* mesh = new IndexMesh();
+	//mesh->mNumVertices = num;
+
+	//// numero de vertices
+	//const double dividido = 360.0 / num;
+
+	//// angulo inicial
+	//constexpr double alpha = glm::radians(90.0);
+
+	////mesh->vVertices.emplace_back(0, 0, 0);
+	//for (int i = 0; i < num; i++)
+	//{
+	//	// x = Cx + R*cos(alpha)
+	//	// y = Cy + R*sen(alpha) 
+	//	mesh->vVertices.emplace_back(
+	//		r * cos(alpha + glm::radians(dividido * i)), 
+	//		r * sin(alpha + glm::radians(dividido * i)),
+	//		0.0);
+	//}
+
+	///*mesh->vNormals.reserve(mesh->mNumVertices);
+	//mesh->buildNormalVectorsV2();*/
+	return mesh;
+}
+
 
 void IndexMesh::render() const
 {
@@ -392,7 +419,7 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 	int indiceMayor = 0;
 	mesh->nNumIndices = mesh->mNumVertices * 6;
 	mesh->vIndices = new GLuint[mesh->nNumIndices];
-	for (int i = 0; i < mesh->mNumVertices * 6; i++)
+	for (int i = 0; i < mesh->nNumIndices; i++)
 		mesh->vIndices[i] = 0;
 
 	/// PASO 6
@@ -402,7 +429,7 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 		// El contador j recorre los vértices del perfil ,
 		// de abajo arriba . Las caras cuadrangulares resultan
 		// al unir la muestra i- ésima con la (i +1)% nn - ésima
-		for (int j = 0; j < mm - 1; j++)
+		for (int j = 0; j < mm; j++)
 		{
 			// El contador indice sirve para llevar cuenta
 			// de los índices generados hasta ahora . Se recorre
