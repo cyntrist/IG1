@@ -389,6 +389,7 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 	mesh->mPrimitive = GL_TRIANGLES;
 	// Definir el número de vértices como nn*mm
 	mesh->mNumVertices = nn * mm;
+	mesh->vVertices.reserve(mesh->nNumIndices);
 	// Usar un vector auxiliar de vértices
 	//std::vector<glm::vec<3, double>> vs;
 	//vs.reserve(mesh->mNumVertices);
@@ -397,7 +398,7 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 	for (int i = 0; i < nn; i++)
 	{
 		// Generar la muestra i- ésima de vértices
-		GLdouble theta = i * grados / nn;
+		GLdouble theta = i * grados / (nn-1);
 		GLdouble c = cos(glm::radians(theta));
 		GLdouble s = sin(glm::radians(theta));
 		for (int j = 0; j < mm; j++)
@@ -424,12 +425,20 @@ MbR* MbR::generateIndexMbR(GLint mm, GLint nn, glm::dvec3* perfil, GLint grados)
 
 	/// PASO 6
 	// El contador i recorre las muestras alrededor del eje Y
-	for (int i = 0; i < nn - 1; i++)
+	auto n = nn;
+	auto m = mm;
+	//if (grados != 360)
+	{
+		m -= 1;
+		n -= 1;
+	}
+
+	for (int i = 0; i < n; i++)
 	{
 		// El contador j recorre los vértices del perfil ,
 		// de abajo arriba . Las caras cuadrangulares resultan
 		// al unir la muestra i- ésima con la (i +1)% nn - ésima
-		for (int j = 0; j < mm; j++)
+		for (int j = 0; j < m; j++)
 		{
 			// El contador indice sirve para llevar cuenta
 			// de los índices generados hasta ahora . Se recorre
@@ -499,9 +508,7 @@ MbR* MbR::generatePartialIndexMbR(int mm, int nn, int grados, glm::dvec3* perfil
 
 	// 4. Volcar el array auxiliar v�rtices en el array de v�rtices
 	for (int i = 0; i < mesh->mNumVertices; i++)
-	{
 		mesh->vVertices.push_back(vs[i]);
-	}
 	delete[] vs;
 
 	// 5. Construir los �ndices de las caras triangulares
