@@ -156,22 +156,6 @@ IndexMesh* IndexMesh::generateIndexedBox(GLdouble l)
 	mesh->vIndices[34] = 7;
 	mesh->vIndices[35] = 6;
 
-	/// CARAS
-	int nV = 3;
-	mesh->vCaras.resize(mesh->nNumIndices / nV);
-	for (int i = 0; i < mesh->nNumIndices / nV; i++)
-	{
-		//std::cout << mesh->vIndices[i * nV] << std::endl;
-		//std::cout << mesh->vIndices[i * nV + 1] << std::endl;
-		//std::cout << mesh->vIndices[i * nV + 2] << std::endl;
-
-		mesh->vCaras[i] = Cara(
-			mesh->vIndices[i * nV],
-			mesh->vIndices[i * nV + 1],
-			mesh->vIndices[i * nV + 2]
-		);
-	}
-	//std::cout << std::endl;
 
 	/// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);
@@ -208,33 +192,35 @@ IndexMesh* IndexMesh::generateIndexedBoxV2(GLdouble l) /// la version de la prof
 	mesh->vIndices = new GLuint[mesh->nNumIndices];
 	const GLuint arr[36] =
 	{
-		0, 1, 2, 1, 3, 2, 2, 3, 4,
-		3, 5, 4, 4, 5, 6, 5, 7, 6,
-		//diagonal como el resto en la cara lateral izquierda
-		//6, 7, 0, 7, 1, 0,
-		//diagonal al contrario del resto en la cara lateral izquierda
+		0, 1, 2, 1, 3, 2,
+		2, 3, 4, 3, 5, 4,
+		4, 5, 6, 5, 7, 6,
+		//última diagonal como el resto en la cara lateral izquierda
+		//6, 7, 0, 7, 1, 0, // se ve ligeramente distinto, POR?
+		//última diagonal al contrario del resto en la cara lateral izquierda
 		0, 6, 1, 6, 7, 1,
-		0, 2, 4, 4, 6, 0, 1, 5, 3, 1, 7, 5
+		0, 2, 4, 4, 6, 0, // arriba
+		1, 5, 3, 1, 7, 5 // abajo
 	};
 
 	for (int i = 0; i < mesh->nNumIndices; i++)
 		mesh->vIndices[i] = arr[i];
 
-	/// CARAS
-	int nV = 3;
-	mesh->vCaras.resize(mesh->nNumIndices / nV);
-	for (int i = 0; i < mesh->nNumIndices / nV; i++)
-	{
-		//std::cout << mesh->vIndices[i * nV] << std::endl;
-		//std::cout << mesh->vIndices[i * nV + 1] << std::endl;
-		//std::cout << mesh->vIndices[i * nV + 2] << std::endl;
+	///// CARAS
+	//int nV = 3;
+	//mesh->vCaras.resize(mesh->nNumIndices / nV);
+	//for (int i = 0; i < mesh->nNumIndices / nV; i++)
+	//{
+	//	//std::cout << mesh->vIndices[i * nV] << std::endl;
+	//	//std::cout << mesh->vIndices[i * nV + 1] << std::endl;
+	//	//std::cout << mesh->vIndices[i * nV + 2] << std::endl;
 
-		mesh->vCaras[i] = Cara(
-			mesh->vIndices[i * nV],
-			mesh->vIndices[i * nV + 1],
-			mesh->vIndices[i * nV + 2]
-		);
-	}
+	//	mesh->vCaras[i] = Cara(
+	//		mesh->vIndices[i * nV],
+	//		mesh->vIndices[i * nV + 1],
+	//		mesh->vIndices[i * nV + 2]
+	//	);
+	//}
 
 	/// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);

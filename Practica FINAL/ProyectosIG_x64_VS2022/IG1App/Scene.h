@@ -81,6 +81,11 @@ protected:
 	GLdouble ang;
 
 
+	CompoundEntity* parentNode;
+	CompoundEntity* childNode;
+	CompoundEntity* childNodeRotate;
+	GLdouble grAng;
+
 	// light
 	DirLight* dirLight = nullptr;
 	PosLight* posLight = nullptr;	// IDENTIFICADOR GL_LIGHT1 ????
